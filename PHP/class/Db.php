@@ -3,8 +3,13 @@ class Db {
     public $pdo;
     function __construct(){
         try{
-            //$this->pdo = new PDO('mysql:host=localhost;dbname=id18263011_databaselarehab', 'id18263011_admin', 'M(#hqygJ2DXj^bN4');
-            $this->pdo = new PDO('sqlite:'.__DIR__.'/../database/database.db' );
+            try{
+                $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=id18263011_databaselarehab', 'root');
+                //$this->pdo = new PDO('mysql:host=localhost;dbname=id18263011_databaselarehab', 'id18263011_admin', 'M(#hqygJ2DXj^bN4');
+                //$this->pdo = new PDO('sqlite:'.__DIR__.'\..\database\database.db' );
+            } catch(PDOException $e){
+                echo "Connexion échouée : " . $e->getMessage();
+            }
         }catch(PDOException $e){
             echo $e->getMessage();
         }

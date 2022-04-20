@@ -1,5 +1,5 @@
 <?php session_start();
-if (!$_SESSION["connected"]){
+if (!isset($_SESSION["connected"])){
     header('Location: connexion.php');
     die();
 }?>

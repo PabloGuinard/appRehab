@@ -21,6 +21,5 @@ $popup = new Popup()?>
         <button type="submit">Se connecter</button>
     </div>
 </form>
-<?=$_SESSION["connexion"]?>
 </body>
 </html>

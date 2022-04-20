@@ -4,9 +4,12 @@ if (!$_SESSION["connected"]){
     die();
 }
 include 'class/Db.php';
-session_start();
 $db = new Db();
-$categories = $db->getAllCategories();
+
+$_SESSION["message"] = $db->setIsReadyTrue();
+
+
+/* $categories = $db->getAllCategories();
 $arrayCategories = Array();
 $arrayTmp = Array();
 $cpt = 0;
@@ -94,9 +97,9 @@ $finalArray = Array(
 );
 
 $json = json_encode($finalArray);
-file_put_contents("api/api.json", $json);
+file_put_contents("api/api.json", $json); 
 
-$_SESSION["message"] = "Application mise à jour";
+$_SESSION["message"] = "Application mise à jour";*/
 header("Location: index.php");
 exit();
 ?>
