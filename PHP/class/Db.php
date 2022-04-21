@@ -256,28 +256,40 @@ class Db {
         return $sth->fetchAll();
     }
 
-    public function getAllCategories(){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories");
-        $sth->execute();
+    public function getAllMotsReadyRecent($dateConnexion){
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
+        $sth->execute(["dateConnexion" => $dateConnexion]);
         return $sth->fetchAll();
     }
 
-    public function getAllThemes(){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes");
-        $sth->execute();
+    /* public function getAllCategoriesReadyRecent($dateConnexion){
+        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
+        $sth->execute(["dateConnexion" => $dateConnexion]);
+        return $sth->fetchAll();
+    } */
+
+    public function getAllThemesReadyRecent($dateConnexion){
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
+        $sth->execute(["dateConnexion" => $dateConnexion]);
         return $sth->fetchAll();
     }
 
-    public function getAllExercices(){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices");
-        $sth->execute();
+    public function getAllExercicesReadyRecent($dateConnexion){
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
+        $sth->execute(["dateConnexion" => $dateConnexion]);
         return $sth->fetchAll();
     }
 
-    public function getAllItems(){
-        $sth = $this->pdo->prepare("SELECT * FROM Items");
-        $sth->execute();
+    public function getAllItemsReadyRecent($dateConnexion){
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
+        $sth->execute(["dateConnexion" => $dateConnexion]);
         return $sth->fetchAll();
+    }
+
+    public function getPresentationReadyRecent($dateConnexion){
+        $sth = $this->pdo->prepare("SELECT * FROM Presentation WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
+        $sth->execute(["dateConnexion" => $dateConnexion]);
+        return $sth->fetch();
     }
 
     public function addComment(string $rate, string $comment, string $exerciceId){
