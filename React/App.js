@@ -32,25 +32,7 @@ async function setDataFromApi(json, typeData){
         cptJson++
     }
     await setStorage(typeData + "Length", (cptData + json.length).toString())
-
-    
-    let allData
-    try{
-        allData = await AsyncStorage.getItem(typeData + "All")
-    } catch{}
-    if(allData === null){
-        allData = JSON.stringify(json)
-    } else {
-        //concat old and new data
-        allData = JSON.parse(allData)
-        allData.slice(0, -1)
-        allData = allData.concat(json)
-        allData = allData.concat("]")
-        allData = JSON.stringify(allData)
-        console.log(json);
-        console.log(allData)
-    }
-    await setStorage(typeData + "All", allData)
+    concatOldNewData(json, typeData)
 }
 
 async function initGlobals(){
@@ -66,6 +48,25 @@ async function initGlobals(){
     }catch (e){}
     global.AmountExercicesEndedMonth = Number(tmp)
     global.AmountExercicesEndedMonth = 0
+}
+
+async function concatOldNewData(json, typeData){
+    let allData
+    try{
+        allData = await AsyncStorage.getItem(typeData + "All")
+    } catch{}
+    if(allData === null){
+        allData = JSON.stringify(json)
+    } else {
+        allData = JSON.parse(allData)
+        allData.slice(0, -1)
+        allData = allData.concat(json)
+        //allData = allData.concat("]")
+        allData = JSON.stringify(allData)
+        console.log("json");
+        console.log(allData)
+    }
+    await setStorage(typeData + "All", allData)
 }
 
 const initHistoriqueAndLastConnexion = async () => {
@@ -105,41 +106,9 @@ const getAllDataFromApi = async () => {
         setDataFromApi(json.exercices, "exercice")
     if(json.items != undefined)
         setDataFromApi(json.items, "item")
-
-    /* for (var cpt = 0; cpt < json.categories.length; cpt++) {
-        try {
-            const toString = JSON.stringify(json.categories[cpt]);
-            await setStorage('categorie' + cpt, toString)
-        } catch (error){}
-    }
-    for (cpt = 0; cpt < json.themes.length; cpt++) {
-        try{
-            const toString = JSON.stringify(json.themes[cpt]);
-            await setStorage('theme' + cpt, toString);
-        } catch(error){}
-    }
-    for (cpt = 0; cpt < json.exercices.length; cpt++) {
-        try{
-            const toString = JSON.stringify(json.exercices[cpt]);
-            await setStorage('exercice' + cpt, toString);
-        } catch(error){}
-    }
-    for (cpt = 0; cpt < json.items.length; cpt++) {
-        try{
-            const toString = JSON.stringify(json.items[cpt]);
-            await setStorage('item' + cpt, toString);
-        } catch(error){}
-    } */
+    if(json.mots != undefined)
+        concatOldNewData(json.mots, "mot")
     try {
-        /* await setStorage('categoriesLength', '' + json.categories.length)
-        await setStorage('themesLength', '' + json.themes.length)
-        await setStorage('exercicesLength', '' + json.exercices.length)
-        await setStorage('itemsLength', '' + json.items.length) */
-
-        
-        
-        toString = JSON.stringify(json.mots)
-        await setStorage('motAll', toString)
         toString = JSON.stringify((json.presentation))
         await setStorage('presentation', toString)
     } catch(error){}
