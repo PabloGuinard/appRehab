@@ -8,7 +8,7 @@ $timestamp = $_GET["timestamp"];
 $finalArray = Array();
 
 //add new categories in result
-/* $categories = $db->getAllCategoriesReadyRecent(date('Y-m-d H-i-s', $timestamp));
+$categories = $db->getAllCategoriesReadyRecent(date('Y-m-d H-i-s', $timestamp));
 if($categories){
     $arrayCategories = Array();
     $arrayTmp = Array();
@@ -23,9 +23,7 @@ if($categories){
         $cpt++;
     }
     $finalArray["categories"] = $arrayCategories;
-} else {
-    echo "No new categories\n";
-} */
+} 
 
 //add new themes in result
 $themes = $db->getAllThemesReadyRecent(date('Y-m-d H-i-s', $timestamp));
@@ -44,8 +42,6 @@ if($themes){
         $cpt++;
     }
     $finalArray["themes"] = $arrayThemes;
-} else {
-    echo "no new themes\n";
 }
 
 
@@ -66,8 +62,6 @@ if($exercices){
         $cpt++;
     }
     $finalArray["exercices"] = $arrayExercices;
-} else {
-    echo "no new exercices\n";
 }
 
 //add new items in result
@@ -87,8 +81,6 @@ if($items){$arrayItems = Array();
         $cpt++;
     }
     $finalArray["items"] = $arrayItems;
-} else {
-    echo "no new items\n";
 }
 
 //add new mots in result
@@ -108,16 +100,12 @@ if($mots){
         $cpt++;
     }
     $finalArray["mots"] = $arrayMots;
-} else {
-    echo "no new mots\n";
 }
 
 //add presentation in result
 $presentation = $db->getPresentationReadyRecent(date('Y-m-d H-i-s', $timestamp));
 if($presentation){
     $finalArray["presentation"] = $presentation["contenu"];
-} else {
-    echo "no new presentation\n";
 }
 
 $json = json_encode($finalArray);

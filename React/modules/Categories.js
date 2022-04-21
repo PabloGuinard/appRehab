@@ -81,7 +81,7 @@ async function navigation(params){
   };
   let tmp
   try {
-    tmp =  await AsyncStorage.getItem('allThemes')
+    tmp =  await AsyncStorage.getItem('themeAll')
   }catch (error){}
   var allThemes = JSON.parse(tmp)
   var matchThemes = [];

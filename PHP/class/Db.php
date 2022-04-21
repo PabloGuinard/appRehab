@@ -256,39 +256,39 @@ class Db {
         return $sth->fetchAll();
     }
 
-    public function getAllMotsReadyRecent($dateConnexion){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
-        $sth->execute(["dateConnexion" => $dateConnexion]);
+    public function getAllMotsReadyRecent($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    /* public function getAllCategoriesReadyRecent($dateConnexion){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
-        $sth->execute(["dateConnexion" => $dateConnexion]);
+    public function getAllCategoriesReadyRecent($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
-    } */
+    } 
 
-    public function getAllThemesReadyRecent($dateConnexion){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
-        $sth->execute(["dateConnexion" => $dateConnexion]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllExercicesReadyRecent($dateConnexion){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
-        $sth->execute(["dateConnexion" => $dateConnexion]);
+    public function getAllThemesReadyRecent($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    public function getAllItemsReadyRecent($dateConnexion){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
-        $sth->execute(["dateConnexion" => $dateConnexion]);
+    public function getAllExercicesReadyRecent($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    public function getPresentationReadyRecent($dateConnexion){
-        $sth = $this->pdo->prepare("SELECT * FROM Presentation WHERE isReady=1 AND :dateConnexion < DATE(modifiedAT)");
-        $sth->execute(["dateConnexion" => $dateConnexion]);
+    public function getAllItemsReadyRecent($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
+        return $sth->fetchAll();
+    }
+
+    public function getPresentationReadyRecent($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Presentation WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
         return $sth->fetch();
     }
 
@@ -367,5 +367,17 @@ class Db {
         $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1");
         $sth->execute();
         return "App mise à jour";
+    }
+
+    public function test($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM categories  WHERE TIMESTAMP(:mytime) < modifiedAt ");
+        $sth->execute(["mytime" => $timestamp]);
+        $result = $sth->fetchAll();
+        if($result == null)
+        {
+            return "nop";
+        } else {
+            return sizeof($result);
+        }
     }
 }

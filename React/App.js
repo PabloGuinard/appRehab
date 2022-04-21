@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from './stacks/Home';
 import Profile from './stacks/Profile';
 import Challenge from './stacks/Challenge';
+import { log } from 'react-native-reanimated';
 
 async function setStorage(key: string, value: string){
     if(typeof value === Object){
@@ -14,6 +15,42 @@ async function setStorage(key: string, value: string){
         await AsyncStorage.setItem(key, value)
     }catch (error){
     }
+}
+
+async function setDataFromApi(json, typeData){
+    let cptData = 0
+    let cptJson = 0
+    try{
+        let tmp = await AsyncStorage.getItem(typeData + "sLength")
+        if(tmp != null)
+            cptData = tmp
+    } catch{}
+    console.log(typeData + " cptdata : " + cptData + "  json length : " + json.length);
+    for(let cpt = cptData; cpt < cptData + json.length; cpt++){
+        const toString = JSON.stringify(json[cpt])
+        await setStorage(typeData + cpt, toString)
+        cptJson++
+    }
+    await setStorage(typeData + "Length", (cptData + json.length).toString())
+
+    
+    let allData
+    try{
+        allData = await AsyncStorage.getItem(typeData + "All")
+    } catch{}
+    if(allData === null){
+        allData = JSON.stringify(json)
+    } else {
+        //concat old and new data
+        allData = JSON.parse(allData)
+        allData.slice(0, -1)
+        allData = allData.concat(json)
+        allData = allData.concat("]")
+        allData = JSON.stringify(allData)
+        console.log(json);
+        console.log(allData)
+    }
+    await setStorage(typeData + "All", allData)
 }
 
 async function initGlobals(){
@@ -31,7 +68,7 @@ async function initGlobals(){
     global.AmountExercicesEndedMonth = 0
 }
 
-async function initHistorique(){
+const initHistoriqueAndLastConnexion = async () => {
     let tmp = null
     try {
         tmp = await AsyncStorage.getItem('nbItemsHistorique')
@@ -39,13 +76,37 @@ async function initHistorique(){
     if(tmp === null){
         await setStorage('nbItemsHistorique', '0')
     }
+    tmp = null
+    try {
+        tmp = await AsyncStorage.getItem('timestampLastConnection')
+    }catch (e) {}
+    if(tmp === null){
+        await setStorage('timestampLastConnection', '0')
+    }
 }
 
-global.mainColor = '#88bd28';
 const getAllDataFromApi = async () => {
-    const response = await fetch('https://apprehab.000webhostapp.com/api/api.json' + '?' + new Date());
+
+    //fetch data from API
+    let timestamp = 2
+    try {
+        timestamp = await AsyncStorage.getItem('timestampLastConnection')
+    }catch (error){}
+    //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php' + '?timestamp=' + new Date());
+    const response = await fetch('http://10.39.20.77/api/api.php?timestamp=' + timestamp);
+    console.log('http://10.39.20.77/api/api.php?timestamp=' + timestamp)
+    await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
     const json = await response.json();
-    for (var cpt = 0; cpt < json.categories.length; cpt++) {
+    if(json.categories != undefined)
+        setDataFromApi(json.categories, "categorie")
+    if(json.themes != undefined)
+        setDataFromApi(json.themes, "theme")
+    if(json.exercices != undefined)
+        setDataFromApi(json.exercices, "exercice")
+    if(json.items != undefined)
+        setDataFromApi(json.items, "item")
+
+    /* for (var cpt = 0; cpt < json.categories.length; cpt++) {
         try {
             const toString = JSON.stringify(json.categories[cpt]);
             await setStorage('categorie' + cpt, toString)
@@ -68,23 +129,17 @@ const getAllDataFromApi = async () => {
             const toString = JSON.stringify(json.items[cpt]);
             await setStorage('item' + cpt, toString);
         } catch(error){}
-    }
+    } */
     try {
-        await setStorage('categoriesLength', '' + json.categories.length)
+        /* await setStorage('categoriesLength', '' + json.categories.length)
         await setStorage('themesLength', '' + json.themes.length)
         await setStorage('exercicesLength', '' + json.exercices.length)
-        await setStorage('itemsLength', '' + json.items.length)
-        toString = JSON.stringify(json.categories)
-        await setStorage('allCategories', toString)
-        toString = JSON.stringify(json.themes)
-        await setStorage('allThemes', toString)
-        toString = JSON.stringify(json.exercices)
-        await setStorage('allExercices', toString)
-        toString = JSON.stringify(json.items)
-        await setStorage('allItems', toString)
+        await setStorage('itemsLength', '' + json.items.length) */
+
+        
+        
         toString = JSON.stringify(json.mots)
-        await setStorage('allMots', toString)
-        await setStorage('themesLength')
+        await setStorage('motAll', toString)
         toString = JSON.stringify((json.presentation))
         await setStorage('presentation', toString)
     } catch(error){}
@@ -102,7 +157,7 @@ async function setMonth(){
         let lastUpdate
         try {
             lastUpdate = await AsyncStorage.getItem("monthOfUpdate")
-        }catch (e) { console.log("" + e)}
+        }catch (e) {}
         if(lastUpdate !== ("" + new Date().getMonth())){
             await setStorage("amountExercicesStartedMonth", "0")
             await setStorage("amountExercicesEndedMonth", "0")
@@ -112,14 +167,20 @@ async function setMonth(){
     }
 }
 
-const Stack = createStackNavigator();
+async function initialisation(){
+    await setMonth()
+    await initGlobals()
+    await initHistoriqueAndLastConnexion()
+    await getAllDataFromApi()
+}
+
+const Stack = createStackNavigator()
+global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    setMonth()
-    initGlobals()
-    getAllDataFromApi()
-    initHistorique()
+    //AsyncStorage.clear()
+    initialisation();
     return (
       <NavigationContainer>
         <Stack.Navigator>

@@ -21,7 +21,7 @@ async function navigation(params) {
     if (params.title === 'Lexique') {
         let tmp
         try {
-            tmp = await AsyncStorage.getItem('allMots')
+            tmp = await AsyncStorage.getItem('motAll')
         }catch (error){}
         const tabMots = await JSON.parse(tmp)
         for (let cpt = 0; cpt < tabMots.length; cpt++) {
@@ -73,7 +73,7 @@ async function navigation(params) {
         }
         let tmp
         try {
-            tmp = await AsyncStorage.getItem('allExercices')
+            tmp = await AsyncStorage.getItem('exerciceAll')
         }catch (error){}
         let allExercices = JSON.parse(tmp)
         let matchExercices = []
@@ -93,7 +93,7 @@ async function navigation(params) {
         if (params.color === mainColor) {
             let tmp
             try {
-                tmp = await AsyncStorage.getItem('allMots')
+                tmp = await AsyncStorage.getItem('motAll')
             }catch (error){}
             let allMots = JSON.parse(tmp)
             for (let cpt = 0; cpt < allMots.length; cpt++) {
@@ -161,7 +161,7 @@ async function navigation(params) {
                 cpt++
             }
             try {
-                tmp = await AsyncStorage.getItem('allItems')
+                tmp = await AsyncStorage.getItem('itemAll')
             }catch (error){}
             let allItems = JSON.parse(tmp)
             let content = [];
