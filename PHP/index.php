@@ -18,7 +18,7 @@ $popup = new Popup()?>
 <div class="h1Button">
     <h1 class="h1DataBase">Dashboard</h1>
     <div class="buttonsDataBase">
-        <a href="api.php">Mettre à jour l'app</a>
+        <a href="updateApp.php">Mettre à jour l'app</a>
         <a href="viewLexique.php">Voir le lexique</a>
         <a href="viewRates.php">Voir les commentaires</a>
     </div>

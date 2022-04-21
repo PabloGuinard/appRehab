@@ -16,7 +16,7 @@ include "class/Popup.php"?>
     <div class="h1Button">
         <h1 class="h1DataBase">Commentaires</h1>
         <div class="buttonsDataBase">
-            <a href="api.php">Mettre à jour l'app</a>
+            <a href="updateApp.php">Mettre à jour l'app</a>
             <a href="index.php">Retourner au dashboard</a>
             <a href="viewLexique.php">Voir le lexique</a>
         </div>
