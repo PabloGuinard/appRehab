@@ -93,7 +93,7 @@ $popup = new Popup()?>
                                         <div class="titleItem">Item ' . $item['typeItem'] . '</div>
                                         <div class="buttonsForm">
                                             <div class="button btModal"><img src="img/edit_item.png" alt="Modifier"></div> 
-                                            ' .$popup->modalUpdateItem($item, $exercice). '
+                                            ' .$popup->modalUpdateItem($item, $idExercice). '
                                             <div class="button btModal"><img src="img/delete_item.png" alt="Suppr"></div> 
                                             ' .$popup->modalSuppr('red', 'Supprimer l\'item '.$item["typeItem"].' ?', $item['idItem'], 'Item').'
                                             
