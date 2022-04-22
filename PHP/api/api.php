@@ -54,6 +54,58 @@ if($result){
 
 $finalArray = Array();
 
+//delete doubletons in arrayModified
+if(isset($modifiedArray["categories"]) && isset($finalArray["categories"])){
+    for($cpt = 0; $cpt < sizeof($newsArray["categories"]); $cpt++){
+        $index = array_search($newsArray["categories"][$cpt], $modifiedArray["categories"]);
+        if(getType($index) != "boolean"){
+            unset($modifiedArray["categories"][$index]);
+        }
+    }
+    if(sizeof($modifiedArray["categories"]) < 1)
+        unset($modifiedArray["categories"]);
+}
+if(isset($modifiedArray["themes"]) && isset($finalArray["themes"])){
+    for($cpt = 0; $cpt < sizeof($newsArray["themes"]); $cpt++){
+        $index = array_search($newsArray["themes"][$cpt], $modifiedArray["themes"]);
+        if(getType($index) != "boolean"){
+            unset($modifiedArray["themes"][$index]);
+        }
+    } 
+    if(sizeof($modifiedArray["themes"]) < 1)
+        unset($modifiedArray["themes"]);
+}
+if(isset($modifiedArray["exercices"]) && isset($finalArray["exercices"])){
+    for($cpt = 0; $cpt < sizeof($newsArray["exercices"]); $cpt++){
+        $index = array_search($newsArray["exercices"][$cpt], $modifiedArray["exercices"]);
+        if(getType($index) != "boolean"){
+            unset($modifiedArray["exercices"][$index]);
+        }
+    } 
+    if(sizeof($modifiedArray["exercices"]) < 1)
+        unset($modifiedArray["exercices"]);
+}
+if(isset($modifiedArray["items"]) && isset($finalArray["items"])){
+    for($cpt = 0; $cpt < sizeof($newsArray["items"]); $cpt++){
+        $index = array_search($newsArray["items"][$cpt], $modifiedArray["items"]);
+        if(getType($index) != "boolean"){
+            unset($modifiedArray["items"][$index]);
+        }
+    } 
+    if(sizeof($modifiedArray["items"]) < 1)
+        unset($modifiedArray["items"]);
+}
+if(isset($modifiedArray["mots"]) && isset($finalArray["mots"])){
+    for($cpt = 0; $cpt < sizeof($newsArray["mots"]); $cpt++){
+        $index = array_search($newsArray["mots"][$cpt], $modifiedArray["mots"]);
+        if(getType($index) != "boolean"){
+            unset($modifiedArray["mots"][$index]);
+        }
+    } 
+    if(sizeof($modifiedArray["mots"]) < 1)
+        unset($modifiedArray["mots"]);
+}
+
 //add new and modified in result if not null
 if(sizeof($newsArray) > 0)
     $finalArray["news"] = $newsArray;
@@ -64,6 +116,10 @@ if(sizeof($modifiedArray) > 0)
 $result = $db->getPresentationReadyRecent(date('Y-m-d H-i-s', $timestamp));
 if($result){
     $finalArray["presentation"] = $result["contenu"];
+}
+
+if(sizeof($finalArray) < 1){
+    $finalArray["nothing"] = "nothing";
 }
 
 $json = json_encode($finalArray);
