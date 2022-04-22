@@ -35,18 +35,23 @@ async function setDataFromApi(json, typeData){
 }
 
 async function updateDataFromApi(json, typeData){
-    let dataAll
+    let oldData
     try{
-        dataAll = await AsyncStorage.getItem(typeData + "All")
+        oldData = await AsyncStorage.getItem(typeData + "All")
     } catch{}
-    dataAll = JSON.parse(dataAll)
+    oldData = JSON.parse(oldData)
+    //set new data in "All" & normal
     json.forEach(element => {
         console.log(element);
+        let index = oldData.findIndex(checkData, element.id)
+        oldData[index] = element
+        setStorage(typeData + index, JSON.stringify(element))
     });
+    setStorage(typeData + "All", JSON.stringify(oldData))
 }
 
-function findIndexById(id, data){
-
+function checkData(element){
+    return this == element.id
 }
 
 async function initGlobals(){
@@ -106,48 +111,53 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php' + '?timestamp=' + new Date());
-    const response = await fetch('http://10.39.20.77/api/api.php?timestamp=1650613398'/*  + timestamp */);
-    console.log('http://10.39.20.77/api/api.php?timestamp=' + timestamp)
+    const url = 'http://10.39.20.77/api/api.php?timestamp=1650639178'// + timestamp
+    const response = await fetch(url)
+    console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
     const json = await response.json();
 
-    //add new content
-    const news = json.news;
-    if(news != undefined){
-        if(news.categories != undefined)
-            setDataFromApi(news.categories, "categorie")
-        if(news.themes != undefined)
-            setDataFromApi(news.themes, "theme")
-        if(news.exercices != undefined)
-            setDataFromApi(news.exercices, "exercice")
-        if(news.items != undefined)
-            setDataFromApi(news.items, "item")
-        if(news.mots != undefined)
-            concatOldNewData(news.mots, "mot")
-    }
-
-    //update content
-    const modified = json.modified;
-    if(modified != undefined){
-        if(modified.categories != undefined)
-            updateDataFromApi(modified.categories, "categorie")
-        if(modified.themes != undefined)
-            updateDataFromApi(modified.themes, "theme")
-        if(modified.exercices != undefined)
-            updateDataFromApi(modified.exercices, "exercice")
-        if(modified.items != undefined)
-            updateDataFromApi(modified.items, "item")
-        if(modified.mots != undefined)
-            //concatOldNewData(modified.mots, "mot")
-            ;
-    }
-
-    //update presentation
-    if(json.presentation != undefined){
-        try {
-            toString = JSON.stringify((json.presentation))
-            await setStorage('presentation', toString)
-        } catch(error){}
+    if(json.nothing == undefined){
+        //add new content
+        const news = json.news;
+        if(news != undefined){
+            if(news.categories != undefined)
+                setDataFromApi(news.categories, "categorie")
+            if(news.themes != undefined)
+                setDataFromApi(news.themes, "theme")
+            if(news.exercices != undefined)
+                setDataFromApi(news.exercices, "exercice")
+            if(news.items != undefined)
+                setDataFromApi(news.items, "item")
+            if(news.mots != undefined)
+                concatOldNewData(news.mots, "mot")
+        }
+    
+        //update content
+        const modified = json.modified;
+        if(modified != undefined){
+            if(modified.categories != undefined)
+                updateDataFromApi(modified.categories, "categorie")
+            if(modified.themes != undefined)
+                updateDataFromApi(modified.themes, "theme")
+            if(modified.exercices != undefined)
+                updateDataFromApi(modified.exercices, "exercice")
+            if(modified.items != undefined)
+                updateDataFromApi(modified.items, "item")
+            if(modified.mots != undefined)
+                //concatOldNewData(modified.mots, "mot")
+                ;
+        }
+    
+        //update presentation
+        if(json.presentation != undefined){
+            try {
+                toString = JSON.stringify((json.presentation))
+                await setStorage('presentation', toString)
+            } catch(error){}
+        }
+    } else {
+        console.log("nothing new");
     }
 };
 
@@ -185,7 +195,7 @@ global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    AsyncStorage.clear()
+    //AsyncStorage.clear()
     initialisation();
     return (
       <NavigationContainer>
