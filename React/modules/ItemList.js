@@ -3,7 +3,6 @@ import {SafeAreaView, View, StyleSheet, FlatList, Text} from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function forceUpdate(){
-    console.log('test');
 }
 
 async function setStorage(key: string, value: string){
@@ -26,7 +25,7 @@ async function navigation(params) {
         const tabMots = await JSON.parse(tmp)
         for (let cpt = 0; cpt < tabMots.length; cpt++) {
             DATA[DATA.length] = {
-                id: tabMots[cpt].idMot,
+                id: tabMots[cpt].id,
                 title: tabMots[cpt].mot,
                 link: 'LessonPage',
             }
@@ -67,7 +66,7 @@ async function navigation(params) {
             }catch (error){}
             let theme = JSON.parse(tmp)
             if (theme.nomTheme === params.title) {
-                idTheme = theme.idTheme
+                idTheme = theme.id
             }
             cpt++
         }
@@ -84,7 +83,7 @@ async function navigation(params) {
         }
         for (cpt = 0; cpt < matchExercices.length; cpt++) {
             DATA[DATA.length] = {
-                id: matchExercices[cpt].idExercice,
+                id: matchExercices[cpt].id,
                 title: matchExercices[cpt].nomExercice,
                 link: 'LessonPage'
             }
@@ -102,10 +101,10 @@ async function navigation(params) {
                     content[0] = {
                         type: 'Texte',
                         data: allMots[cpt].definition,
-                        id: allMots[cpt].idMot
+                        id: allMots[cpt].id
                     }
                     DATA[0] = {
-                        id: allMots[cpt].idMot,
+                        id: allMots[cpt].id,
                         title: allMots[cpt].mot,
                         content: content
                     };
@@ -166,11 +165,11 @@ async function navigation(params) {
             let allItems = JSON.parse(tmp)
             let content = [];
             for (cpt = 0; cpt < allItems.length; cpt++) {
-                if (allItems[cpt].exerciceId === matchExercice.idExercice) {
+                if (allItems[cpt].exerciceId === matchExercice.id) {
                     content[content.length] = {
                         type: allItems[cpt].typeItem,
                         data: allItems[cpt].pathItem,
-                        id: allItems[cpt].idItem
+                        id: allItems[cpt].id
                     }
                 }
             }
@@ -180,7 +179,7 @@ async function navigation(params) {
                 id: ''
             }
             DATA[0] = {
-                id: matchExercice.idExercice,
+                id: matchExercice.id,
                 title: matchExercice.nomExercice,
                 content: content
             }

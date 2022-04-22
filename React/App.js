@@ -25,7 +25,6 @@ async function setDataFromApi(json, typeData){
         if(tmp != null)
             cptData = tmp
     } catch{}
-    console.log(typeData + " cptdata : " + cptData + "  json length : " + json.length);
     for(let cpt = cptData; cpt < cptData + json.length; cpt++){
         const toString = JSON.stringify(json[cpt])
         await setStorage(typeData + cpt, toString)
@@ -33,6 +32,21 @@ async function setDataFromApi(json, typeData){
     }
     await setStorage(typeData + "Length", (cptData + json.length).toString())
     concatOldNewData(json, typeData)
+}
+
+async function updateDataFromApi(json, typeData){
+    let dataAll
+    try{
+        dataAll = await AsyncStorage.getItem(typeData + "All")
+    } catch{}
+    dataAll = JSON.parse(dataAll)
+    json.forEach(element => {
+        console.log(element);
+    });
+}
+
+function findIndexById(id, data){
+
 }
 
 async function initGlobals(){
@@ -63,8 +77,6 @@ async function concatOldNewData(json, typeData){
         allData = allData.concat(json)
         //allData = allData.concat("]")
         allData = JSON.stringify(allData)
-        console.log("json");
-        console.log(allData)
     }
     await setStorage(typeData + "All", allData)
 }
@@ -94,24 +106,49 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php' + '?timestamp=' + new Date());
-    const response = await fetch('http://10.39.20.77/api/api.php?timestamp=' + timestamp);
+    const response = await fetch('http://10.39.20.77/api/api.php?timestamp=1650613398'/*  + timestamp */);
     console.log('http://10.39.20.77/api/api.php?timestamp=' + timestamp)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
     const json = await response.json();
-    if(json.categories != undefined)
-        setDataFromApi(json.categories, "categorie")
-    if(json.themes != undefined)
-        setDataFromApi(json.themes, "theme")
-    if(json.exercices != undefined)
-        setDataFromApi(json.exercices, "exercice")
-    if(json.items != undefined)
-        setDataFromApi(json.items, "item")
-    if(json.mots != undefined)
-        concatOldNewData(json.mots, "mot")
-    try {
-        toString = JSON.stringify((json.presentation))
-        await setStorage('presentation', toString)
-    } catch(error){}
+
+    //add new content
+    const news = json.news;
+    if(news != undefined){
+        if(news.categories != undefined)
+            setDataFromApi(news.categories, "categorie")
+        if(news.themes != undefined)
+            setDataFromApi(news.themes, "theme")
+        if(news.exercices != undefined)
+            setDataFromApi(news.exercices, "exercice")
+        if(news.items != undefined)
+            setDataFromApi(news.items, "item")
+        if(news.mots != undefined)
+            concatOldNewData(news.mots, "mot")
+    }
+
+    //update content
+    const modified = json.modified;
+    if(modified != undefined){
+        if(modified.categories != undefined)
+            updateDataFromApi(modified.categories, "categorie")
+        if(modified.themes != undefined)
+            updateDataFromApi(modified.themes, "theme")
+        if(modified.exercices != undefined)
+            updateDataFromApi(modified.exercices, "exercice")
+        if(modified.items != undefined)
+            updateDataFromApi(modified.items, "item")
+        if(modified.mots != undefined)
+            //concatOldNewData(modified.mots, "mot")
+            ;
+    }
+
+    //update presentation
+    if(json.presentation != undefined){
+        try {
+            toString = JSON.stringify((json.presentation))
+            await setStorage('presentation', toString)
+        } catch(error){}
+    }
 };
 
 async function setMonth(){
@@ -148,7 +185,7 @@ global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    //AsyncStorage.clear()
+    AsyncStorage.clear()
     initialisation();
     return (
       <NavigationContainer>

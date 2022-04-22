@@ -44,7 +44,7 @@ include "class/Popup.php"?>
                 </div>
                 <div class='date'>  
                 <div class='button btModal'><img src='img/delete_mainColor.png'></div>
-                " .$popup->modalSuppr("mainColor", "Supprimer le commentaire ?", $commentaire['idCommentaire'], "Commentaire")."
+                " .$popup->modalSuppr("mainColor", "Supprimer le commentaire ?", $commentaire['id'], "Commentaire")."
                     </form>
                 </div>
             </div>";

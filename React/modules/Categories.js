@@ -75,7 +75,7 @@ async function navigation(params){
     }catch (error){}
     var categorie = JSON.parse(tmp);
     if(params.title === categorie.nomCategorie){
-      idCategorie = categorie.idCategorie;
+      idCategorie = categorie.id;
     };
     cpt++;
   };
@@ -93,7 +93,7 @@ async function navigation(params){
   var DATA = [];
   for(cpt = 0; cpt < matchThemes.length; cpt ++){
     DATA[DATA.length] = {
-      id: matchThemes[cpt].idTheme,
+      id: matchThemes[cpt].id,
       title: matchThemes[cpt].nomTheme,
       link: 'ExercisesPage'
     };

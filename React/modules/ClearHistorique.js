@@ -26,7 +26,7 @@ async function clear(){
 
 const ClearHistorique = (params) => {
     return (
-        <View style={styles.item} backgroundColor={mainColor} onStartShouldSetResponder={() => {clear(), console.log(params.navigation.goBack())}}>
+        <View style={styles.item} backgroundColor={mainColor} onStartShouldSetResponder={() => {clear()}}>
             <Text style={styles.title}>Réinitialiser l'historique</Text>
         </View>
     )

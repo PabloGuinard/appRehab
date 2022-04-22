@@ -31,7 +31,7 @@ async function sendComment(rate: string, comment: string, exerciceId: string) {
 const ModalRate = (params) => {
   isEnded = false
   global.comment = "Aucun commentaire"
-  isEndedFunction(params.idExercice)
+  isEndedFunction(params.id)
 
   function closeSendComment(rate, comment, exerciceId){
     closeModal(exerciceId)
@@ -69,7 +69,7 @@ const ModalRate = (params) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Pressable onPress={()=>closeModal(params.idExercice)}>
+            <Pressable onPress={()=>closeModal(params.id)}>
               <Image source={require('../assets/icones/cross.png')}
                      style={styles.cross}
               />
@@ -80,7 +80,7 @@ const ModalRate = (params) => {
             <CommentTextInput/>
             <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => closeSendComment(global.rate, global.comment, params.idExercice)}>
+                onPress={() => closeSendComment(global.rate, global.comment, params.id)}>
               <Text style={styles.textStyle}>Envoyer</Text>
             </Pressable>
           </View>
