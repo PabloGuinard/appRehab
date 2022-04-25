@@ -22,9 +22,9 @@ class Db {
         $result = $sth->fetch();
         if($result == false){
             return "Catégorie inexistante";
-        }
+        } 
         $categorieId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nomTheme= :lesson");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nomTheme= :lesson AND isDeleted != 1");
         $sth->execute(["lesson" => $nom]);
         $result = $sth->fetch();
         if($result != false){
@@ -43,7 +43,7 @@ class Db {
             return "Thème non existant";
         }
         $lessonId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nomExercice= :nom");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nomExercice= :nom AND isDeleted != 1");
         $sth->execute(["nom" => $nom]);
         $result = $sth->fetch();
         if($result != false){
@@ -62,7 +62,7 @@ class Db {
             return "Exercice non existant";
         }
         $itemId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE pathItem= :nom");
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE pathItem= :nom AND isDeleted != 1");
         $sth->execute(["nom" => $contenu]);
         $result = $sth->fetch();
         if($result != false){
@@ -74,7 +74,7 @@ class Db {
     }
 
     public function addMot(string $mot, string $def){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE mot= :mot");
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE mot= :mot AND isDeleted != 1");
         $sth->execute(["mot" => $mot]);
         $result = $sth->fetch();
         if($result != false){
