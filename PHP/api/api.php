@@ -79,8 +79,8 @@ if($result){
 
 $finalArray = Array();
 
-//delete doubletons in arrayModified
-if(isset($modifiedArray["categories"]) && isset($finalArray["categories"])){
+//delete duplicates in arrayModified
+if(isset($modifiedArray["categories"]) && isset($newsArray["categories"])){
     for($cpt = 0; $cpt < sizeof($newsArray["categories"]); $cpt++){
         $index = array_search($newsArray["categories"][$cpt], $modifiedArray["categories"]);
         if(getType($index) != "boolean"){
@@ -90,7 +90,7 @@ if(isset($modifiedArray["categories"]) && isset($finalArray["categories"])){
     if(sizeof($modifiedArray["categories"]) < 1)
         unset($modifiedArray["categories"]);
 }
-if(isset($modifiedArray["themes"]) && isset($finalArray["themes"])){
+if(isset($modifiedArray["themes"]) && isset($newsArray["themes"])){
     for($cpt = 0; $cpt < sizeof($newsArray["themes"]); $cpt++){
         $index = array_search($newsArray["themes"][$cpt], $modifiedArray["themes"]);
         if(getType($index) != "boolean"){
@@ -100,7 +100,7 @@ if(isset($modifiedArray["themes"]) && isset($finalArray["themes"])){
     if(sizeof($modifiedArray["themes"]) < 1)
         unset($modifiedArray["themes"]);
 }
-if(isset($modifiedArray["exercices"]) && isset($finalArray["exercices"])){
+if(isset($modifiedArray["exercices"]) && isset($newsArray["exercices"])){
     for($cpt = 0; $cpt < sizeof($newsArray["exercices"]); $cpt++){
         $index = array_search($newsArray["exercices"][$cpt], $modifiedArray["exercices"]);
         if(getType($index) != "boolean"){
@@ -110,7 +110,7 @@ if(isset($modifiedArray["exercices"]) && isset($finalArray["exercices"])){
     if(sizeof($modifiedArray["exercices"]) < 1)
         unset($modifiedArray["exercices"]);
 }
-if(isset($modifiedArray["items"]) && isset($finalArray["items"])){
+if(isset($modifiedArray["items"]) && isset($newsArray["items"])){
     for($cpt = 0; $cpt < sizeof($newsArray["items"]); $cpt++){
         $index = array_search($newsArray["items"][$cpt], $modifiedArray["items"]);
         if(getType($index) != "boolean"){
@@ -120,7 +120,7 @@ if(isset($modifiedArray["items"]) && isset($finalArray["items"])){
     if(sizeof($modifiedArray["items"]) < 1)
         unset($modifiedArray["items"]);
 }
-if(isset($modifiedArray["mots"]) && isset($finalArray["mots"])){
+if(isset($modifiedArray["mots"]) && isset($newsArray["mots"])){
     for($cpt = 0; $cpt < sizeof($newsArray["mots"]); $cpt++){
         $index = array_search($newsArray["mots"][$cpt], $modifiedArray["mots"]);
         if(getType($index) != "boolean"){

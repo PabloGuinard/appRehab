@@ -44,8 +44,6 @@ async function updateDataFromApi(json, typeData, isMot){
     json.forEach(element => {
         let index = oldData.findIndex(checkData, element.id)
         oldData[index] = element
-        console.log("ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé");
-        console.log(oldData[index]);
         if(!isMot)
             setStorage(typeData + index, JSON.stringify(element))
     });
@@ -63,12 +61,14 @@ async function deleteDataFromApi(json, typeData, isMot){
 
     json.forEach(element => {
         let index = oldData.findIndex(checkData, element.id)
-        //delete in normal
-        if(!isMot){
-            let elementId = oldData[index].id
-            deleteIndexFromStorage(typeData, elementId)
+        if(index !== -1){
+            //delete in normal
+            if(!isMot){
+                let elementId = oldData[index].id
+                deleteIndexFromStorage(typeData, elementId)
+            }
+            oldData.splice(index, 1)
         }
-        oldData.splice(index, 1)
     })
     oldData = JSON.stringify(oldData)
     await setStorage(typeData + "All", oldData)
@@ -265,7 +265,7 @@ async function initialisation(){
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
     
-    logCurrentStorage()
+    //logCurrentStorage()
 }
 
 const Stack = createStackNavigator()
@@ -273,7 +273,7 @@ global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    //AsyncStorage.clear()
+    AsyncStorage.clear()
     initialisation()
     return (
       <NavigationContainer>
