@@ -34,7 +34,7 @@ async function setDataFromApi(json, typeData){
     concatOldNewData(json, typeData)
 }
 
-async function updateDataFromApi(json, typeData){
+async function updateDataFromApi(json, typeData, isMot){
     let oldData
     try{
         oldData = await AsyncStorage.getItem(typeData + "All")
@@ -42,10 +42,10 @@ async function updateDataFromApi(json, typeData){
     oldData = JSON.parse(oldData)
     //set new data in "All" & normal
     json.forEach(element => {
-        console.log(element);
         let index = oldData.findIndex(checkData, element.id)
         oldData[index] = element
-        setStorage(typeData + index, JSON.stringify(element))
+        if(!isMot)
+            setStorage(typeData + index, JSON.stringify(element))
     });
     setStorage(typeData + "All", JSON.stringify(oldData))
 }
@@ -53,6 +53,19 @@ async function updateDataFromApi(json, typeData){
 function checkData(element){
     return this == element.id
 }
+
+export function logCurrentStorage() {
+    AsyncStorage.getAllKeys().then((keyArray) => {
+      AsyncStorage.multiGet(keyArray).then((keyValArray) => {
+        let myStorage: any = {};
+        for (let keyVal of keyValArray) {
+          myStorage[keyVal[0]] = keyVal[1]
+        }
+  
+        console.log('CURRENT STORAGE: ', myStorage);
+      })
+    });
+  }
 
 async function initGlobals(){
     global.amountExercicesStartedMonth = 0
@@ -111,7 +124,7 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php' + '?timestamp=' + new Date());
-    const url = 'http://10.39.20.77/api/api.php?timestamp=1650639178'// + timestamp
+    const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
     const response = await fetch(url)
     console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
@@ -137,15 +150,15 @@ const getAllDataFromApi = async () => {
         const modified = json.modified;
         if(modified != undefined){
             if(modified.categories != undefined)
-                updateDataFromApi(modified.categories, "categorie")
+                updateDataFromApi(modified.categories, "categorie", false)
             if(modified.themes != undefined)
-                updateDataFromApi(modified.themes, "theme")
+                updateDataFromApi(modified.themes, "theme", false)
             if(modified.exercices != undefined)
-                updateDataFromApi(modified.exercices, "exercice")
+                updateDataFromApi(modified.exercices, "exercice", false)
             if(modified.items != undefined)
-                updateDataFromApi(modified.items, "item")
+                updateDataFromApi(modified.items, "item", false)
             if(modified.mots != undefined)
-                //concatOldNewData(modified.mots, "mot")
+                updateDataFromApi(modified.mots, "mot", true)
                 ;
         }
     
@@ -196,7 +209,8 @@ global.mainColor = '#88bd28'
 export default class App extends React.Component {
   render() {
     //AsyncStorage.clear()
-    initialisation();
+    initialisation()
+    logCurrentStorage()
     return (
       <NavigationContainer>
         <Stack.Navigator>
