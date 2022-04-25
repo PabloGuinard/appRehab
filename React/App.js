@@ -61,21 +61,41 @@ async function deleteDataFromApi(json, typeData, isMot){
 
     json.forEach(element => {
         let index = oldData.findIndex(checkData, element.id)
+        //delete in normal
+        if(!isMot){
+            let elementId = oldData[index].id
+            deleteIndexFromStorage(typeData, elementId)
+        }
         oldData.splice(index, 1)
+        if(!isMot)
+            deleteIndexFromStorage(typeData, )
     })
     oldData = JSON.stringify(oldData)
     await setStorage(typeData + "All", oldData)
-    console.log(oldData)
 }
 
-async function deleteIndexFromStorage(typeData, index){
+async function deleteIndexFromStorage(typeData, elementId){
     let dataLength = 0
+    let element
     try{
         dataLength = await AsyncStorage.getItem(typeData + "Length")
     } catch{}
-    for (index; index < dataLength; index++) {
-        const element = dataLength;
-        
+    for (let cpt = 0; cpt < dataLength; cpt++) {
+        try{
+            element = await AsyncStorage.getItem(typeData + cpt)
+            element = JSON.parse(element)
+            if(element.id === elementId){
+                let tmp
+                for(cpt; cpt < dataLength - 1; cpt++){
+                    try{
+                        tmp = await AsyncStorage.getItem(typeData + (cpt + 1))
+                    }catch{}
+                    await setStorage(typeData + cpt, tmp)
+                }
+                AsyncStorage.removeItem(typeData + cpt)
+                return
+            }
+        }catch{}
     }
 }
 
@@ -153,7 +173,7 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php' + '?timestamp=' + new Date());
-    const url = 'http://10.39.20.77/api/api.php?timestamp=1650879756'// + timestamp
+    const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
     const response = await fetch(url)
     console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
