@@ -44,6 +44,8 @@ async function updateDataFromApi(json, typeData, isMot){
     json.forEach(element => {
         let index = oldData.findIndex(checkData, element.id)
         oldData[index] = element
+        console.log("ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé");
+        console.log(oldData[index]);
         if(!isMot)
             setStorage(typeData + index, JSON.stringify(element))
     });
@@ -67,8 +69,6 @@ async function deleteDataFromApi(json, typeData, isMot){
             deleteIndexFromStorage(typeData, elementId)
         }
         oldData.splice(index, 1)
-        if(!isMot)
-            deleteIndexFromStorage(typeData, )
     })
     oldData = JSON.stringify(oldData)
     await setStorage(typeData + "All", oldData)
@@ -184,45 +184,45 @@ const getAllDataFromApi = async () => {
         const news = json.news
         if(news != undefined){
             if(news.categories != undefined)
-                setDataFromApi(news.categories, "categorie")
+                await setDataFromApi(news.categories, "categorie")
             if(news.themes != undefined)
-                setDataFromApi(news.themes, "theme")
+                await setDataFromApi(news.themes, "theme")
             if(news.exercices != undefined)
-                setDataFromApi(news.exercices, "exercice")
+                await setDataFromApi(news.exercices, "exercice")
             if(news.items != undefined)
-                setDataFromApi(news.items, "item")
+                await setDataFromApi(news.items, "item")
             if(news.mots != undefined)
-                concatOldNewData(news.mots, "mot")
+                await concatOldNewData(news.mots, "mot")
         }
     
         //update content
         const modified = json.modified
         if(modified != undefined){
             if(modified.categories != undefined)
-                updateDataFromApi(modified.categories, "categorie", false)
+            await updateDataFromApi(modified.categories, "categorie", false)
             if(modified.themes != undefined)
-                updateDataFromApi(modified.themes, "theme", false)
+            await updateDataFromApi(modified.themes, "theme", false)
             if(modified.exercices != undefined)
                 updateDataFromApi(modified.exercices, "exercice", false)
             if(modified.items != undefined)
-                updateDataFromApi(modified.items, "item", false)
+            await updateDataFromApi(modified.items, "item", false)
             if(modified.mots != undefined)
-                updateDataFromApi(modified.mots, "mot", true)
+            await updateDataFromApi(modified.mots, "mot", true)
         }
 
         //delete content
         const deleted = json.deleted
         if(deleted != undefined){
             if(deleted.categories != undefined)
-                deleteDataFromApi(deleted.categories, "categorie", false)
+                await deleteDataFromApi(deleted.categories, "categorie", false)
             if(deleted.themes != undefined)
-                deleteDataFromApi(deleted.themes, "theme", false)
+                await deleteDataFromApi(deleted.themes, "theme", false)
             if(deleted.exercices != undefined)
-                deleteDataFromApi(deleted.exercices, "exercice", false)
+                await deleteDataFromApi(deleted.exercices, "exercice", false)
             if(deleted.items != undefined)
-                deleteDataFromApi(deleted.items, "item", false)
+                await deleteDataFromApi(deleted.items, "item", false)
             if(deleted.mots != undefined)
-                deleteDataFromApi(deleted.mots, "mot", true)
+                await deleteDataFromApi(deleted.mots, "mot", true)
         }
     
         //update presentation
@@ -264,6 +264,8 @@ async function initialisation(){
     await initGlobals()
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
+    
+    logCurrentStorage()
 }
 
 const Stack = createStackNavigator()
@@ -273,7 +275,6 @@ export default class App extends React.Component {
   render() {
     //AsyncStorage.clear()
     initialisation()
-    //logCurrentStorage()
     return (
       <NavigationContainer>
         <Stack.Navigator>
