@@ -50,6 +50,35 @@ async function updateDataFromApi(json, typeData, isMot){
     setStorage(typeData + "All", JSON.stringify(oldData))
 }
 
+async function deleteDataFromApi(json, typeData, isMot){
+    let oldData
+    let oldDataLength = 0
+    try{
+        oldData = await AsyncStorage.getItem(typeData + "All")
+        oldDataLength = await AsyncStorage.getItem(typeData + "Length")
+    }catch{}
+    oldData = JSON.parse(oldData)
+
+    json.forEach(element => {
+        let index = oldData.findIndex(checkData, element.id)
+        oldData.splice(index, 1)
+    })
+    oldData = JSON.stringify(oldData)
+    await setStorage(typeData + "All", oldData)
+    console.log(oldData)
+}
+
+async function deleteIndexFromStorage(typeData, index){
+    let dataLength = 0
+    try{
+        dataLength = await AsyncStorage.getItem(typeData + "Length")
+    } catch{}
+    for (index; index < dataLength; index++) {
+        const element = dataLength;
+        
+    }
+}
+
 function checkData(element){
     return this == element.id
 }
@@ -124,7 +153,7 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php' + '?timestamp=' + new Date());
-    const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
+    const url = 'http://10.39.20.77/api/api.php?timestamp=1650879756'// + timestamp
     const response = await fetch(url)
     console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
@@ -132,7 +161,7 @@ const getAllDataFromApi = async () => {
 
     if(json.nothing == undefined){
         //add new content
-        const news = json.news;
+        const news = json.news
         if(news != undefined){
             if(news.categories != undefined)
                 setDataFromApi(news.categories, "categorie")
@@ -147,7 +176,7 @@ const getAllDataFromApi = async () => {
         }
     
         //update content
-        const modified = json.modified;
+        const modified = json.modified
         if(modified != undefined){
             if(modified.categories != undefined)
                 updateDataFromApi(modified.categories, "categorie", false)
@@ -159,7 +188,21 @@ const getAllDataFromApi = async () => {
                 updateDataFromApi(modified.items, "item", false)
             if(modified.mots != undefined)
                 updateDataFromApi(modified.mots, "mot", true)
-                ;
+        }
+
+        //delete content
+        const deleted = json.deleted
+        if(deleted != undefined){
+            if(deleted.categories != undefined)
+                deleteDataFromApi(deleted.categories, "categorie", false)
+            if(deleted.themes != undefined)
+                deleteDataFromApi(deleted.themes, "theme", false)
+            if(deleted.exercices != undefined)
+                deleteDataFromApi(deleted.exercices, "exercice", false)
+            if(deleted.items != undefined)
+                deleteDataFromApi(deleted.items, "item", false)
+            if(deleted.mots != undefined)
+                deleteDataFromApi(deleted.mots, "mot", true)
         }
     
         //update presentation
@@ -210,7 +253,7 @@ export default class App extends React.Component {
   render() {
     //AsyncStorage.clear()
     initialisation()
-    logCurrentStorage()
+    //logCurrentStorage()
     return (
       <NavigationContainer>
         <Stack.Navigator>
