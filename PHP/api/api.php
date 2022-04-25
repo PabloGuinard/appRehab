@@ -7,6 +7,7 @@ $timestamp = $_GET["timestamp"];
 
 $newsArray = Array();
 $modifiedArray = Array();
+$deletedArray = Array();
 
 //add new fields in result
 $result = $db->getAllNewCategories(date('Y-m-d H-i-s', $timestamp));
@@ -31,26 +32,50 @@ if($result){
 }
 
 //add modified fields in result
-$result = $db->getAllCategoriesReadyRecent(date('Y-m-d H-i-s', $timestamp));
+$result = $db->getAllModifiedCategories(date('Y-m-d H-i-s', $timestamp));
 if($result){
     $modifiedArray["categories"] = $db->setDataInArray($result, ["id", "nomCategorie"]);
 } 
-$result = $db->getAllThemesReadyRecent(date('Y-m-d H-i-s', $timestamp));
+$result = $db->getAllModifiedThemes(date('Y-m-d H-i-s', $timestamp));
 if($result){
     $modifiedArray["themes"] = $db->setDataInArray($result, ["id", "nomTheme", "categorieId"]);
 }
-$result = $db->getAllExercicesReadyRecent(date('Y-m-d H-i-s', $timestamp));
+$result = $db->getAllModifiedExercices(date('Y-m-d H-i-s', $timestamp));
 if($result){
     $modifiedArray["exercices"] = $db->setDataInArray($result, ["id", "nomExercice", "themeId"]);
 }
-$result = $db->getAllItemsReadyRecent(date('Y-m-d H-i-s', $timestamp));
+$result = $db->getAllModifiedItems(date('Y-m-d H-i-s', $timestamp));
 if($result){$arrayItems = Array();
     $modifiedArray["items"] = $db->setDataInArray($result, ["id", "pathItem", "typeItem", "exerciceId"]);
 }
-$result = $db->getAllMotsReadyRecent(date('Y-m-d H-i-s', $timestamp));
+$result = $db->getAllModifiedMots(date('Y-m-d H-i-s', $timestamp));
 if($result){
     $modifiedArray["mots"] = $db->setDataInArray($result, ["id", "mot", "definition"]);
 }
+
+//add deleted fields in result
+$result = $db->getAllDeletedCategories(date('Y-m-d H-i-s', $timestamp));
+if($result){
+    $deletedArray["categories"] = $db->setDataInArray($result, ["id", "nomCategorie"]);
+} 
+$result = $db->getAllDeletedThemes(date('Y-m-d H-i-s', $timestamp));
+if($result){
+    $deletedArray["themes"] = $db->setDataInArray($result, ["id", "nomTheme", "categorieId"]);
+}
+$result = $db->getAllDeletedExercices(date('Y-m-d H-i-s', $timestamp));
+if($result){
+    $deletedArray["exercices"] = $db->setDataInArray($result, ["id", "nomExercice", "themeId"]);
+}
+$result = $db->getAllDeletedItems(date('Y-m-d H-i-s', $timestamp));
+if($result){$arrayItems = Array();
+    $deletedArray["items"] = $db->setDataInArray($result, ["id", "pathItem", "typeItem", "exerciceId"]);
+}
+$result = $db->getAllDeletedMots(date('Y-m-d H-i-s', $timestamp));
+if($result){
+    $deletedArray["mots"] = $db->setDataInArray($result, ["id", "mot", "definition"]);
+}
+
+
 
 $finalArray = Array();
 
@@ -106,11 +131,13 @@ if(isset($modifiedArray["mots"]) && isset($finalArray["mots"])){
         unset($modifiedArray["mots"]);
 }
 
-//add new and modified in result if not null
+//add new, modified and deleted in result if not null
 if(sizeof($newsArray) > 0)
     $finalArray["news"] = $newsArray;
 if(sizeof($modifiedArray) > 0)
     $finalArray["modified"] = $modifiedArray;
+if(sizeof($deletedArray) > 0)
+    $finalArray["deleted"] = $deletedArray;
 
 //add presentation in result
 $result = $db->getPresentationReadyRecent(date('Y-m-d H-i-s', $timestamp));

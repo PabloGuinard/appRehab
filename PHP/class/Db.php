@@ -92,8 +92,9 @@ class Db {
         if($result == false){
             return "Mot non existant";
         }
-        $sth = $this->pdo->prepare("DELETE FROM Mots WHERE mot= :mot");
-        $sth->execute(["mot" => $nom]);
+        $timestamp = date('Y-m-d H-i-s');
+        $sth = $this->pdo->prepare("UPDATE Mots SET isReady = -1, modifiedAt= :timestamp WHERE mot= :mot");
+        $sth->execute(["mot" => $nom, "timestamp" => $timestamp]);
         return "Mot supprimé";
     }
 
@@ -104,11 +105,12 @@ class Db {
         if ($result == false) {
             return "Exercice non existant";
         }
+        $timestamp = date('Y-m-d H-i-s');
         $itemId = $result["id"];
-        $sth = $this->pdo->prepare("DELETE FROM Items WHERE ExerciceId= :itemId");
+        $sth = $this->pdo->prepare("UPDATE Items SET isReady = -1 WHERE ExerciceId= :itemId");
         $sth->execute(["itemId" => $itemId]);
-        $sth = $this->pdo->prepare("DELETE FROM Exercices WHERE id= :itemId");
-        $sth->execute(["itemId" => $itemId]);
+        $sth = $this->pdo->prepare("UPDATE Exercices SET isReady = -1, modifiedAt= :timestamp WHERE id= :itemId");
+        $sth->execute(["itemId" => $itemId, "timestamp" => $timestamp]);
         return "Exercice supprimé";
     }
 
@@ -119,8 +121,9 @@ class Db {
         if($result == false){
             return "Item non existant";
         }
-        $sth = $this->pdo->prepare("DELETE FROM Items WHERE id= :id");
-        $sth->execute(["id" => $id]);
+        $timestamp = date('Y-m-d H-i-s');
+        $sth = $this->pdo->prepare("UPDATE Items SET isReady = -1, modifiedAt= :timestamp WHERE id= :id");
+        $sth->execute(["id" => $id, "timestamp" => $timestamp]);
         return "Item supprimé";
     }
 
@@ -138,8 +141,9 @@ class Db {
         foreach ($result as $value){
             $this->deleteExercice($value);
         }
-        $sth = $this->pdo->prepare("DELETE FROM Themes WHERE id= :lessonId");
-        $sth->execute(["lessonId" => $lessonId]);
+        $timestamp = date('Y-m-d H-i-s');
+        $sth = $this->pdo->prepare("UPDATE Themes SET isReady = -1, modifiedAt= :timestamp WHERE id= :lessonId");
+        $sth->execute(["lessonId" => $lessonId, "timestamp" => $timestamp]);
         return "Thème supprimé";
     }
 
@@ -157,34 +161,35 @@ class Db {
         foreach ($result as $value){
             $this->deleteTheme($value);
         }
-        $sth = $this->pdo->prepare("DELETE FROM Categories WHERE id= :categoryId");
-        $sth->execute(["categoryId" => $categoryId]);
+        $timestamp = date('Y-m-d H-i-s');
+        $sth = $this->pdo->prepare("UPDATE Categories SET isReady = -1, modifiedAt= :timestamp WHERE id= :categoryId");
+        $sth->execute(["categoryId" => $categoryId, "timestamp" => $timestamp]);
         return "Catégorie supprimée";
     }
 
     public function getCategories(){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories");
+        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady != -1");
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
         return $result;
     }
 
     public function getThemes(){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady != -1");
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
         return $result;
     }
 
     public function getExercices(){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady != -1");
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
         return $result;
     }
 
     public function getMots(){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots");
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady != -1");
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
         return $result;
@@ -209,25 +214,25 @@ class Db {
     }
 
     public function getThemesFromCategorie(string $idCategory){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE categorieId= :idCategory");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE categorieId= :idCategory AND isReady != -1");
         $sth->execute(["idCategory" => $idCategory]);
         return $sth->fetchAll(PDO::FETCH_COLUMN, 1);
     }
 
     public function getExerciceFromTheme(string $idLesson){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE themeId= :idLesson");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE themeId= :idLesson AND isReady != -1");
         $sth->execute(["idLesson" => $idLesson]);
         return $sth->fetchAll(PDO::FETCH_COLUMN, 1);
     }
 
     public function getItemsFromExercice(string $idExercice){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE exerciceId= :id");
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE exerciceId= :id AND isReady != -1");
         $sth->execute(["id" => $idExercice]);
         return $sth->fetchAll();
     }
 
     public function getAllCommentaires(){
-        $sth = $this->pdo->prepare("SELECT * FROM Commentaires");
+        $sth = $this->pdo->prepare("SELECT * FROM Commentaires WHERE isReady != -1");
         $sth->execute();
         return $sth->fetchAll();
     }
@@ -251,7 +256,7 @@ class Db {
     }
 
     public function getAllMots(){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots");
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady != -1");
         $sth->execute();
         return $sth->fetchAll();
     }
@@ -286,32 +291,62 @@ class Db {
         return $sth->fetchAll();
     }
 
-    public function getAllMotsReadyRecent($timestamp){
+    public function getAllModifiedMots($timestamp){
         $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    public function getAllCategoriesReadyRecent($timestamp){
+    public function getAllModifiedCategories($timestamp){
         $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     } 
 
-    public function getAllThemesReadyRecent($timestamp){
+    public function getAllModifiedThemes($timestamp){
         $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    public function getAllExercicesReadyRecent($timestamp){
+    public function getAllModifiedExercices($timestamp){
         $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    public function getAllItemsReadyRecent($timestamp){
+    public function getAllModifiedItems($timestamp){
         $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
+        return $sth->fetchAll();
+    }
+
+    public function getAllDeletedMots($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=-1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
+        return $sth->fetchAll();
+    }
+
+    public function getAllDeletedCategories($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady=-1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
+        return $sth->fetchAll();
+    }
+
+    public function getAllDeletedThemes($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=-1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
+        return $sth->fetchAll();
+    }
+
+    public function getAllDeletedExercices($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=-1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
+        return $sth->fetchAll();
+    }
+
+    public function getAllDeletedItems($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=-1 AND TIMESTAMP(:myTime) < modifiedAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
@@ -372,7 +407,7 @@ class Db {
     }
 
     public function supprComm(string $id){
-        $sth = $this->pdo->prepare("DELETE FROM Commentaires WHERE id= :id");
+        $sth = $this->pdo->prepare("UPDATE Commentaires SET isReady = -1 WHERE id= :id");
         $sth->execute(["id" => $id]);
         return "Commentaire supprimé";
     }
@@ -384,17 +419,17 @@ class Db {
     }
 
     public function setIsReadyTrue(){
-        $sth = $this->pdo->prepare("UPDATE Categories SET isReady= 1");
+        $sth = $this->pdo->prepare("UPDATE Categories SET isReady= 1 WHERE isReady = 0");
         $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Themes SET isReady= 1");
+        $sth = $this->pdo->prepare("UPDATE Themes SET isReady= 1 WHERE isReady = 0");
         $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Exercices SET isReady= 1");
+        $sth = $this->pdo->prepare("UPDATE Exercices SET isReady= 1 WHERE isReady = 0");
         $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Items SET isReady= 1");
+        $sth = $this->pdo->prepare("UPDATE Items SET isReady= 1 WHERE isReady = 0");
         $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Mots SET isReady= 1");
+        $sth = $this->pdo->prepare("UPDATE Mots SET isReady= 1 WHERE isReady = 0");
         $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1");
+        $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1 WHERE isReady = 0");
         $sth->execute();
         return "App mise à jour";
     }
