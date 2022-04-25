@@ -65,21 +65,19 @@ async function deleteDataFromApi(json, typeData, isMot){
             //delete in normal
             if(!isMot){
                 let elementId = oldData[index].id
-                deleteIndexFromStorage(typeData, elementId)
+                deleteIndexFromStorage(typeData, elementId, oldDataLength)
             }
             oldData.splice(index, 1)
+            oldDataLength--
         }
     })
     oldData = JSON.stringify(oldData)
     await setStorage(typeData + "All", oldData)
+    await setStorage(typeData + "Length", oldDataLength.toString())
 }
 
-async function deleteIndexFromStorage(typeData, elementId){
-    let dataLength = 0
+async function deleteIndexFromStorage(typeData, elementId, dataLength){
     let element
-    try{
-        dataLength = await AsyncStorage.getItem(typeData + "Length")
-    } catch{}
     for (let cpt = 0; cpt < dataLength; cpt++) {
         try{
             element = await AsyncStorage.getItem(typeData + cpt)
@@ -193,6 +191,7 @@ const getAllDataFromApi = async () => {
                 await setDataFromApi(news.items, "item")
             if(news.mots != undefined)
                 await concatOldNewData(news.mots, "mot")
+                await setStorage("motLength", news.mots.length.toString())
         }
     
         //update content
@@ -265,7 +264,7 @@ async function initialisation(){
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
     
-    //logCurrentStorage()
+    logCurrentStorage()
 }
 
 const Stack = createStackNavigator()
