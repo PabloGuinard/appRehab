@@ -5,6 +5,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export function forceUpdate(){
 }
 
+function checkTitle(element){
+    return this == element.nom
+}
+
 async function setStorage(key: string, value: string){
     if(typeof value === Object){
         value = JSON.stringify(value)
@@ -19,14 +23,12 @@ async function navigation(params) {
     let DATA = []
     if (params.title === 'Lexique') {
         let tmp
-        try {
-            tmp = await AsyncStorage.getItem('motAll')
-        }catch (error){}
-        const tabMots = await JSON.parse(tmp)
-        for (let cpt = 0; cpt < tabMots.length; cpt++) {
+        tmp = await AsyncStorage.getItem('motAll')
+        const motsArray = await JSON.parse(tmp)
+        for (let cpt = 0; cpt < motsArray.length; cpt++) {
             DATA[DATA.length] = {
-                id: tabMots[cpt].id,
-                title: tabMots[cpt].mot,
+                id: motsArray[cpt].id,
+                title: motsArray[cpt].nom,
                 link: 'LessonPage',
             }
         }
@@ -59,13 +61,20 @@ async function navigation(params) {
     else if (params.link === 'ExercisesPage') {
         let cpt = 0;
         let idTheme = -1;
+        //find theme
+        tmp = await AsyncStorage.getItem('themeAll')
+        let themesArray = JSON.parse(tmp)
+        themeId = themesArray.findIndex(checkTitle, params.title)
+
+
+
         while (idTheme === -1) {
             let tmp
             try {
                 tmp = await AsyncStorage.getItem('theme' + cpt)
             }catch (error){}
             let theme = JSON.parse(tmp)
-            if (theme.nomTheme === params.title) {
+            if (theme.nom === params.title) {
                 idTheme = theme.id
             }
             cpt++
@@ -77,14 +86,14 @@ async function navigation(params) {
         let allExercices = JSON.parse(tmp)
         let matchExercices = []
         for (cpt = 0; cpt < allExercices.length; cpt++) {
-            if (allExercices[cpt].themeId === idTheme) {
+            if (allExercices[cpt].parentId === idTheme) {
                 matchExercices[matchExercices.length] = allExercices[cpt];
             }
         }
         for (cpt = 0; cpt < matchExercices.length; cpt++) {
             DATA[DATA.length] = {
                 id: matchExercices[cpt].id,
-                title: matchExercices[cpt].nomExercice,
+                title: matchExercices[cpt].nom,
                 link: 'LessonPage'
             }
         }
@@ -97,7 +106,7 @@ async function navigation(params) {
             }catch (error){}
             let allMots = JSON.parse(tmp)
             for (let cpt = 0; cpt < allMots.length; cpt++) {
-                if (allMots[cpt].mot === params.title) {
+                if (allMots[cpt].nom === params.title) {
                     let content = [];
                     content[0] = {
                         type: 'Texte',
@@ -106,7 +115,7 @@ async function navigation(params) {
                     }
                     DATA[0] = {
                         id: allMots[cpt].id,
-                        title: allMots[cpt].mot,
+                        title: allMots[cpt].nom,
                         content: content
                     };
                 }
@@ -155,7 +164,7 @@ async function navigation(params) {
                     tmp = await AsyncStorage.getItem('exercice' + cpt)
                 }catch (error){}
                 matchExercice = JSON.parse(tmp)
-                if (matchExercice.nomExercice === params.title) {
+                if (matchExercice.nom === params.title) {
                     idExercice = matchExercice
                 }
                 cpt++
@@ -166,10 +175,10 @@ async function navigation(params) {
             let allItems = JSON.parse(tmp)
             let content = [];
             for (cpt = 0; cpt < allItems.length; cpt++) {
-                if (allItems[cpt].exerciceId === matchExercice.id) {
+                if (allItems[cpt].parentId === matchExercice.id) {
                     content[content.length] = {
                         type: allItems[cpt].typeItem,
-                        data: allItems[cpt].pathItem,
+                        data: allItems[cpt].nom,
                         id: allItems[cpt].id
                     }
                 }
@@ -181,7 +190,7 @@ async function navigation(params) {
             }
             DATA[0] = {
                 id: matchExercice.id,
-                title: matchExercice.nomExercice,
+                title: matchExercice.nom,
                 content: content
             }
         }

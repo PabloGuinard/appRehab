@@ -86,7 +86,7 @@ async function navigation(params){
   var allThemes = JSON.parse(tmp)
   var matchThemes = [];
   for (cpt = 0; cpt < allThemes.length; cpt++){
-    if(allThemes[cpt].categorieId === idCategorie){
+    if(allThemes[cpt].parentId === idCategorie){
       matchThemes[matchThemes.length] = allThemes[cpt];
     };
   };

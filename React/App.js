@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from './stacks/Home';
 import Profile from './stacks/Profile';
 import Challenge from './stacks/Challenge';
-import { log } from 'react-native-reanimated';
 
 async function setStorage(key: string, value: string){
     if(typeof value === Object){
@@ -58,7 +57,6 @@ async function deleteDataFromApi(json, typeData, isMot){
         oldDataLength = await AsyncStorage.getItem(typeData + "Length")
     }catch{}
     oldData = JSON.parse(oldData)
-    console.log("recup : " + oldDataLength);
     json.forEach(element => {
         let index = oldData.findIndex(checkData, element.id)
         if(index !== -1){
@@ -66,13 +64,11 @@ async function deleteDataFromApi(json, typeData, isMot){
             if(!isMot){
                 let elementId = oldData[index].id
                 deleteIndexFromStorage(typeData, elementId, oldDataLength)
-                console.log("index : " + oldDataLength);
             }
             oldData.splice(index, 1)
             oldDataLength--
         }
     })
-    console.log("end : " + oldDataLength);
     oldData = JSON.stringify(oldData)
     await setStorage(typeData + "All", oldData)
     await setStorage(typeData + "Length", oldDataLength.toString())
@@ -276,7 +272,7 @@ async function initialisation(){
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
     
-    // logCurrentStorage()
+    logCurrentStorage()
     await logDataType("exercice")
 }
 
@@ -285,7 +281,7 @@ global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    //AsyncStorage.clear()
+    AsyncStorage.clear()
     initialisation()
     return (
       <NavigationContainer>
