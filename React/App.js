@@ -101,7 +101,7 @@ function checkData(element){
     return this == element.id
 }
 
-export function logCurrentStorage() {
+function logCurrentStorage() {
     AsyncStorage.getAllKeys().then((keyArray) => {
       AsyncStorage.multiGet(keyArray).then((keyValArray) => {
         let myStorage: any = {};
