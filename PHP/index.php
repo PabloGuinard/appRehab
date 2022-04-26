@@ -58,34 +58,32 @@ $popup = new Popup()?>
         $themes = $db->getThemesFromCategorie($idCategory);
         if(sizeof($themes) > 0) {
             foreach ($themes as $theme):
-                $idTheme = $db->getThemeId($theme);
-                $exercices = $db->getExerciceFromTheme($idTheme);
                 echo '
                             <div class="hidden themeNode">
                                 <div class="themeDataBase brown">
-                                    <div class="titleTheme">Thème ' . $theme . '</div>
+                                    <div class="titleTheme">Thème ' . $theme["nomTheme"] . '</div>
                                     <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_theme.png" alt="Suppr"></div>
-                ' .$popup->modalUpdate('brown', $theme, $idTheme, 'modifTheme.php', 'Modifier le thème '.$theme.' ?'). '
+                ' .$popup->modalUpdate('brown', $theme["nomTheme"], $theme["id"], 'modifTheme.php', 'Modifier le thème '.$theme["nomTheme"].' ?'). '
                                         <div class="button btModal"><img src="img/delete_theme.png" alt="Modifier"></div>
-                ' .$popup->modalSuppr('brown', 'Supprimer le thème '.$theme.' ?', 'Theme', $idTheme).'
+                ' .$popup->modalSuppr('brown', 'Supprimer le thème '.$theme["nomTheme"].' ?', 'Theme', $theme["id"]).'
                                     </div>
                             </div>';
+                $exercices = $db->getExerciceFromTheme($theme["id"]);
                 if(sizeof($exercices) > 0){
                     foreach ($exercices as $exercice):
-                        $idExercice = $db->getExerciceId($exercice);
                         echo '
                                 <div class="hidden exerciceNode">
                                     <div class="exerciceDataBase blue">
-                                        <div class="titleExercice">Exercice ' . $exercice . '</div>
+                                        <div class="titleExercice">Exercice ' . $exercice["nomExercice"] . '</div>
                                         <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
-                        ' .$popup->modalUpdate('blue', $exercice, $idExercice, 'modifExercice.php', 'Modifier l\'exercice '.$exercice.' ?'). '
+                        ' .$popup->modalUpdate('blue', $exercice["nomExercice"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice '.$exercice["nomExercice"].' ?'). '
                                         <div class="button btModal"><img src="img/delete_exercice.png" alt="Suppr"></div>
-                        ' .$popup->modalSuppr('blue', 'Supprimer l\'exercice '.$exercice.' ?', 'Exercice', $idExercice).'
+                        ' .$popup->modalSuppr('blue', 'Supprimer l\'exercice '.$exercice["nomExercice"].' ?', 'Exercice', $exercice["id"]).'
                                         </div>
                                     </div>';
-                        $items = $db->getItemsFromExercice($idExercice);
+                        $items = $db->getItemsFromExercice($exercice["id"]);
                         if(sizeof($items) > 0){
                             foreach ($items as $item):
                                 echo '
@@ -103,7 +101,7 @@ $popup = new Popup()?>
                         }
                             echo '<div class="hidden itemNode noBorder"><div class="buttonsForm">
                                         <div class="button btModal"><img src="img/add_item.png" alt="Ajouter"></div>
-                                        ' .$popup->modalAddItem($exercice).'
+                                        ' .$popup->modalAddItem($exercice["nomExercice"]).'
                                         </div>
                                     </div>
                                 </div>';
@@ -114,7 +112,7 @@ $popup = new Popup()?>
                         <div class="exerciceDataBase noBorder">
                             <div class="buttonsForm">
                                 <div class="button btModal"><img src="img/add_exercice.png" alt="Ajouter"></div>
-                                ' .$popup->modalAdd('blue', 'Ajouter un exercice dans le thème ' .$theme, 'Exercice', 'Theme', $theme).'
+                                ' .$popup->modalAdd('blue', 'Ajouter un exercice dans le thème ' .$theme["nomTheme"], 'Exercice', 'Theme', $theme["nomTheme"]).'
                             </div>
                         </div>
                     </div>

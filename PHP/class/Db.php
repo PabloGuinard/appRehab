@@ -190,13 +190,13 @@ class Db {
     public function getThemesFromCategorie(string $idCategory){
         $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE categorieId= :idCategory AND isDeleted != 1");
         $sth->execute(["idCategory" => $idCategory]);
-        return $sth->fetchAll(PDO::FETCH_COLUMN, 1);
+        return $sth->fetchAll();
     }
 
     public function getExerciceFromTheme(string $idLesson){
         $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE themeId= :idLesson AND isDeleted != 1");
         $sth->execute(["idLesson" => $idLesson]);
-        return $sth->fetchAll(PDO::FETCH_COLUMN, 1);
+        return $sth->fetchAll();
     }
 
     public function getItemsFromExercice(string $idExercice){

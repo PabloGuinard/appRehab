@@ -31,7 +31,6 @@ async function navigation(params) {
             }
         }
     }  
-    
     else if(params.title === 'Historique'){
         let tmp
         try {
@@ -56,7 +55,8 @@ async function navigation(params) {
             }
             DATA.reverse()
         }
-    } else if (params.link === 'ExercisesPage') {
+    } 
+    else if (params.link === 'ExercisesPage') {
         let cpt = 0;
         let idTheme = -1;
         while (idTheme === -1) {
@@ -88,7 +88,8 @@ async function navigation(params) {
                 link: 'LessonPage'
             }
         }
-    } else if (params.link === 'LessonPage') {
+    } 
+    else if (params.link === 'LessonPage') {
         if (params.color === mainColor) {
             let tmp
             try {
@@ -185,6 +186,7 @@ async function navigation(params) {
             }
         }
     }
+    
     params.nav.navigate(params.link, {DATA: {DATA}, color: params.color, title: params.title});
 }
 
