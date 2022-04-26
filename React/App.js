@@ -58,7 +58,7 @@ async function deleteDataFromApi(json, typeData, isMot){
         oldDataLength = await AsyncStorage.getItem(typeData + "Length")
     }catch{}
     oldData = JSON.parse(oldData)
-
+    console.log("recup : " + oldDataLength);
     json.forEach(element => {
         let index = oldData.findIndex(checkData, element.id)
         if(index !== -1){
@@ -66,11 +66,13 @@ async function deleteDataFromApi(json, typeData, isMot){
             if(!isMot){
                 let elementId = oldData[index].id
                 deleteIndexFromStorage(typeData, elementId, oldDataLength)
+                console.log("index : " + oldDataLength);
             }
             oldData.splice(index, 1)
             oldDataLength--
         }
     })
+    console.log("end : " + oldDataLength);
     oldData = JSON.stringify(oldData)
     await setStorage(typeData + "All", oldData)
     await setStorage(typeData + "Length", oldDataLength.toString())
@@ -103,16 +105,25 @@ function checkData(element){
 
 function logCurrentStorage() {
     AsyncStorage.getAllKeys().then((keyArray) => {
-      AsyncStorage.multiGet(keyArray).then((keyValArray) => {
+        AsyncStorage.multiGet(keyArray).then((keyValArray) => {
         let myStorage: any = {};
         for (let keyVal of keyValArray) {
-          myStorage[keyVal[0]] = keyVal[1]
+            myStorage[keyVal[0]] = keyVal[1]
         }
-  
+
         console.log('CURRENT STORAGE: ', myStorage);
-      })
+        })
     });
-  }
+}
+
+async function logDataType(dataType){
+    console.log('length : ');
+    let tmp = await AsyncStorage.getItem(dataType + "Length")
+    console.log(tmp);
+    console.log('all : ');
+    tmp = await AsyncStorage.getItem(dataType + "All")
+    console.log(tmp);
+}
 
 async function initGlobals(){
     global.amountExercicesStartedMonth = 0
@@ -265,7 +276,8 @@ async function initialisation(){
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
     
-    //logCurrentStorage()
+    // logCurrentStorage()
+    await logDataType("exercice")
 }
 
 const Stack = createStackNavigator()

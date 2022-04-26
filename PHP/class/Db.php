@@ -236,7 +236,7 @@ class Db {
     }
 
     public function getAllNewMots($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
@@ -248,19 +248,19 @@ class Db {
     }
 
     public function getAllNewThemes($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
     public function getAllNewExercices($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
     public function getAllNewItems($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
@@ -408,8 +408,6 @@ class Db {
         $sth = $this->pdo->prepare("UPDATE Items SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
         $sth->execute(["timestamp" => $timestamp]);
         $sth = $this->pdo->prepare("UPDATE Mots SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
-        $sth->execute(["timestamp" => $timestamp]);
-        $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
         $sth->execute(["timestamp" => $timestamp]);
         return "App mise à jour";
     }
