@@ -23,7 +23,8 @@ async function isEndedFunction(exerciceId){
 }
 
 async function sendComment(rate: string, comment: string, exerciceId: string) {
-  let url = 'https://apprehab.000webhostapp.com/api/apiTraitement.php?rate=' + rate + '&comment='
+  // let url = 'https://apprehab.000webhostapp.com/api/apiTraitement.php?rate=' + rate + '&comment='
+  let url = 'https://10.39.20.77/api/apiTraitement.php?rate=' + rate + '&comment='
       + comment + '&exerciceId=' + exerciceId
   await fetch(url)
 }

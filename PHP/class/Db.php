@@ -382,7 +382,7 @@ class Db {
     }
 
     public function getPathItemFromId(string $id){
-        $sth = $this->pdo->prepare("SELECT pathItem FROM Items WHERE id= :id");
+        $sth = $this->pdo->prepare("SELECT nom FROM Items WHERE id= :id");
         $sth->execute(["id" => $id]);
         return $sth->fetch();
     }

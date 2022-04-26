@@ -74,7 +74,7 @@ async function navigation(params){
       tmp = await AsyncStorage.getItem('categorie' + cpt)
     }catch (error){}
     var categorie = JSON.parse(tmp);
-    if(params.title === categorie.nomCategorie){
+    if(params.title === categorie.nom){
       idCategorie = categorie.id;
     };
     cpt++;
@@ -94,7 +94,7 @@ async function navigation(params){
   for(cpt = 0; cpt < matchThemes.length; cpt ++){
     DATA[DATA.length] = {
       id: matchThemes[cpt].id,
-      title: matchThemes[cpt].nomTheme,
+      title: matchThemes[cpt].nom,
       link: 'ExercisesPage'
     };
   };

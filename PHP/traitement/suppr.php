@@ -14,8 +14,8 @@ switch ($_POST["typeSuppr"]){
         break;
     case "Item":
         $path = $db->getPathItemFromId($_POST["id"]);
-        if (file_exists('..'.$path["pathItem"])) {
-            unlink('..'.$path["pathItem"]);
+        if (file_exists('..'.$path["nom"])) {
+            unlink('..'.$path["nom"]);
         }
         $_SESSION["message"] = $db->deleteItem($_POST["id"]);
         break;

@@ -2,7 +2,8 @@ import React from 'react';
 
 import { SafeAreaView, StyleSheet, Dimensions, Image } from 'react-native';
 
-const source = {uri:'https://apprehab.000webhostapp.com/database/challenge/challenge.jpg'+ '?' + new Date()};
+// const source = {uri:'https://apprehab.000webhostapp.com/database/challenge/challenge.jpg'+ '?' + new Date()};
+const source = {uri:'https://10.39.20.77/database/challenge/challenge.jpg'+ '?' + new Date()};
 
 const ChallengePicture = () => {
   return (
