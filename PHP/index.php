@@ -61,12 +61,12 @@ $popup = new Popup()?>
                 echo '
                             <div class="hidden themeNode">
                                 <div class="themeDataBase brown">
-                                    <div class="titleTheme">Thème ' . $theme["nomTheme"] . '</div>
+                                    <div class="titleTheme">Thème ' . $theme["nom"] . '</div>
                                     <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_theme.png" alt="Suppr"></div>
-                ' .$popup->modalUpdate('brown', $theme["nomTheme"], $theme["id"], 'modifTheme.php', 'Modifier le thème '.$theme["nomTheme"].' ?'). '
+                ' .$popup->modalUpdate('brown', $theme["nom"], $theme["id"], 'modifTheme.php', 'Modifier le thème '.$theme["nom"].' ?'). '
                                         <div class="button btModal"><img src="img/delete_theme.png" alt="Modifier"></div>
-                ' .$popup->modalSuppr('brown', 'Supprimer le thème '.$theme["nomTheme"].' ?', 'Theme', $theme["id"]).'
+                ' .$popup->modalSuppr('brown', 'Supprimer le thème '.$theme["nom"].' ?', 'Theme', $theme["id"]).'
                                     </div>
                             </div>';
                 $exercices = $db->getExerciceFromTheme($theme["id"]);
@@ -75,12 +75,12 @@ $popup = new Popup()?>
                         echo '
                                 <div class="hidden exerciceNode">
                                     <div class="exerciceDataBase blue">
-                                        <div class="titleExercice">Exercice ' . $exercice["nomExercice"] . '</div>
+                                        <div class="titleExercice">Exercice ' . $exercice["nom"] . '</div>
                                         <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
-                        ' .$popup->modalUpdate('blue', $exercice["nomExercice"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice '.$exercice["nomExercice"].' ?'). '
+                        ' .$popup->modalUpdate('blue', $exercice["nom"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice '.$exercice["nom"].' ?'). '
                                         <div class="button btModal"><img src="img/delete_exercice.png" alt="Suppr"></div>
-                        ' .$popup->modalSuppr('blue', 'Supprimer l\'exercice '.$exercice["nomExercice"].' ?', 'Exercice', $exercice["id"]).'
+                        ' .$popup->modalSuppr('blue', 'Supprimer l\'exercice '.$exercice["nom"].' ?', 'Exercice', $exercice["id"]).'
                                         </div>
                                     </div>';
                         $items = $db->getItemsFromExercice($exercice["id"]);
@@ -101,7 +101,7 @@ $popup = new Popup()?>
                         }
                             echo '<div class="hidden itemNode noBorder"><div class="buttonsForm">
                                         <div class="button btModal"><img src="img/add_item.png" alt="Ajouter"></div>
-                                        ' .$popup->modalAddItem($exercice["nomExercice"]).'
+                                        ' .$popup->modalAddItem($exercice["nom"]).'
                                         </div>
                                     </div>
                                 </div>';
@@ -112,7 +112,7 @@ $popup = new Popup()?>
                         <div class="exerciceDataBase noBorder">
                             <div class="buttonsForm">
                                 <div class="button btModal"><img src="img/add_exercice.png" alt="Ajouter"></div>
-                                ' .$popup->modalAdd('blue', 'Ajouter un exercice dans le thème ' .$theme["nomTheme"], 'Exercice', 'Theme', $theme["nomTheme"]).'
+                                ' .$popup->modalAdd('blue', 'Ajouter un exercice dans le thème ' .$theme["nom"], 'Exercice', 'Theme', $theme["nom"]).'
                             </div>
                         </div>
                     </div>

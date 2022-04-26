@@ -17,70 +17,70 @@ class Db {
     }
 
     public function addTheme(string $nom, string $categorie){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE nomCategorie= :categorie");
+        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE nom= :categorie");
         $sth->execute(["categorie" => $categorie]);
         $result = $sth->fetch();
         if($result == false){
             return "Catégorie inexistante";
         } 
         $categorieId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nomTheme= :lesson AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nom= :lesson AND isDeleted != 1");
         $sth->execute(["lesson" => $nom]);
         $result = $sth->fetch();
         if($result != false){
             return "Thème déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Themes (nomTheme, categorieId, isReady) VALUES (:nom, :categorie, -1)");
+        $sth = $this->pdo->prepare("INSERT INTO Themes (nom, parentId, isReady) VALUES (:nom, :categorie, -1)");
         $sth->execute(["nom" => $nom, "categorie" => $categorieId]);
         return "Thème ajouté";
     }
 
     public function addExercice(string $nom, string $lesson){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nomTheme= :lesson");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nom= :lesson");
         $sth->execute(["lesson" => $lesson]);
         $result = $sth->fetch();
         if($result == false){
             return "Thème non existant";
         }
         $lessonId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nomExercice= :nom AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nom= :nom AND isDeleted != 1");
         $sth->execute(["nom" => $nom]);
         $result = $sth->fetch();
         if($result != false){
             return "Exercice déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Exercices(nomExercice, themeId, isReady) VALUES(:nom, :lessonId, -1)");
+        $sth = $this->pdo->prepare("INSERT INTO Exercices(nom, parentId, isReady) VALUES(:nom, :lessonId, -1)");
         $sth->execute(["nom" => $nom, "lessonId" => $lessonId]);
         return "Exercice ajouté";
     }
 
     public function addItem(string $contenu, string $exercice, string $typeFile){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nomExercice= :exercice");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nom= :exercice");
         $sth->execute(["exercice" => $exercice]);
         $result = $sth->fetch();
         if($result == false){
             return "Exercice non existant";
         }
         $itemId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE pathItem= :nom AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE nom= :nom AND isDeleted != 1");
         $sth->execute(["nom" => $contenu]);
         $result = $sth->fetch();
         if($result != false){
             return "Item déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Items(pathItem, typeItem, ExerciceId, isReady) VALUES(:contenu, :typeFile, :exercice, -1)");
+        $sth = $this->pdo->prepare("INSERT INTO Items(nom, typeItem, parentId, isReady) VALUES(:contenu, :typeFile, :exercice, -1)");
         $sth->execute(["exercice" => $itemId, "contenu" => $contenu, "typeFile" => $typeFile]);
         return "Item ajouté";
     }
 
     public function addMot(string $mot, string $def){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE mot= :mot AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE nom= :mot AND isDeleted != 1");
         $sth->execute(["mot" => $mot]);
         $result = $sth->fetch();
         if($result != false){
             return "Mot déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Mots(mot, definition, isReady) VALUES(:mot, :def, -1)");
+        $sth = $this->pdo->prepare("INSERT INTO Mots(nom, definition, isReady) VALUES(:mot, :def, -1)");
         $sth->execute(["mot" => $mot, "def" => $def]);
         return "Mot ajouté";
     }
@@ -130,7 +130,7 @@ class Db {
         if($result == false){
             return "Thème non existant";
         }
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE themeId= :id");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE parentId= :id");
         $sth->execute(["id" => $id]);
         $result = $sth->fetchAll(PDO::FETCH_COLUMN, 0);
         foreach ($result as $value){
@@ -170,37 +170,37 @@ class Db {
     }
 
     public function getCategorieId(string $nom){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE nomCategorie= :nom");
+        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE nom= :nom");
         $sth->execute(["nom" => $nom]);
         return $sth->fetch(PDO::FETCH_COLUMN, 0);
     }
 
     public function getThemeId(string $nom){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nomTheme= :nom");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nom= :nom");
         $sth->execute(["nom" => $nom]);
         return $sth->fetch(PDO::FETCH_COLUMN, 0);
     }
 
     public function getExerciceId(string $nom){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nomExercice= :nom");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nom= :nom");
         $sth->execute(["nom" => $nom]);
         return $sth->fetch(PDO::FETCH_COLUMN, 0);
     }
 
     public function getThemesFromCategorie(string $idCategory){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE categorieId= :idCategory AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE parentId= :idCategory AND isDeleted != 1");
         $sth->execute(["idCategory" => $idCategory]);
         return $sth->fetchAll();
     }
 
     public function getExerciceFromTheme(string $idLesson){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE themeId= :idLesson AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE parentId= :idLesson AND isDeleted != 1");
         $sth->execute(["idLesson" => $idLesson]);
         return $sth->fetchAll();
     }
 
     public function getItemsFromExercice(string $idExercice){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE exerciceId= :id AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE parentId= :id AND isDeleted != 1");
         $sth->execute(["id" => $idExercice]);
         return $sth->fetchAll();
     }
@@ -338,19 +338,19 @@ class Db {
     }
 
     public function updateTheme(string $newTitle, string $id){
-        $sth = $this->pdo->prepare("UPDATE Themes SET nomTheme= :newTitle, isReady=0 WHERE id= :id");
+        $sth = $this->pdo->prepare("UPDATE Themes SET nom= :newTitle, isReady=0 WHERE id= :id");
         $sth->execute(["newTitle" => $newTitle, "id" => $id]);
         return "Thème mis à jour";
     }
 
     public function updateExercice(string $newTitle, string $id){
-        $sth = $this->pdo->prepare("UPDATE Exercices SET nomExercice= :newTitle, isReady=0 WHERE id= :id");
+        $sth = $this->pdo->prepare("UPDATE Exercices SET nom= :newTitle, isReady=0 WHERE id= :id");
         $sth->execute(["newTitle" => $newTitle, "id" => $id]);
         return "Exercice mis à jour";
     }
 
     public function updateItem(string  $pathItem, string $id, string $typeItem){
-        $sth = $this->pdo->prepare("UPDATE Items SET typeItem= :typeItem, pathItem= :pathItem, isReady=0 WHERE id= :id");
+        $sth = $this->pdo->prepare("UPDATE Items SET typeItem= :typeItem, nom= :pathItem, isReady=0 WHERE id= :id");
         $sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id]);
         return "Item mis à jour";
     }
@@ -363,7 +363,7 @@ class Db {
     }
 
     public function updateMot(string $mot, string $definition, string $id){
-        $sth = $this->pdo->prepare("UPDATE Mots SET mot= :mot, definition= :definition, isReady=0 WHERE id= :id");
+        $sth = $this->pdo->prepare("UPDATE Mots SET nom= :mot, definition= :definition, isReady=0 WHERE id= :id");
         $sth->execute(["mot" => $mot, "definition" => $definition, "id" => $id]);
         return "Mot modifié";
     }

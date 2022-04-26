@@ -29,14 +29,14 @@ include "class/Popup.php"?>
     $allCommentaires = array_reverse($allCommentaires);
     foreach ($allCommentaires as $commentaire){
         $exercice = $db->getExerciceFromExerciceId($commentaire["exerciceId"]);
-        $theme = $db->getThemeFromThemeId($exercice["themeId"]);
-        $categorie = $db->getCategorieFromCategorieId($theme["categorieId"]);
+        $theme = $db->getThemeFromThemeId($exercice["parentId"]);
+        $categorie = $db->getCategorieFromCategorieId($theme["parentId"]);
         echo "
             <div class='divCommentaire'>
                 <div class='categorieThemeExercice'>
-                    <p class='categorieDataBase'>".$categorie['nomCategorie']."</p>
-                    <p class='themeDataBase newMargin'>".$theme["nomTheme"]."</p>
-                    <p class='exerciceCommentaire'>".$exercice["nomExercice"]."</p>
+                    <p class='categorieDataBase'>".$categorie['nom']."</p>
+                    <p class='themeDataBase newMargin'>".$theme["nom"]."</p>
+                    <p class='exerciceCommentaire'>".$exercice["nom"]."</p>
                 </div>
                 <div class='commentaire'>
                     <p class='noteCommentaire'>".$commentaire["note"]." / 5</p>
@@ -44,7 +44,7 @@ include "class/Popup.php"?>
                 </div>
                 <div class='date'>  
                 <div class='button btModal'><img src='img/delete_mainColor.png'></div>
-                " .$popup->modalSuppr("mainColor", "Supprimer le commentaire ?", $commentaire['id'], "Commentaire")."
+                " .$popup->modalSuppr("mainColor", "Supprimer le commentaire ?", "Commentaire", $commentaire["id"])."
                     </form>
                 </div>
             </div>";

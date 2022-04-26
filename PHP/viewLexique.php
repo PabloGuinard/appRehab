@@ -31,13 +31,13 @@ $allMots = $db->getAllMots();
 foreach ($allMots as $mot){
     echo "
         <div class='divCommentaire mainColor'>
-            <p class='mot'>".$mot['mot']."</p>
+            <p class='mot'>".$mot['nom']."</p>
             <p class='messageCommentaire'>".$mot["definition"]. "</p>
             <div class='buttonsForm'>
                 <div class='button btModal'><img src='img/edit_mainColor.png'></div>
                 " .$popup->modalUpdateWord($mot). "
                 <div class='button btModal'><img src='img/delete_mainColor.png'></div>
-                " .$popup->modalSuppr("mainColor", "Supprimer le mot " . $mot['mot'] . " ?", "Mot", $mot["id"])."
+                " .$popup->modalSuppr("mainColor", "Supprimer le mot " . $mot['nom'] . " ?", "Mot", $mot["id"])."
             </div>
         </div>";
 }?>

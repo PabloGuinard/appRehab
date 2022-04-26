@@ -20,7 +20,7 @@ switch ($_POST["typeSuppr"]){
         $_SESSION["message"] = $db->deleteItem($_POST["id"]);
         break;
     case "Commentaire":
-        $db->supprComm($_POST["id"]);
+        $_SESSION["message"] = $db->supprComm($_POST["id"]);
         break;
 }
 if($_POST["typeSuppr"] == "Mot") {

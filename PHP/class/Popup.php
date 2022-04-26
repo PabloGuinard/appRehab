@@ -41,19 +41,19 @@ class Popup
                         <div class="divInputLabel hidden divInputLien">
                             <label for="lienItem">Lien</label>
                             <input type="text" name="lienItem" id="lienItem" class="inputModal"';
-        if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["pathItem"];
+        if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["nom"];
         $result .= '">
                         </div>
                         <div class="divInputLabel divInputTexte">
                             <label for="textItem">Texte</label>
                             <textarea name="textItem" id="textItem">';
-        if($item["typeItem"] == 'Texte') $result .= $item["pathItem"];
+        if($item["typeItem"] == 'Texte') $result .= $item["nom"];
         $result .= '
                             </textarea>
                         </div>
                         <div class="divInputLabel hidden divInputImage">
                             <label for="imageItem">Image</label>
-                            <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg" src="'.$item["pathItem"].'">
+                            <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg" src="'.$item["nom"].'">
                         </div>
                         <input type="hidden" name="dropAjout" value="'.$item["id"].'">
                         <button class="red" type="submit">Modifier</button>
@@ -166,7 +166,7 @@ class Popup
                 <form action="traitement/modifMot.php" method="post" enctype="multipart/form-data">
                     <div class="divInputLabel">
                         <label for="titreMot">Mot</label>
-                        <input class="inputModal" type="text" name="titreMot" id="titreMot" required="required" value="'.$mot["mot"].'">
+                        <input class="inputModal" type="text" name="titreMot" id="titreMot" required="required" value="'.$mot["nom"].'">
                     </div>
                     <div class="divInputLabel">
                         <label for="dropExercice">Définition</label>
