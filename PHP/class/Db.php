@@ -92,9 +92,8 @@ class Db {
         if($result == false){
             return "Mot non existant";
         }
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Mots SET isDeleted = 1, modifiedAt= :timestamp, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Mots SET isDeleted = 1, isReady = 0 WHERE id= :id");
+        $sth->execute(["id" => $id]);
         return "Mot supprimé";
     }
 
@@ -105,11 +104,10 @@ class Db {
         if ($result == false) {
             return "Exercice non existant";
         }
-        $timestamp = date('Y-m-d H-i-s');
         $sth = $this->pdo->prepare("UPDATE Items SET isDeleted = 1 WHERE ExerciceId= :id");
         $sth->execute(["id" => $id]);
-        $sth = $this->pdo->prepare("UPDATE Exercices SET isDeleted = 1, modifiedAt= :timestamp, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Exercices SET isDeleted = 1, isReady = 0 WHERE id= :id");
+        $sth->execute(["id" => $id]);
         return "Exercice supprimé";
     }
 
@@ -120,9 +118,8 @@ class Db {
         if($result == false){
             return "Item non existant";
         }
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Items SET isDeleted = 1, modifiedAt= :timestamp, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Items SET isDeleted = 1, isReady = 0 WHERE id= :id");
+        $sth->execute(["id" => $id]);
         return "Item supprimé";
     }
 
@@ -139,30 +136,9 @@ class Db {
         foreach ($result as $value){
             $this->deleteExercice($value);
         }
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Themes SET isDeleted = 1, modifiedAt= :timestamp, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Themes SET isDeleted = 1, isReady = 0 WHERE id= :id");
+        $sth->execute(["id" => $id]);
         return "Thème supprimé";
-    }
-
-    public function deleteCategorie(string $nom){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE nomCategorie= :nom");
-        $sth->execute(["nom" => $nom]);
-        $result = $sth->fetch();
-        if($result == false){
-            return "Catégorie non existante";
-        }
-        $categoryId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE categorieId= :categoryId");
-        $sth->execute(["categoryId" => $categoryId]);
-        $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
-        foreach ($result as $value){
-            $this->deleteTheme($value);
-        }
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Categories SET isDeleted = 1, modifiedAt= :timestamp, isReady = 0 WHERE id= :categoryId");
-        $sth->execute(["categoryId" => $categoryId, "timestamp" => $timestamp]);
-        return "Catégorie supprimée";
     }
 
     public function getCategories(){
@@ -362,38 +338,33 @@ class Db {
     }
 
     public function updateTheme(string $newTitle, string $id){
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Themes SET nomTheme= :newTitle, isReady=0, modifiedAt= :timestamp WHERE id= :id");
-        $sth->execute(["newTitle" => $newTitle, "id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Themes SET nomTheme= :newTitle, isReady=0 WHERE id= :id");
+        $sth->execute(["newTitle" => $newTitle, "id" => $id]);
         return "Thème mis à jour";
     }
 
     public function updateExercice(string $newTitle, string $id){
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Exercices SET nomExercice= :newTitle, isReady=0, modifiedAt= :timestamp WHERE id= :id");
-        $sth->execute(["newTitle" => $newTitle, "id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Exercices SET nomExercice= :newTitle, isReady=0 WHERE id= :id");
+        $sth->execute(["newTitle" => $newTitle, "id" => $id]);
         return "Exercice mis à jour";
     }
 
     public function updateItem(string  $pathItem, string $id, string $typeItem){
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Items SET typeItem= :typeItem, pathItem= :pathItem, isReady=0, modifiedAt= :timestamp WHERE id= :id");
-        $sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Items SET typeItem= :typeItem, pathItem= :pathItem, isReady=0 WHERE id= :id");
+        $sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id]);
         return "Item mis à jour";
     }
 
     public function updatePresentation(string $contenu){
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Presentation SET contenu= :contenu, isReady=0, modifiedAt= :timestamp");
-        $sth->execute(["contenu" => $contenu, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Presentation SET contenu= :contenu, isReady=0");
+        $sth->execute(["contenu" => $contenu]);
         echo $sth->fetch();
         return "Présentation mise à jour";
     }
 
     public function updateMot(string $mot, string $definition, string $id){
-        $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Mots SET mot= :mot, definition= :definition, isReady=0, modifiedAt= :timestamp WHERE id= :id");
-        $sth->execute(["mot" => $mot, "definition" => $definition, "id" => $id, "timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Mots SET mot= :mot, definition= :definition, isReady=0 WHERE id= :id");
+        $sth->execute(["mot" => $mot, "definition" => $definition, "id" => $id]);
         return "Mot modifié";
     }
 
@@ -417,18 +388,19 @@ class Db {
     }
 
     public function setIsReadyTrue(){
+        $timestamp = date('Y-m-d H-i-s');
         $sth = $this->pdo->prepare("UPDATE Categories SET isReady= 1 WHERE isReady = 0");
-        $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Themes SET isReady= 1 WHERE isReady = 0");
-        $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Exercices SET isReady= 1 WHERE isReady = 0");
-        $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Items SET isReady= 1 WHERE isReady = 0");
-        $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Mots SET isReady= 1 WHERE isReady = 0");
-        $sth->execute();
-        $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1 WHERE isReady = 0");
-        $sth->execute();
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Themes SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Exercices SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Items SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Mots SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth->execute(["timestamp" => $timestamp]);
         return "App mise à jour";
     }
 
