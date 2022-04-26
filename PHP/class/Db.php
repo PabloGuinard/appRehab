@@ -30,7 +30,7 @@ class Db {
         if($result != false){
             return "Thème déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Themes (nomTheme, categorieId) VALUES (:nom, :categorie)");
+        $sth = $this->pdo->prepare("INSERT INTO Themes (nomTheme, categorieId, isReady) VALUES (:nom, :categorie, -1)");
         $sth->execute(["nom" => $nom, "categorie" => $categorieId]);
         return "Thème ajouté";
     }
@@ -49,7 +49,7 @@ class Db {
         if($result != false){
             return "Exercice déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Exercices(nomExercice, themeId) VALUES(:nom, :lessonId)");
+        $sth = $this->pdo->prepare("INSERT INTO Exercices(nomExercice, themeId, isReady) VALUES(:nom, :lessonId, -1)");
         $sth->execute(["nom" => $nom, "lessonId" => $lessonId]);
         return "Exercice ajouté";
     }
@@ -68,7 +68,7 @@ class Db {
         if($result != false){
             return "Item déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Items(pathItem, typeItem, ExerciceId) VALUES(:contenu, :typeFile, :exercice)");
+        $sth = $this->pdo->prepare("INSERT INTO Items(pathItem, typeItem, ExerciceId, isReady) VALUES(:contenu, :typeFile, :exercice, -1)");
         $sth->execute(["exercice" => $itemId, "contenu" => $contenu, "typeFile" => $typeFile]);
         return "Item ajouté";
     }
@@ -80,7 +80,7 @@ class Db {
         if($result != false){
             return "Mot déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Mots(mot, definition) VALUES(:mot, :def)");
+        $sth = $this->pdo->prepare("INSERT INTO Mots(mot, definition, isReady) VALUES(:mot, :def, -1)");
         $sth->execute(["mot" => $mot, "def" => $def]);
         return "Mot ajouté";
     }
@@ -389,8 +389,7 @@ class Db {
 
     public function setIsReadyTrue(){
         $timestamp = date('Y-m-d H-i-s');
-        $sth = $this->pdo->prepare("UPDATE Categories SET isReady= 1 WHERE isReady = 0");
-        $sth->execute(["timestamp" => $timestamp]);
+        //set modifiedAt field
         $sth = $this->pdo->prepare("UPDATE Themes SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
         $sth->execute(["timestamp" => $timestamp]);
         $sth = $this->pdo->prepare("UPDATE Exercices SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
@@ -400,6 +399,17 @@ class Db {
         $sth = $this->pdo->prepare("UPDATE Mots SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
         $sth->execute(["timestamp" => $timestamp]);
         $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth->execute(["timestamp" => $timestamp]);
+        //set createdAt fields
+        $sth = $this->pdo->prepare("UPDATE Themes SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Exercices SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Items SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Mots SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE Presentation SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");
         $sth->execute(["timestamp" => $timestamp]);
         return "App mise à jour";
     }

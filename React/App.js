@@ -190,9 +190,10 @@ const getAllDataFromApi = async () => {
                 await setDataFromApi(news.exercices, "exercice")
             if(news.items != undefined)
                 await setDataFromApi(news.items, "item")
-            if(news.mots != undefined)
+            if(news.mots != undefined){
                 await concatOldNewData(news.mots, "mot")
                 await setStorage("motLength", news.mots.length.toString())
+            }
         }
     
         //update content
