@@ -170,8 +170,9 @@ const getAllDataFromApi = async () => {
     try {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
-    //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php' + '?timestamp=' + new Date());
+    //const response = await fetch('https://apprehab.000webhostapp.com/api/api.php?timestamp=' + new Date());
     const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
+    //const url = 'https
     const response = await fetch(url)
     console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
@@ -264,7 +265,7 @@ async function initialisation(){
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
     
-    logCurrentStorage()
+    //logCurrentStorage()
 }
 
 const Stack = createStackNavigator()

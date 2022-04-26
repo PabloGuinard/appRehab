@@ -66,25 +66,25 @@ $popup = new Popup()?>
                                     <div class="titleTheme">Thème ' . $theme . '</div>
                                     <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_theme.png" alt="Suppr"></div>
-                ' .$popup->modalUpdate('brown', $theme, 'modifTheme.php', 'Modifier le thème '.$theme.' ?'). '
+                ' .$popup->modalUpdate('brown', $theme, $idTheme, 'modifTheme.php', 'Modifier le thème '.$theme.' ?'). '
                                         <div class="button btModal"><img src="img/delete_theme.png" alt="Modifier"></div>
-                ' .$popup->modalSuppr('brown', 'Supprimer le thème '.$theme.' ?', $theme, 'Theme').'
+                ' .$popup->modalSuppr('brown', 'Supprimer le thème '.$theme.' ?', 'Theme', $idTheme).'
                                     </div>
                             </div>';
                 if(sizeof($exercices) > 0){
                     foreach ($exercices as $exercice):
+                        $idExercice = $db->getExerciceId($exercice);
                         echo '
                                 <div class="hidden exerciceNode">
                                     <div class="exerciceDataBase blue">
                                         <div class="titleExercice">Exercice ' . $exercice . '</div>
                                         <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
-                        ' .$popup->modalUpdate('blue', $exercice, 'modifExercice.php', 'Modifier l\'exercice '.$exercice.' ?'). '
+                        ' .$popup->modalUpdate('blue', $exercice, $idExercice, 'modifExercice.php', 'Modifier l\'exercice '.$exercice.' ?'). '
                                         <div class="button btModal"><img src="img/delete_exercice.png" alt="Suppr"></div>
-                        ' .$popup->modalSuppr('blue', 'Supprimer l\'exercice '.$exercice.' ?', $exercice, 'Exercice').'
+                        ' .$popup->modalSuppr('blue', 'Supprimer l\'exercice '.$exercice.' ?', 'Exercice', $idExercice).'
                                         </div>
                                     </div>';
-                        $idExercice = $db->getExerciceId($exercice);
                         $items = $db->getItemsFromExercice($idExercice);
                         if(sizeof($items) > 0){
                             foreach ($items as $item):
@@ -93,9 +93,9 @@ $popup = new Popup()?>
                                         <div class="titleItem">Item ' . $item['typeItem'] . '</div>
                                         <div class="buttonsForm">
                                             <div class="button btModal"><img src="img/edit_item.png" alt="Modifier"></div> 
-                                            ' .$popup->modalUpdateItem($item, $idExercice). '
+                                            ' .$popup->modalUpdateItem($item). '
                                             <div class="button btModal"><img src="img/delete_item.png" alt="Suppr"></div> 
-                                            ' .$popup->modalSuppr('red', 'Supprimer l\'item '.$item["typeItem"].' ?', $item['id'], 'Item').'
+                                            ' .$popup->modalSuppr('red', 'Supprimer l\'item '.$item["typeItem"].' ?', 'Item', $item["id"]).'
                                             
                                         </div>
                                     </div>';
