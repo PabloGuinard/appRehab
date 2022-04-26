@@ -12,67 +12,67 @@ $deletedArray = Array();
 //add new fields in result
 $result = $db->getAllNewCategories(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $newsArray["categories"] = $db->setDataInArray($result, ["id", "nomCategorie"]);
+    $newsArray["categories"] = $db->setDataInArray($result, ["id", "nom"]);
 } 
 $result = $db->getAllNewThemes(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $newsArray["themes"] = $db->setDataInArray($result, ["id", "nomTheme", "categorieId"]);
+    $newsArray["themes"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
 $result = $db->getAllNewExercices(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $newsArray["exercices"] = $db->setDataInArray($result, ["id", "nomExercice", "themeId"]);
+    $newsArray["exercices"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
 $result = $db->getAllNewItems(date('Y-m-d H-i-s', $timestamp));
 if($result){$arrayItems = Array();
-    $newsArray["items"] = $db->setDataInArray($result, ["id", "pathItem", "typeItem", "exerciceId"]);
+    $newsArray["items"] = $db->setDataInArray($result, ["id", "nom", "typeItem", "parentId"]);
 }
 $result = $db->getAllNewMots(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $newsArray["mots"] = $db->setDataInArray($result, ["id", "mot", "definition"]);
+    $newsArray["mots"] = $db->setDataInArray($result, ["id", "nom", "definition"]);
 }
 
 //add modified fields in result
 $result = $db->getAllModifiedCategories(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $modifiedArray["categories"] = $db->setDataInArray($result, ["id", "nomCategorie"]);
+    $modifiedArray["categories"] = $db->setDataInArray($result, ["id", "nom"]);
 } 
 $result = $db->getAllModifiedThemes(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $modifiedArray["themes"] = $db->setDataInArray($result, ["id", "nomTheme", "categorieId"]);
+    $modifiedArray["themes"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
 $result = $db->getAllModifiedExercices(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $modifiedArray["exercices"] = $db->setDataInArray($result, ["id", "nomExercice", "themeId"]);
+    $modifiedArray["exercices"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
 $result = $db->getAllModifiedItems(date('Y-m-d H-i-s', $timestamp));
 if($result){$arrayItems = Array();
-    $modifiedArray["items"] = $db->setDataInArray($result, ["id", "pathItem", "typeItem", "exerciceId"]);
+    $modifiedArray["items"] = $db->setDataInArray($result, ["id", "nom", "typeItem", "parentId"]);
 }
 $result = $db->getAllModifiedMots(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $modifiedArray["mots"] = $db->setDataInArray($result, ["id", "mot", "definition"]);
+    $modifiedArray["mots"] = $db->setDataInArray($result, ["id", "nom", "definition"]);
 }
 
 //add deleted fields in result
 $result = $db->getAllDeletedCategories(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $deletedArray["categories"] = $db->setDataInArray($result, ["id", "nomCategorie"]);
+    $deletedArray["categories"] = $db->setDataInArray($result, ["id", "nom"]);
 } 
 $result = $db->getAllDeletedThemes(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $deletedArray["themes"] = $db->setDataInArray($result, ["id", "nomTheme", "categorieId"]);
+    $deletedArray["themes"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
 $result = $db->getAllDeletedExercices(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $deletedArray["exercices"] = $db->setDataInArray($result, ["id", "nomExercice", "themeId"]);
+    $deletedArray["exercices"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
 $result = $db->getAllDeletedItems(date('Y-m-d H-i-s', $timestamp));
 if($result){$arrayItems = Array();
-    $deletedArray["items"] = $db->setDataInArray($result, ["id", "pathItem", "typeItem", "exerciceId"]);
+    $deletedArray["items"] = $db->setDataInArray($result, ["id", "nom", "typeItem", "parentId"]);
 }
 $result = $db->getAllDeletedMots(date('Y-m-d H-i-s', $timestamp));
 if($result){
-    $deletedArray["mots"] = $db->setDataInArray($result, ["id", "mot", "definition"]);
+    $deletedArray["mots"] = $db->setDataInArray($result, ["id", "nom", "definition"]);
 }
 
 
