@@ -61,10 +61,11 @@ async function navigation(params) {
     else if (params.link === 'ExercisesPage') {
         let cpt = 0;
         let idTheme = -1;
-        //find theme
+        //find parent theme
         tmp = await AsyncStorage.getItem('themeAll')
         let themesArray = JSON.parse(tmp)
         themeId = themesArray.findIndex(checkTitle, params.title)
+        console.log(themeId);
 
 
 

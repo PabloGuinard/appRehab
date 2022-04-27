@@ -148,6 +148,6 @@ if($result){
 if(sizeof($finalArray) < 1){
     $finalArray["nothing"] = "nothing";
 }
-
+    
 $json = json_encode($finalArray);
 echo $json;
