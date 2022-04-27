@@ -62,7 +62,7 @@ class Db {
             return "Exercice non existant";
         }
         $itemId = $result["id"];
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE nom= :nom AND isDeleted != 1");
+        $sth = $this->pdo->prepare("SELECT * ² Items WHERE nom= :nom AND isDeleted != 1");
         $sth->execute(["nom" => $contenu]);
         $result = $sth->fetch();
         if($result != false){
@@ -85,85 +85,45 @@ class Db {
         return "Mot ajouté";
     }
 
-    public function deleteMot(string $id){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE id= :id");
-        $sth->execute(["id" => $id]);
+    public function deleteLine(string $id, string $table){
+        $message = substr($table, 0, -1);
+        switch($table){
+            case("Themes"):
+                $childTable = "Exercices";
+                break;
+            case("Exercices"):
+                $childTable = "Items";
+                break;
+            default:
+                $childTable = "none";
+        }
+        $request = "SELECT * FROM " . $table . " WHERE id = " . $id;
+        $sth = $this->pdo->prepare($request);
+        $sth->execute();
         $result = $sth->fetch();
         if($result == false){
-            return "Mot non existant";
+            return $message . " non existant";
         }
-        $sth = $this->pdo->prepare("UPDATE Mots SET isDeleted = 1, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        return "Mot supprimé";
-    }
-
-    public function deleteExercice(string $id){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        $result = $sth->fetch();
-        if ($result == false) {
-            return "Exercice non existant";
+        echo $childTable;
+        if($childTable != "none"){
+            $request = "SELECT * FROM " . $childTable . " WHERE parentId = " . $id;
+            echo $request;
+            $sth = $this->pdo->prepare($request);
+            $sth->execute();
+            $result = $sth->fetchAll(PDO::FETCH_COLUMN, 0);
+            foreach($result as $value){
+                echo $value;
+                $this->deleteLine($value, $childTable);
+            }
         }
-        $sth = $this->pdo->prepare("UPDATE Items SET isDeleted = 1 WHERE ExerciceId= :id");
-        $sth->execute(["id" => $id]);
-        $sth = $this->pdo->prepare("UPDATE Exercices SET isDeleted = 1, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        return "Exercice supprimé";
-    }
-
-    public function deleteItem(string $id){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        $result = $sth->fetch();
-        if($result == false){
-            return "Item non existant";
-        }
-        $sth = $this->pdo->prepare("UPDATE Items SET isDeleted = 1, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        return "Item supprimé";
-    }
-
-    public function deleteTheme(string $id){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        $result = $sth->fetch();
-        if($result == false){
-            return "Thème non existant";
-        }
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE parentId= :id");
-        $sth->execute(["id" => $id]);
-        $result = $sth->fetchAll(PDO::FETCH_COLUMN, 0);
-        foreach ($result as $value){
-            $this->deleteExercice($value);
-        }
-        $sth = $this->pdo->prepare("UPDATE Themes SET isDeleted = 1, isReady = 0 WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        return "Thème supprimé";
+        $request = "UPDATE " . $table . " SET isDeleted = 1, isReady = 0 WHERE id = " . $id;
+        $sth = $this->pdo->prepare($request);
+        $sth->execute();
+        return $message . " supprimé";
     }
 
     public function getCategories(){
         $sth = $this->pdo->prepare("SELECT * FROM Categories");
-        $sth->execute();
-        $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
-        return $result;
-    }
-
-    public function getThemes(){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isDeleted != 1");
-        $sth->execute();
-        $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
-        return $result;
-    }
-
-    public function getExercices(){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isDeleted != 1");
-        $sth->execute();
-        $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
-        return $result;
-    }
-
-    public function getMots(){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isDeleted != 1");
         $sth->execute();
         $result = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
         return $result;
@@ -175,33 +135,17 @@ class Db {
         return $sth->fetch(PDO::FETCH_COLUMN, 0);
     }
 
-    public function getThemeId(string $nom){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nom= :nom");
-        $sth->execute(["nom" => $nom]);
-        return $sth->fetch(PDO::FETCH_COLUMN, 0);
+    public function getPresentation(){
+        $sth = $this->pdo->prepare("SELECT * FROM Presentation");
+        $sth->execute();
+        $result = $sth->fetch();
+        return $result["contenu"];
     }
 
-    public function getExerciceId(string $nom){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nom= :nom");
-        $sth->execute(["nom" => $nom]);
-        return $sth->fetch(PDO::FETCH_COLUMN, 0);
-    }
-
-    public function getThemesFromCategorie(string $idCategory){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE parentId= :idCategory AND isDeleted != 1");
-        $sth->execute(["idCategory" => $idCategory]);
-        return $sth->fetchAll();
-    }
-
-    public function getExerciceFromTheme(string $idLesson){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE parentId= :idLesson AND isDeleted != 1");
-        $sth->execute(["idLesson" => $idLesson]);
-        return $sth->fetchAll();
-    }
-
-    public function getItemsFromExercice(string $idExercice){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE parentId= :id AND isDeleted != 1");
-        $sth->execute(["id" => $idExercice]);
+    public function getTableFromParent(string $parentId, string $tableName){
+        $request = "SELECT * FROM " . $tableName . " WHERE parentId = " . $parentId ." AND isDeleted != 1";
+        $sth = $this->pdo->prepare($request);
+        $sth->execute();
         return $sth->fetchAll();
     }
 
@@ -211,21 +155,10 @@ class Db {
         return $sth->fetchAll();
     }
 
-    public function getExerciceFromExerciceId(string $id){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        return $sth->fetch();
-    }
-
-    public function getThemeFromThemeId(string $id){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE id= :id");
-        $sth->execute(["id" => $id]);
-        return $sth->fetch();
-    }
-
-    public function getCategorieFromCategorieId(string $id){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE id= :id");
-        $sth->execute(["id" => $id]);
+    public function getLineFromId(string $id, string $table){
+        $request = "SELECT * FROM " . $table . " WHERE id = " . $id;
+        $sth = $this->pdo->prepare($request);
+        $sth->execute();
         return $sth->fetch();
     }
 
@@ -235,92 +168,23 @@ class Db {
         return $sth->fetchAll();
     }
 
-    public function getAllNewMots($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
+    public function getAllNewLinesInTable($timestamp, $table){
+        $request = "SELECT * FROM " . $table . " WHERE isReady = 1";
+        $sth = $this->pdo->prepare($request . " AND TIMESTAMP(:myTime) < createdAt");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    public function getAllNewCategories($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
+    public function getAllModifiedLinesInTable($timestamp, $table){
+        $request = "SELECT * FROM " . $table . " WHERE isReady = 1";
+        $sth = $this->pdo->prepare($request . " AND TIMESTAMP(:myTime) < modifiedAt AND isDeleted != 1");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
 
-    public function getAllNewThemes($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllNewExercices($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllNewItems($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND TIMESTAMP(:myTime) < createdAt");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllModifiedMots($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt AND isDeleted != 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllModifiedCategories($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt AND isDeleted != 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    } 
-
-    public function getAllModifiedThemes($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt AND isDeleted != 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllModifiedExercices($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt AND isDeleted != 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllModifiedItems($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isReady=1 AND TIMESTAMP(:myTime) < modifiedAt AND isDeleted != 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllDeletedMots($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE isDeleted = 1 AND TIMESTAMP(:myTime) < modifiedAt AND isReady = 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllDeletedCategories($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE isDeleted = 1 AND TIMESTAMP(:myTime) < modifiedAt AND isReady = 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllDeletedThemes($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE isDeleted = 1 AND TIMESTAMP(:myTime) < modifiedAt AND isReady = 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllDeletedExercices($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE isDeleted = 1 AND TIMESTAMP(:myTime) < modifiedAt AND isReady = 1");
-        $sth->execute(["myTime" => $timestamp]);
-        return $sth->fetchAll();
-    }
-
-    public function getAllDeletedItems($timestamp){
-        $sth = $this->pdo->prepare("SELECT * FROM Items WHERE isDeleted = 1 AND TIMESTAMP(:myTime) < modifiedAt AND isReady = 1");
+    public function getAllDeletedLinesInTable($timestamp, $table){
+        $request = "SELECT * FROM " . $table;
+        $sth = $this->pdo->prepare($request . " WHERE isDeleted = 1 AND TIMESTAMP(:myTime) < modifiedAt AND isReady = 1");
         $sth->execute(["myTime" => $timestamp]);
         return $sth->fetchAll();
     }
@@ -337,16 +201,11 @@ class Db {
           $sth->fetch();
     }
 
-    public function updateTheme(string $newTitle, string $id){
-        $sth = $this->pdo->prepare("UPDATE Themes SET nom= :newTitle, isReady=0 WHERE id= :id");
-        $sth->execute(["newTitle" => $newTitle, "id" => $id]);
-        return "Thème mis à jour";
-    }
-
-    public function updateExercice(string $newTitle, string $id){
-        $sth = $this->pdo->prepare("UPDATE Exercices SET nom= :newTitle, isReady=0 WHERE id= :id");
-        $sth->execute(["newTitle" => $newTitle, "id" => $id]);
-        return "Exercice mis à jour";
+    public function updateLine(string $newName, string $id, string $table){
+        $request = "UPDATE " . $table . " SET nom = '" . $newName . "', isReady = 0";
+        $sth = $this->pdo->prepare($request . " WHERE id = :id");
+        $sth->execute(["id" => $id]);
+        return substr($table, 0, -1) . " mis à jour";
     }
 
     public function updateItem(string  $pathItem, string $id, string $typeItem){
@@ -368,20 +227,13 @@ class Db {
         return "Mot modifié";
     }
 
-    public function getPresentation(){
-        $sth = $this->pdo->prepare("SELECT * FROM Presentation");
-        $sth->execute();
-        $result = $sth->fetch();
-        return $result["contenu"];
-    }
-
     public function supprComm(string $id){
         $sth = $this->pdo->prepare("UPDATE Commentaires SET isDeleted = 1 WHERE id= :id");
         $sth->execute(["id" => $id]);
         return "Commentaire supprimé";
     }
 
-    public function getPathItemFromId(string $id){
+    public function getNomItemFromId(string $id){
         $sth = $this->pdo->prepare("SELECT nom FROM Items WHERE id= :id");
         $sth->execute(["id" => $id]);
         return $sth->fetch();

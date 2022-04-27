@@ -28,9 +28,9 @@ include "class/Popup.php"?>
     $allCommentaires = $db->getAllCommentaires();
     $allCommentaires = array_reverse($allCommentaires);
     foreach ($allCommentaires as $commentaire){
-        $exercice = $db->getExerciceFromExerciceId($commentaire["exerciceId"]);
-        $theme = $db->getThemeFromThemeId($exercice["parentId"]);
-        $categorie = $db->getCategorieFromCategorieId($theme["parentId"]);
+        $exercice = $db->getLineFromId($commentaire["exerciceId"], "Exercices");
+        $theme = $db->getLineFromId($exercice["parentId"], "Themes");
+        $categorie = $db->getLineFromId($theme["parentId"], "Categories");
         echo "
             <div class='divCommentaire'>
                 <div class='categorieThemeExercice'>
