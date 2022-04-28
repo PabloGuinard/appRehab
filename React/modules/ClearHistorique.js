@@ -13,15 +13,7 @@ async function setStorage(key: string, value: string){
 }
 
 async function clear(){
-    let nbItemsHistorique
-    try {
-        nbItemsHistorique = await AsyncStorage.getItem('nbItemsHistorique')
-    } catch (e){}
-    nbItemsHistorique = Number(nbItemsHistorique)
-    for (let cpt = 0; cpt < nbItemsHistorique; cpt++){
-        await AsyncStorage.removeItem('itemHistorique' + cpt)
-    }
-    setStorage('nbItemsHistorique', '0')
+    setStorage("historique", "")
 }
 
 const ClearHistorique = (params) => {

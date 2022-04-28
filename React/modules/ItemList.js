@@ -22,112 +22,65 @@ async function setStorage(key: string, value: string){
 async function navigation(params) {
     let DATA = []
     if (params.title === 'Lexique') {
-        let tmp
-        tmp = await AsyncStorage.getItem('motAll')
-        const motsArray = await JSON.parse(tmp)
-        for (let cpt = 0; cpt < motsArray.length; cpt++) {
+        const motsArray = JSON.parse(await AsyncStorage.getItem('motAll'))
+        motsArray.forEach(mot => {
             DATA[DATA.length] = {
-                id: motsArray[cpt].id,
-                title: motsArray[cpt].nom,
+                id: mot.id,
+                title: mot.nom,
                 link: 'LessonPage',
             }
-        }
+        })
     }  
     else if(params.title === 'Historique'){
-        let tmp
-        try {
-            tmp = await AsyncStorage.getItem('nbItemsHistorique')
-        }catch (error){}
-        let historiqueLength = tmp
-        if(historiqueLength === null){
-            DATA = {};
-        }else {
-            for (let cpt = 0; cpt < historiqueLength; cpt++){
-                let tmp
-                try {
-                    tmp = await AsyncStorage.getItem('itemHistorique' + cpt)
-                }catch (error){}
-                tmp = JSON.parse(tmp)
-                DATA[DATA.length] = {
-                    id: cpt,
-                    title: tmp.title,
-                    color: tmp.color,
-                    link: tmp.link
-                }
-            }
+        let historiqueArray = JSON.parse(await AsyncStorage.getItem("historique"))
+        let cptId = 0
+        if(historiqueArray !== null){
+            historiqueArray.forEach(item => {
+                DATA.push({
+                    id: cptId,
+                    title: item.title,
+                    color: item.color,
+                    link: item.link
+                })
+                cptId++
+            })
             DATA.reverse()
         }
     } 
     else if (params.link === 'ExercisesPage') {
-        let cpt = 0;
-        let idTheme = -1;
-        //find parent theme
-        tmp = await AsyncStorage.getItem('themeAll')
-        let themesArray = JSON.parse(tmp)
-        themeId = themesArray.findIndex(checkTitle, params.title)
-        console.log(themeId);
+        //find parent
+        let themesArray = JSON.parse(await AsyncStorage.getItem('themeAll'))
+        let parentIndex = themesArray.findIndex(checkTitle, params.title)
+        let parent = themesArray[parentIndex]
 
-
-
-        while (idTheme === -1) {
-            let tmp
-            try {
-                tmp = await AsyncStorage.getItem('theme' + cpt)
-            }catch (error){}
-            let theme = JSON.parse(tmp)
-            if (theme.nom === params.title) {
-                idTheme = theme.id
-            }
-            cpt++
-        }
-        let tmp
-        try {
-            tmp = await AsyncStorage.getItem('exerciceAll')
-        }catch (error){}
-        let allExercices = JSON.parse(tmp)
-        let matchExercices = []
-        for (cpt = 0; cpt < allExercices.length; cpt++) {
-            if (allExercices[cpt].parentId === idTheme) {
-                matchExercices[matchExercices.length] = allExercices[cpt];
-            }
-        }
-        for (cpt = 0; cpt < matchExercices.length; cpt++) {
+        let exercicesArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
+        exercicesArray = exercicesArray.filter(exercice => exercice.parentId === parent.id)
+        exercicesArray.forEach(exercice => {
             DATA[DATA.length] = {
-                id: matchExercices[cpt].id,
-                title: matchExercices[cpt].nom,
+                id: exercice.id,
+                title: exercice.nom,
                 link: 'LessonPage'
             }
-        }
+        })
     } 
     else if (params.link === 'LessonPage') {
         if (params.color === mainColor) {
-            let tmp
-            try {
-                tmp = await AsyncStorage.getItem('motAll')
-            }catch (error){}
-            let allMots = JSON.parse(tmp)
-            for (let cpt = 0; cpt < allMots.length; cpt++) {
-                if (allMots[cpt].nom === params.title) {
-                    let content = [];
-                    content[0] = {
-                        type: 'Texte',
-                        data: allMots[cpt].definition,
-                        id: allMots[cpt].id
-                    }
-                    DATA[0] = {
-                        id: allMots[cpt].id,
-                        title: allMots[cpt].nom,
-                        content: content
-                    };
-                }
+            let motsArray = JSON.parse(await AsyncStorage.getItem('motAll'))
+            let index = motsArray.findIndex(checkTitle, params.title)
+            let content = []
+            content[0] = {
+                type: 'Texte',
+                data: motsArray[index].definition,
+                id: motsArray[index].id
+            }
+            DATA[0] = {
+                id: motsArray[index].id,
+                title: motsArray[index].nom,
+                content: content
             }
         }
-    else {
-        let tmp
-            try {
-                tmp = await AsyncStorage.getItem('nbItemsHistorique')
-            }catch (error){}
-            let nbItemsHistorique = tmp
+        else {
+            //add to historique
             let data
             if(params.color === global.mainColor){
                 data = {
@@ -140,58 +93,49 @@ async function navigation(params) {
                     title: params.title,
                     color: params.color,
                     link: 'LessonPage'
-                }}
-            await setStorage('itemHistorique' + nbItemsHistorique, JSON.stringify(data))
-            tmp = Number(nbItemsHistorique)
-            tmp++
-            nbItemsHistorique = tmp.toString()
-            await setStorage('nbItemsHistorique', nbItemsHistorique)
-            try {
-                tmp = await AsyncStorage.getItem("amountExercicesStartedMonth")
-            }catch (error){}
-            let toIncrease = Number(tmp)
+                }
+            };
+
+            let historiqueArray = JSON.parse(await AsyncStorage.getItem("historique"))
+            if(historiqueArray === null)
+                historiqueArray = Array()
+            let index = historiqueArray.findIndex(item => item.title === data.title)
+            if(index !== -1)
+                historiqueArray.splice(index, 1)
+            historiqueArray.push(data)
+            await setStorage("historique", JSON.stringify(historiqueArray))
+            //increase amount exercices started
+            let toIncrease = await AsyncStorage.getItem("amountExercicesStartedMonth")
             if (toIncrease === null) {
                 toIncrease = -1;
             }
             toIncrease++;
-            toIncrease = toIncrease.toString()
-            await setStorage("amountExercicesStartedMonth", toIncrease)
+            await setStorage("amountExercicesStartedMonth", toIncrease.toString())
             global.amountExercicesStartedMonth = toIncrease
-            let idExercice = -1;
-            let matchExercice;
-            let cpt = 0;
-            while (idExercice === -1) {
-                try {
-                    tmp = await AsyncStorage.getItem('exercice' + cpt)
-                }catch (error){}
-                matchExercice = JSON.parse(tmp)
-                if (matchExercice.nom === params.title) {
-                    idExercice = matchExercice
-                }
-                cpt++
-            }
-            try {
-                tmp = await AsyncStorage.getItem('itemAll')
-            }catch (error){}
-            let allItems = JSON.parse(tmp)
-            let content = [];
-            for (cpt = 0; cpt < allItems.length; cpt++) {
-                if (allItems[cpt].parentId === matchExercice.id) {
-                    content[content.length] = {
-                        type: allItems[cpt].typeItem,
-                        data: allItems[cpt].nom,
-                        id: allItems[cpt].id
-                    }
-                }
-            }
-            content[content.length] = {
+            
+            //find parent
+            let exercicesArray = JSON.parse(await AsyncStorage.getItem("exerciceAll"))
+            let parentIndex = exercicesArray.findIndex(checkTitle, params.title)
+            let parent = exercicesArray[parentIndex]
+            //find matching items
+            let itemsArray = JSON.parse(await AsyncStorage.getItem("itemAll"))
+            itemsArray.filter(item => item.parentId === parent.id)
+            let content = []
+            itemsArray.forEach(item => {
+                content.push({
+                    type: item.typeItem,
+                    data: item.nom,
+                    id: item.id
+                })
+            })
+            content.push({
                 type: 'Button',
                 data: '',
                 id: ''
-            }
+            })
             DATA[0] = {
-                id: matchExercice.id,
-                title: matchExercice.nom,
+                id: parent.id,
+                title: parent.nom,
                 content: content
             }
         }
