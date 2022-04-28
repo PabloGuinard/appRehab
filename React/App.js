@@ -16,62 +16,24 @@ async function setStorage(key: string, value: string){
     }
 }
 
-async function setDataFromApi(json, typeData){
-    let cptData = 0
-    let cptJson = 0
-    try{
-        let tmp = await AsyncStorage.getItem(typeData + "Length")
-        if(tmp != null)
-            cptData = tmp
-    } catch{}
-    for(let cpt = cptData; cpt < cptData + json.length; cpt++){
-        const toString = JSON.stringify(json[cpt])
-        await setStorage(typeData + cpt, toString)
-        cptJson++
-    }
-    await setStorage(typeData + "Length", (cptData + json.length).toString())
-    concatOldNewData(json, typeData)
+async function updateDataFromApi(json, typeData){
+    let allData = JSON.parse(await AsyncStorage.getItem(typeData + "All"))
+    json.forEach(newElement => {
+        let index = allData.findIndex(checkData, newElement.id)
+        allData[index] = newElement
+    })
+    await setStorage(typeData + "All", JSON.stringify(allData))
 }
 
-async function updateDataFromApi(json, typeData, isMot){
-    let oldData
-    try{
-        oldData = await AsyncStorage.getItem(typeData + "All")
-    } catch{}
-    oldData = JSON.parse(oldData)
-    //set new data in "All" & normal
-    json.forEach(element => {
-        let index = oldData.findIndex(checkData, element.id)
-        oldData[index] = element
-        if(!isMot)
-            setStorage(typeData + index, JSON.stringify(element))
-    });
-    setStorage(typeData + "All", JSON.stringify(oldData))
-}
-
-async function deleteDataFromApi(json, typeData, isMot){
-    let oldData
-    let oldDataLength = 0
-    try{
-        oldData = await AsyncStorage.getItem(typeData + "All")
-        oldDataLength = await AsyncStorage.getItem(typeData + "Length")
-    }catch{}
-    oldData = JSON.parse(oldData)
-    json.forEach(element => {
-        let index = oldData.findIndex(checkData, element.id)
+async function deleteDataFromApi(json, typeData){
+    let allData = JSON.parse(await AsyncStorage.getItem(typeData + "All"))
+    json.forEach(toDelete => {
+        let index = allData.findIndex(checkData, toDelete.id)
         if(index !== -1){
-            //delete in normal
-            if(!isMot){
-                let elementId = oldData[index].id
-                deleteIndexFromStorage(typeData, elementId, oldDataLength)
-            }
-            oldData.splice(index, 1)
-            oldDataLength--
+            allData.splice(index, 1)
         }
     })
-    oldData = JSON.stringify(oldData)
-    await setStorage(typeData + "All", oldData)
-    await setStorage(typeData + "Length", oldDataLength.toString())
+    await setStorage(typeData + "All", JSON.stringify(allData))
 }
 
 async function deleteIndexFromStorage(typeData, elementId, dataLength){
@@ -137,20 +99,15 @@ async function initGlobals(){
 }
 
 async function concatOldNewData(json, typeData){
-    let allData
-    try{
-        allData = await AsyncStorage.getItem(typeData + "All")
-    } catch{}
+    let allData = JSON.parse(await AsyncStorage.getItem(typeData + "All"))
     if(allData === null){
-        allData = JSON.stringify(json)
-    } else {
-        allData = JSON.parse(allData)
-        allData.slice(0, -1)
-        allData = allData.concat(json)
-        //allData = allData.concat("]")
-        allData = JSON.stringify(allData)
+        allData = json
     }
-    await setStorage(typeData + "All", allData)
+    else {
+        allData = allData.concat(json)
+        console.log(allData)
+    }
+    await setStorage(typeData + "All", JSON.stringify(allData))
 }
 
 const initHistoriqueAndLastConnexion = async () => {
@@ -188,16 +145,15 @@ const getAllDataFromApi = async () => {
         const news = json.news
         if(news != undefined){
             if(news.categories != undefined)
-                await setDataFromApi(news.categories, "categorie")
+                await concatOldNewData(news.categories, "categorie")
             if(news.themes != undefined)
-                await setDataFromApi(news.themes, "theme")
+                await concatOldNewData(news.themes, "theme")
             if(news.exercices != undefined)
-                await setDataFromApi(news.exercices, "exercice")
+                await concatOldNewData(news.exercices, "exercice")
             if(news.items != undefined)
-                await setDataFromApi(news.items, "item")
+                await concatOldNewData(news.items, "item")
             if(news.mots != undefined){
                 await concatOldNewData(news.mots, "mot")
-                await setStorage("motLength", news.mots.length.toString())
             }
         }
     
@@ -205,30 +161,30 @@ const getAllDataFromApi = async () => {
         const modified = json.modified
         if(modified != undefined){
             if(modified.categories != undefined)
-            await updateDataFromApi(modified.categories, "categorie", false)
+            await updateDataFromApi(modified.categories, "categorie")
             if(modified.themes != undefined)
-            await updateDataFromApi(modified.themes, "theme", false)
+            await updateDataFromApi(modified.themes, "theme")
             if(modified.exercices != undefined)
-                updateDataFromApi(modified.exercices, "exercice", false)
+                updateDataFromApi(modified.exercices, "exercice")
             if(modified.items != undefined)
-            await updateDataFromApi(modified.items, "item", false)
+            await updateDataFromApi(modified.items, "item")
             if(modified.mots != undefined)
-            await updateDataFromApi(modified.mots, "mot", true)
+            await updateDataFromApi(modified.mots, "mot")
         }
 
         //delete content
         const deleted = json.deleted
         if(deleted != undefined){
             if(deleted.categories != undefined)
-                await deleteDataFromApi(deleted.categories, "categorie", false)
+                await deleteDataFromApi(deleted.categories, "categorie")
             if(deleted.themes != undefined)
-                await deleteDataFromApi(deleted.themes, "theme", false)
+                await deleteDataFromApi(deleted.themes, "theme")
             if(deleted.exercices != undefined)
-                await deleteDataFromApi(deleted.exercices, "exercice", false)
+                await deleteDataFromApi(deleted.exercices, "exercice")
             if(deleted.items != undefined)
-                await deleteDataFromApi(deleted.items, "item", false)
+                await deleteDataFromApi(deleted.items, "item")
             if(deleted.mots != undefined)
-                await deleteDataFromApi(deleted.mots, "mot", true)
+                await deleteDataFromApi(deleted.mots, "mot")
         }
     
         //update presentation
@@ -280,7 +236,7 @@ global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    AsyncStorage.clear()
+    //AsyncStorage.clear()
     initialisation()
     return (
       <NavigationContainer>
