@@ -56,48 +56,28 @@ const ROW_3 = [
 ];
 
 async function navigation(params){
-  try {
-    var toIncrease = await AsyncStorage.getItem("nbTimes" + params.title);
-  }catch (e){}
-  if(toIncrease === null){
-    await setStorage("nbTimes" + params.title, '1')
-  } else{
-    toIncrease++
-    await setStorage("nbTimes" + params.title, "" + toIncrease)
-  }
-
-  var idCategorie = -1;
-  var cpt = 0;
-  while (idCategorie === -1){
-    let tmp
-    try {
-      tmp = await AsyncStorage.getItem('categorie' + cpt)
-    }catch (error){}
-    var categorie = JSON.parse(tmp);
-    if(params.title === categorie.nom){
-      idCategorie = categorie.id;
-    };
-    cpt++;
-  };
-  let tmp
-  try {
-    tmp =  await AsyncStorage.getItem('themeAll')
-  }catch (error){}
-  var allThemes = JSON.parse(tmp)
-  var matchThemes = [];
-  for (cpt = 0; cpt < allThemes.length; cpt++){
-    if(allThemes[cpt].parentId === idCategorie){
-      matchThemes[matchThemes.length] = allThemes[cpt];
-    };
-  };
-  var DATA = [];
-  for(cpt = 0; cpt < matchThemes.length; cpt ++){
-    DATA[DATA.length] = {
-      id: matchThemes[cpt].id,
-      title: matchThemes[cpt].nom,
-      link: 'ExercisesPage'
-    };
-  };
+  //increase cpt for stats
+  let toIncrease = await AsyncStorage.getItem("nbTimes" + params.title)
+  if(toIncrease === null)
+    toIncrease = -1
+  toIncrease++
+  await setStorage("nbTimes" + params.title, toIncrease.toString())
+  
+  //find matching categorie id
+  let categoriesArray = JSON.parse(await AsyncStorage.getItem("categorieAll"))
+  let index = categoriesArray.findIndex(categorie => categorie.nom === params.title)
+  let matchingId = categoriesArray[index].id
+  //find all matching themes
+  let themesArray = JSON.parse(await AsyncStorage.getItem("themeAll"))
+  themesArray = themesArray.filter(theme => theme.parentId === matchingId)
+  let DATA = []
+  themesArray.forEach(theme => {
+    DATA.push({
+      id: theme.id,
+      title: theme.nom,
+      link: "ExercisesPage"
+    })
+  })
   params.nav.navigate('ThemesPage', {DATA:{DATA}, color:params.color});
 };
 

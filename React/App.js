@@ -36,27 +36,6 @@ async function deleteDataFromApi(json, typeData){
     await setStorage(typeData + "All", JSON.stringify(allData))
 }
 
-async function deleteIndexFromStorage(typeData, elementId, dataLength){
-    let element
-    for (let cpt = 0; cpt < dataLength; cpt++) {
-        try{
-            element = await AsyncStorage.getItem(typeData + cpt)
-            element = JSON.parse(element)
-            if(element.id === elementId){
-                let tmp
-                for(cpt; cpt < dataLength - 1; cpt++){
-                    try{
-                        tmp = await AsyncStorage.getItem(typeData + (cpt + 1))
-                    }catch{}
-                    await setStorage(typeData + cpt, tmp)
-                }
-                AsyncStorage.removeItem(typeData + cpt)
-                return
-            }
-        }catch{}
-    }
-}
-
 function checkData(element){
     return this == element.id
 }
@@ -72,15 +51,6 @@ function logCurrentStorage() {
         console.log('CURRENT STORAGE: ', myStorage);
         })
     });
-}
-
-async function logDataType(dataType){
-    console.log('length : ');
-    let tmp = await AsyncStorage.getItem(dataType + "Length")
-    console.log(tmp);
-    console.log('all : ');
-    tmp = await AsyncStorage.getItem(dataType + "All")
-    console.log(tmp);
 }
 
 async function initGlobals(){
@@ -105,26 +75,14 @@ async function concatOldNewData(json, typeData){
     }
     else {
         allData = allData.concat(json)
-        console.log(allData)
     }
     await setStorage(typeData + "All", JSON.stringify(allData))
 }
 
 const initHistoriqueAndLastConnexion = async () => {
-    let tmp = null
-    try {
-        tmp = await AsyncStorage.getItem('nbItemsHistorique')
-    }catch (e) {}
-    if(tmp === null){
-        await setStorage('nbItemsHistorique', '0')
-    }
-    tmp = null
-    try {
-        tmp = await AsyncStorage.getItem('timestampLastConnection')
-    }catch (e) {}
-    if(tmp === null){
-        await setStorage('timestampLastConnection', '0')
-    }
+    let timestamp = await AsyncStorage.getItem("timestampLastConnection")
+    if(timestamp === null)
+        await setStorage("timestampLastConnection", "0")
 }
 
 const getAllDataFromApi = async () => {
@@ -228,7 +186,6 @@ async function initialisation(){
     await getAllDataFromApi()
     
     //logCurrentStorage()
-    //await logDataType("exercice")
 }
 
 const Stack = createStackNavigator()
