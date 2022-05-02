@@ -185,7 +185,7 @@ async function initialisation(){
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
     
-    //logCurrentStorage()
+    logCurrentStorage()
 }
 
 const Stack = createStackNavigator()

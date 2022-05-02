@@ -81,21 +81,11 @@ async function navigation(params) {
         }
         else {
             //add to historique
-            let data
-            if(params.color === global.mainColor){
-                data = {
-                    title: params.title,
-                    color: params.color,
-                    link: 'LexiquePage'
-                }
-            } else {
-                data = {
-                    title: params.title,
-                    color: params.color,
-                    link: 'LessonPage'
-                }
-            };
-
+            let data = {
+                title: params.title,
+                color: params.color,
+                link: 'LessonPage'
+            }
             let historiqueArray = JSON.parse(await AsyncStorage.getItem("historique"))
             if(historiqueArray === null)
                 historiqueArray = Array()
@@ -117,9 +107,10 @@ async function navigation(params) {
             let exercicesArray = JSON.parse(await AsyncStorage.getItem("exerciceAll"))
             let parentIndex = exercicesArray.findIndex(checkTitle, params.title)
             let parent = exercicesArray[parentIndex]
+            console.log(parent);
             //find matching items
             let itemsArray = JSON.parse(await AsyncStorage.getItem("itemAll"))
-            itemsArray.filter(item => item.parentId === parent.id)
+            itemsArray = itemsArray.filter(item => item.parentId === parent.id)
             let content = []
             itemsArray.forEach(item => {
                 content.push({
