@@ -23,6 +23,7 @@ async function navigation(params) {
     let DATA = []
     if (params.title === 'Lexique') {
         const motsArray = JSON.parse(await AsyncStorage.getItem('motAll'))
+        motsArray.reverse()
         motsArray.forEach(mot => {
             DATA[DATA.length] = {
                 id: mot.id,
@@ -55,6 +56,7 @@ async function navigation(params) {
 
         let exercicesArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
         exercicesArray = exercicesArray.filter(exercice => exercice.parentId === parent.id)
+        exercicesArray.reverse()
         exercicesArray.forEach(exercice => {
             DATA[DATA.length] = {
                 id: exercice.id,

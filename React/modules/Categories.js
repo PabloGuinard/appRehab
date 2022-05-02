@@ -71,6 +71,7 @@ async function navigation(params){
   let themesArray = JSON.parse(await AsyncStorage.getItem("themeAll"))
   themesArray = themesArray.filter(theme => theme.parentId === matchingId)
   let DATA = []
+  themesArray.reverse()
   themesArray.forEach(theme => {
     DATA.push({
       id: theme.id,
