@@ -41,7 +41,7 @@ const ModalRate = (params) => {
 
   function closeModal(exerciceId){
     setModalVisible(!modalVisible)
-    setStorage('exerciceEnded'+exerciceId, 'true')
+    setStorage('exerciceEnded' + exerciceId, 'true')
     global.amountExercicesEndedMonth++
     setStorage('amountExercicesEndedMonth', global.amountExercicesEndedMonth.toString())
   }

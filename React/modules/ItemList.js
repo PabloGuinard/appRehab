@@ -107,7 +107,6 @@ async function navigation(params) {
             let exercicesArray = JSON.parse(await AsyncStorage.getItem("exerciceAll"))
             let parentIndex = exercicesArray.findIndex(checkTitle, params.title)
             let parent = exercicesArray[parentIndex]
-            console.log(parent);
             //find matching items
             let itemsArray = JSON.parse(await AsyncStorage.getItem("itemAll"))
             itemsArray = itemsArray.filter(item => item.parentId === parent.id)

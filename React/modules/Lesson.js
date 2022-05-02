@@ -13,7 +13,7 @@ function printObject(item, params) {
       const source = ({uri:'http://10.39.20.77/'+ item.data + '?' + new Date()});
       return <ItemImage data={source}/>
     case 'Button':
-      return <ModalRate idExercice={params.content[0].id}/>
+      return <ModalRate id={params.content[0].id}/>
   }
 }
 
