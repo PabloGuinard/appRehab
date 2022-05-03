@@ -16,7 +16,6 @@ const LessonPage = ({route, navigation}) => {
             </View>
             <View style={{flex: 5}}>
                 <Lesson content={content} color={color} />
-                
             </View>
             <View style={{flex: 1}}>
                 <NavigBar navigation={navigation}/>

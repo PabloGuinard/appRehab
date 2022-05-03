@@ -18,8 +18,7 @@ class Popup
     }
 
     function modalUpdateItem($item){
-        $result = '
-            <div class="modal">
+    $result = '<div class="modal">
                 <div class="modal-content red ">
                     <div class="btClose">x</div>
                     <p class="titleModal">Modifier l\'item '.$item["typeItem"].' ?</p>
@@ -37,30 +36,40 @@ class Popup
                                 <input type="radio" name="typeFichier" id="imageRadio" value="Image" class="widthNormal noMargin" required="required">
                                 <label for="imageRadio" class="widthNormal noMargin">Image</label>
                             </div>
+                            <div class="classRadio divRadioVideo">
+                                <input type="radio" name="typeFichier" id="videoRadio" value="Video" class="widthNormal noMargin" required="required">
+                                <label for="videoRadio" class="widthNormal noMargin">Video</label>
+                            </div>
                         </div>
                         <div class="divInputLabel hidden divInputLien">
                             <label for="lienItem">Lien</label>
                             <input type="text" name="lienItem" id="lienItem" class="inputModal"';
-        if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["nom"];
-        $result .= '">
-                        </div>
-                        <div class="divInputLabel divInputTexte">
-                            <label for="textItem">Texte</label>
-                            <textarea name="textItem" id="textItem">';
-        if($item["typeItem"] == 'Texte') $result .= $item["nom"];
-        $result .= '
+    if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["nom"];
+    $result .= '">
+                    </div>
+                    <div class="divInputLabel divInputTexte">
+                        <label for="textItem">Texte</label>
+                        <textarea name="textItem" id="textItem">';
+    if($item["typeItem"] == 'Texte') $result .= $item["nom"];
+    $result .= '
                             </textarea>
                         </div>
                         <div class="divInputLabel hidden divInputImage">
                             <label for="imageItem">Image</label>
                             <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg" src="'.$item["nom"].'">
                         </div>
+                        <div class="divInputLabel hidden divInputVideo">
+                            <label for="videoItem">ID de la vidéo</label>
+                            <input type="text" name="videoItem" id="videoItem" class="inputModal"';
+    if($item["typeItem"] == 'Video') $result .= 'value="'.$item["nom"];
+    $result .= '">
+                        </div>
                         <input type="hidden" name="dropAjout" value="'.$item["id"].'">
                         <button class="red" type="submit">Modifier</button>
                     </form>
                 </div>
             </div>';
-        return $result;
+    return $result;
     }
 
     function modalSuppr(string $color, string $text, string $type, string $id){
@@ -98,42 +107,50 @@ class Popup
 
     function modalAddItem(string $parent){
         return '
-            <div class="modal">
-                <div class="modal-content red ">
-                    <div class="btClose">x</div>
-                    <p class="titleModal">Ajouter un item dans l\'exercice '.$parent.' ?</p>
-                    <form action="traitement/ajoutItem.php" method="post" enctype="multipart/form-data">
-                        <div id="divRadioAjout">
-                            <div class="classRadio divRadioTexte">
-                                <input type="radio" name="typeFichier" id="texteRadio" value="Texte" class="widthNormal noMargin" required="required" checked="checked">
-                                <label for="texteRadio" class="widthNormal noMargin">Texte</label>
-                            </div>
-                            <div class="classRadio divRadioLien">
-                                <input type="radio" name="typeFichier" id="lienRadio" value="Lien" class="widthNormal noMargin" required="required">
-                                <label for="lienRadio" class="widthNormal noMargin">Lien</label>
-                            </div>
-                            <div class="classRadio divRadioImage">
-                                <input type="radio" name="typeFichier" id="imageRadio" value="Image" class="widthNormal noMargin" required="required">
-                                <label for="imageRadio" class="widthNormal noMargin">Image</label>
-                            </div>
-                        </div>
-                        <div class="divInputLabel hidden divInputLien">
-                            <label for="lienItem">Lien</label>
-                            <input type="text" name="lienItem" id="lienItem" class="inputModal">
-                        </div>
-                        <div class="divInputLabel divInputTexte">
-                            <label for="textItem">Texte</label>
-                            <textarea name="textItem" id="textItem"></textarea>
-                        </div>
-                        <div class="divInputLabel hidden divInputImage">
-                            <label for="imageItem">Image</label>
-                            <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg"">
-                        </div>
-                        <input type="hidden" name="dropAjout" value="'.$parent.'">
-                        <button class="red" type="submit">Ajouter</button>
-                    </form>
+        <div class="modal">
+        <div class="modal-content red ">
+            <div class="btClose">x</div>
+            <p class="titleModal">Ajouter un item dans l\'exercice '.$parent.' ?</p>
+            <form action="traitement/ajoutItem.php" method="post" enctype="multipart/form-data">
+                <div id="divRadioAjout">
+                    <div class="classRadio divRadioTexte">
+                        <input type="radio" name="typeFichier" id="texteRadio" value="Texte" class="widthNormal noMargin" required="required" checked="checked">
+                        <label for="texteRadio" class="widthNormal noMargin">Texte</label>
+                    </div>
+                    <div class="classRadio divRadioLien">
+                        <input type="radio" name="typeFichier" id="lienRadio" value="Lien" class="widthNormal noMargin" required="required">
+                        <label for="lienRadio" class="widthNormal noMargin">Lien</label>
+                    </div>
+                    <div class="classRadio divRadioImage">
+                        <input type="radio" name="typeFichier" id="imageRadio" value="Image" class="widthNormal noMargin" required="required">
+                        <label for="imageRadio" class="widthNormal noMargin">Image</label>
+                    </div>
+                    <div class="classRadio divRadioVideo">
+                        <input type="radio" name="typeFichier" id="videoRadio" value="Video" class="widthNormal noMargin" required="required">
+                        <label for="videoRadio" class="widthNormal noMargin">Video</label>
+                    </div>
                 </div>
-            </div>';
+                <div class="divInputLabel hidden divInputLien">
+                    <label for="lienItem">Lien</label>
+                    <input type="text" name="lienItem" id="lienItem" class="inputModal">
+                </div>
+                <div class="divInputLabel hidden divInputVideo">
+                    <label for="videoItem">ID de la vidéo</label>
+                    <input type="text" name="videoItem" id="videoItem" class="inputModal">
+                </div>
+                <div class="divInputLabel divInputTexte">
+                    <label for="textItem">Texte</label>
+                    <textarea name="textItem" id="textItem"></textarea>
+                </div>
+                <div class="divInputLabel hidden divInputImage">
+                    <label for="imageItem">Image</label>
+                    <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg">
+                </div>
+                <input type="hidden" name="dropAjout" value="'.$parent.'">
+                <button class="red" type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>';
     }
 
     function modalAddWord(){
