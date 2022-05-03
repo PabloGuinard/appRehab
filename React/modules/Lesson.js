@@ -1,6 +1,7 @@
 import React from 'react';
 import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, Text, Linking, Platform} from 'react-native';
 import ModalRate from './ModalRate';
+import YoutubePlayer from 'react-native-youtube-iframe';
 
 function printObject(item, params) {
   switch (item.type){
@@ -12,9 +13,11 @@ function printObject(item, params) {
       // const source = ({uri:'https://apprehab.000webhostapp.com/'+ item.data + '?' + new Date()});
       const source = ({uri:'http://10.39.20.77/'+ item.data + '?' + new Date()});
       return <ItemImage data={source}/>
+    case 'Video':
+      return <ItemVideo data={item.data}/>
     case 'Button':
       return <ModalRate id={params.content[0].id}/>
-  }
+  } 
 }
 
 const ItemTexte = (item) => (
@@ -34,6 +37,14 @@ const ItemImage = (item) => (
     <Image source={item.data} style={styles.im}/>
   </View>
 );
+
+const ItemVideo = (item) => (
+  <YoutubePlayer
+    height={250}
+    play={true}
+    videoId={item.data}
+  />
+)
 
 const Lesson = (params) => {
   const renderItem =({item}) => (
