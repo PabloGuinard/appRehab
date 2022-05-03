@@ -13,11 +13,6 @@ const radioLien = document.querySelectorAll('#lienRadio')
 const radioTexte = document.querySelectorAll('#texteRadio')
 const radioVideo = document.querySelectorAll('#videoRadio')
 
-console.log(videos);
-console.log(images);
-console.log(liens);
-console.log(textes);
-
 for (let cpt = 0; cpt < liens.length; cpt++){
     liens[cpt].addEventListener('click', event =>{
         inputLiens[cpt].classList.remove('hidden');
