@@ -41,7 +41,7 @@ const ItemImage = (item) => (
 const ItemVideo = (item) => (
   <YoutubePlayer
     height={250}
-    play={true}
+    play={false}
     videoId={item.data}
   />
 )
