@@ -72,10 +72,14 @@ input, select, textarea{
     height: 65px;
     resize: none;
 }
-#textItem{
+#textItem, .textPreview{
     width: 100%;
     resize: vertical;
     min-height: 50px;
+}
+.textPreview{
+    font-size: 20px;
+    text-align: left;
 }
 .classThemeExercice{
     width: 48%;
@@ -291,7 +295,7 @@ a{
     border-radius: 10px;
     margin: 10px;
 }
-.modal {
+.modal{
     display: none;
     position: fixed;
     z-index: 1;
@@ -389,6 +393,7 @@ img{
 .block{
     display: block;
 }
+
 @media (max-width: 1000px) {
     .divThemeExercice{
         flex-direction: column;

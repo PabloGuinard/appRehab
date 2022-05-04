@@ -6,6 +6,7 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+<div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
 <div class="modal block">
         <div class="modal-content red ">
             <div class="btClose">x</div>
@@ -41,6 +42,7 @@
                     <label for="textItem">Texte</label>
                     <textarea name="textItem" id="textItem" class="textItem">texte</textarea>
                     <div class="buttonsEditGroup">
+                        <div class="buttonPreview buttonEdit btModal">Preview</div>
                         <div class="buttonBold buttonEdit">Gras</div>
                         <div class="buttonUnderline buttonEdit">Souligné</div>
                         <div class="buttonItalic buttonEdit">Italique</div>
@@ -61,6 +63,13 @@
                 <input type="hidden" name="dropAjout" value="'.$parent.'">
                 <button class="red" type="submit">Ajouter</button>
             </form>
+        </div>
+    </div>
+    <div class="modal">
+        <div class="modal-content red ">
+            <div class="btClose">x</div>
+            <p class="titleModal">Prévisualisation</p>
+            <div class="textPreview"></div>    
         </div>
     </div>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>

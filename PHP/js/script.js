@@ -5,7 +5,6 @@ $( document ).ready(function() {})
 const selectFont = document.getElementsByClassName('fontSize')
 const selectColor = document.getElementsByClassName('textColor')
 
-
 $('.buttonBold').mousedown(function(event){
     event.preventDefault()
     putTagsInSelection('g')
@@ -61,7 +60,6 @@ function putTagsInSelection(tag){
                 selection = selection.toString().slice(tag.length + 2, selection.toString().length - tag.length - 3)
                 result = text.slice(0, selStart) + selection + text.slice(selEnd, text.length)
                 result = text.slice(0, selStart) + "<" + tag + ">" + selection + "</" + tag + ">" + text.slice(selEnd, text.length)
-                console.log(result);
             }
             //delete
             else{
@@ -77,7 +75,6 @@ function putTagsInSelection(tag){
 
 //line break
 $('.textItem').keydown(function(event) {
-    console.log(event.keyCode);
     if (event.keyCode == 13) {
         let textArea = document.activeElement
         event.preventDefault();
@@ -88,6 +85,58 @@ $('.textItem').keydown(function(event) {
     }
 })
 
+//preview
+const btPreviews = document.getElementsByClassName('buttonPreview')
+const textareasPreviews = document.getElementsByClassName('textPreview')
+const textareasEdit = document.getElementsByClassName('textItem')
+
+for (let cpt = 0; cpt < btPreviews.length; cpt++) {
+    btPreviews[cpt].addEventListener("click", function(){
+        textareasPreviews[cpt].innerHTML = ""
+        textareasPreviews[cpt].insertAdjacentHTML("afterbegin", rawToHtml(textareasEdit[cpt].value))
+    })
+}
+
+function rawToHtml(raw){
+    let result = ""
+    for (let cpt = 0; cpt < raw.length; cpt++) {
+        if(raw[cpt] === "<"){
+            let tag = ""
+            while(raw[cpt] !== ">"){
+                tag += raw[cpt]
+                cpt++
+            }
+            tag += ">"
+            switch (tag[1]) {
+                case 'g':
+                    result += '<span style="font-weight: bold">'
+                    break
+                case 's':
+                    result += '<span style="text-decoration: underline">'
+                    break
+                case 'i':
+                    result += '<span style="font-style: italic">'
+                    break
+                case 'r':
+                    result += '</br>'
+                    break
+                case 'p':
+                    result += '<span style="font-size: ' + tag.substr(2, 2) + 'px">'
+                    break
+                case '#':
+                    result += '<span style="color: ' + tag.substr(1, 7) + '">'
+                    break
+                case '/':
+                    result += '</span>'
+                    break
+            }
+        } else {
+            result += raw[cpt]
+        }
+    }
+    console.log(result);
+    return result
+}
 
 // handle inputs in items popups
 const liens = document.getElementsByClassName('divRadioLien')
@@ -156,6 +205,7 @@ for (let cpt = 0; cpt < liens.length; cpt++){
 let modals = document.getElementsByClassName("modal");
 let bts = document.getElementsByClassName("btModal");
 let btsClose = document.getElementsByClassName("btClose");
+
 for (let cpt = 0; cpt < bts.length; cpt++){
     bts[cpt].addEventListener('click', function(){
         modals[cpt].style.display = "block"
