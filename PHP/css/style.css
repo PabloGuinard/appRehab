@@ -300,7 +300,6 @@ a{
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
 .modal-content {
@@ -368,6 +367,27 @@ img{
 }
 .newMargin{
     margin: 0 10px;
+}
+.buttonEdit, .buttonEditDouble{
+    color: white;
+    background-color: #54aefc;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 100px;
+}
+.fontSize, .textColor{
+    width: 100px;
+    margin: 0 10px;
+}
+.block{
+    display: block;
 }
 @media (max-width: 1000px) {
     .divThemeExercice{

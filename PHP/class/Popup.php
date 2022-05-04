@@ -18,7 +18,7 @@ class Popup
     }
 
     function modalUpdateItem($item){
-    $result = '<div class="modal">
+        $result = '<div class="modal">
                 <div class="modal-content red ">
                     <div class="btClose">x</div>
                     <p class="titleModal">Modifier l\'item '.$item["typeItem"].' ?</p>
@@ -44,32 +44,32 @@ class Popup
                         <div class="divInputLabel hidden divInputLien">
                             <label for="lienItem">Lien</label>
                             <input type="text" name="lienItem" id="lienItem" class="inputModal"';
-    if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["nom"];
-    $result .= '">
+        if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["nom"];
+        $result .= '">
+                        </div>
+                        <div class="divInputLabel divInputTexte">
+                            <label for="textItem">Texte</label>
+                            <textarea name="textItem" id="textItem">';
+        if($item["typeItem"] == 'Texte') $result .= $item["nom"];
+        $result .= '
+                                </textarea>
+                            </div>
+                            <div class="divInputLabel hidden divInputImage">
+                                <label for="imageItem">Image</label>
+                                <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg" src="'.$item["nom"].'">
+                            </div>
+                            <div class="divInputLabel hidden divInputVideo">
+                                <label for="videoItem">ID de la vidéo</label>
+                                <input type="text" name="videoItem" id="videoItem" class="inputModal"';
+        if($item["typeItem"] == 'Video') $result .= 'value="'.$item["nom"];
+        $result .= '">
+                            </div>
+                            <input type="hidden" name="dropAjout" value="'.$item["id"].'">
+                            <button class="red" type="submit">Modifier</button>
+                        </form>
                     </div>
-                    <div class="divInputLabel divInputTexte">
-                        <label for="textItem">Texte</label>
-                        <textarea name="textItem" id="textItem">';
-    if($item["typeItem"] == 'Texte') $result .= $item["nom"];
-    $result .= '
-                            </textarea>
-                        </div>
-                        <div class="divInputLabel hidden divInputImage">
-                            <label for="imageItem">Image</label>
-                            <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg" src="'.$item["nom"].'">
-                        </div>
-                        <div class="divInputLabel hidden divInputVideo">
-                            <label for="videoItem">ID de la vidéo</label>
-                            <input type="text" name="videoItem" id="videoItem" class="inputModal"';
-    if($item["typeItem"] == 'Video') $result .= 'value="'.$item["nom"];
-    $result .= '">
-                        </div>
-                        <input type="hidden" name="dropAjout" value="'.$item["id"].'">
-                        <button class="red" type="submit">Modifier</button>
-                    </form>
-                </div>
-            </div>';
-    return $result;
+                </div>';
+        return $result;
     }
 
     function modalSuppr(string $color, string $text, string $type, string $id){
@@ -140,7 +140,20 @@ class Popup
                 </div>
                 <div class="divInputLabel divInputTexte">
                     <label for="textItem">Texte</label>
-                    <textarea name="textItem" id="textItem"></textarea>
+                    <textarea name="textItem" class="textItem" id="textItem"></textarea>
+                    <div class="buttonsEditGroup">
+                        <div class="buttonBold buttonEdit">Gras</div>
+                        <div class="buttonUnderline buttonEdit">Souligné</div>
+                        <div class="buttonItalic buttonEdit">Italique</div>
+                        <div>
+                            <div class="buttonFont buttonEdit">Police</div>
+                            <input type="number" name="fontSize" class="fontSize" min="10" max = "99" value="20"/>
+                        </div>
+                        <div>
+                            <div class="buttonColor buttonEdit red">Couleur</div>
+                            <input type="color" name="textColor" class="textColor" value="#000000"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="divInputLabel hidden divInputImage">
                     <label for="imageItem">Image</label>
