@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, Text, Linking, Platform} from 'react-native';
 import ModalRate from './ModalRate';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import HTMLView from 'react-native-htmlview';
 
 function printObject(item, params) {
   switch (item.type){
@@ -20,10 +21,93 @@ function printObject(item, params) {
   } 
 }
 
+function test(text){
+  let result = "<View style={styles.itemContentExercise}><Text style={style.data}>"
+  for (let cpt = 0; cpt < text.length; cpt++) {
+    if(text[cpt] === '<'){
+      let tag = ''
+      while (text[cpt] !== '>') {
+        tag += text[cpt]
+        cpt++
+      }
+      tag += '>'
+      switch(tag[1]){
+        case 'g':
+          result += <Text style={{fontWeight: 'bold'}}/>
+          break
+        case 's':
+          result += <Text style={{textDecorationLine: 'underline'}}/>
+          break
+        case 'i':
+          result += <Text style={{fontStyle: 'italic'}}/>
+          break
+        case 'p':
+          
+          break
+        case '#':
+          
+          break
+        case '/':
+          result += <Text/>
+          break
+      }
+    }
+    else{
+      result += text[cpt]
+    }
+  }
+  result += "</Text></View>"
+  return result
+}
+
+function parseText(text){
+  let tags = []
+  let rawText = ""
+  for (let cpt = 0; cpt < text.length; cpt++) {
+    if(text[cpt] === '<'){
+      let tag = ''
+      let pos = cpt
+      while (text[cpt] !== '>') {
+        tag += text[cpt]
+        cpt++
+      }
+      tag += '>'
+      if(tag[1] !== '/')
+        tags.push({
+          tag: tag,
+          pos: pos
+        })
+    }
+    else{
+      rawText += text[cpt]
+    }
+  }
+  let closingTagsPos = []
+  for (let cpt = tags.length - 1; cpt > -1; cpt--) {
+    //find closing tag
+    let closingTag = '</' + tags[cpt].tag.substr(1,  tags[cpt].tag.length)
+    let closingTagPos = -1
+    let index = tags[cpt].pos
+    while(closingTagPos === -1 && index <= text.length - closingTag.length){
+      let tmp = ""
+      for(let i = index; i < closingTag.length + index; i++){
+        tmp +=text[i]
+      }
+      if(closingTag === tmp)
+        closingTagPos = index
+      index++
+    }
+    closingTagsPos.push({
+      tag: closingTag,
+      pos: closingTagPos
+    })
+  }
+  console.log(closingTagsPos);
+  return null
+}
+
 const ItemTexte = (item) => (
-  <View style={styles.itemContentExercise}>
-    <Text style={styles.data}>{item.data}</Text>
-  </View>
+  parseText(item.data)
 );
 
 const ItemURL = (item) => (
