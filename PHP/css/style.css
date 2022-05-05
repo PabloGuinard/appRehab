@@ -393,7 +393,9 @@ img{
 .block{
     display: block;
 }
-
+.preview{
+    width: 50vw;
+}
 @media (max-width: 1000px) {
     .divThemeExercice{
         flex-direction: column;

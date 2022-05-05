@@ -49,10 +49,24 @@ class Popup
                         </div>
                         <div class="divInputLabel divInputTexte">
                             <label for="textItem">Texte</label>
-                            <textarea name="textItem" id="textItem">';
+                            <textarea name="textItem" class="textItem" id="textItem">';
         if($item["typeItem"] == 'Texte') $result .= $item["nom"];
         $result .= '
                                 </textarea>
+                                    <div class="buttonsEditGroup">
+                                    <div class="buttonPreview buttonEdit btModal">Preview</div>
+                                    <div class="buttonBold buttonEdit">Gras</div>
+                                    <div class="buttonUnderline buttonEdit">Souligné</div>
+                                    <div class="buttonItalic buttonEdit">Italique</div>
+                                    <div>
+                                        <div class="buttonFont buttonEdit">Police</div>
+                                        <input type="number" name="fontSize" class="fontSize" min="10" max = "99" value="20"/>
+                                    </div>
+                                    <div>
+                                        <div class="buttonColor buttonEdit red">Couleur</div>
+                                        <input type="color" name="textColor" class="textColor" value="#000000"/>
+                                    </div>
+                                </div>
                             </div>
                             <div class="divInputLabel hidden divInputImage">
                                 <label for="imageItem">Image</label>
@@ -67,6 +81,13 @@ class Popup
                             <input type="hidden" name="dropAjout" value="'.$item["id"].'">
                             <button class="red" type="submit">Modifier</button>
                         </form>
+                    </div>
+                </div>
+                <div class="modal">
+                    <div class="modal-content red preview">
+                        <div class="btClose">x</div>
+                        <p class="titleModal">Prévisualisation</p>
+                        <div class="textPreview"></div>    
                     </div>
                 </div>';
         return $result;
@@ -107,7 +128,7 @@ class Popup
 
     function modalAddItem(string $parent){
         return '
-        <div class="modal block">
+        <div class="modal">
                 <div class="modal-content red ">
                     <div class="btClose">x</div>
                     <p class="titleModal">Ajouter un item dans l\'exercice '.$parent.' ?</p>
@@ -140,7 +161,7 @@ class Popup
                         </div>
                         <div class="divInputLabel divInputTexte">
                             <label for="textItem">Texte</label>
-                            <textarea name="textItem" id="textItem" class="textItem">texte</textarea>
+                            <textarea name="textItem" id="textItem" class="textItem"></textarea>
                             <div class="buttonsEditGroup">
                                 <div class="buttonPreview buttonEdit btModal">Preview</div>
                                 <div class="buttonBold buttonEdit">Gras</div>
@@ -166,7 +187,7 @@ class Popup
                 </div>
             </div>
             <div class="modal">
-                <div class="modal-content red ">
+                <div class="modal-content red preview">
                     <div class="btClose">x</div>
                     <p class="titleModal">Prévisualisation</p>
                     <div class="textPreview"></div>    

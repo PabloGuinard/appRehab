@@ -52,6 +52,8 @@ function putTagsInSelection(tag){
     if(activeEl.value !== undefined){
         let selStart = activeEl.selectionStart;  
         let selEnd = activeEl.selectionEnd;
+        if(selStart === selEnd)
+            return
         let result
 
         if(text.substr(selStart, 2) === "<" + tag[0]){
@@ -72,18 +74,6 @@ function putTagsInSelection(tag){
         activeEl.value = result
     }
 }
-
-//line break
-$('.textItem').keydown(function(event) {
-    if (event.keyCode == 13) {
-        let textArea = document.activeElement
-        event.preventDefault();
-        let cursorPosition = $('.textItem').prop("selectionStart")
-        let text = textArea.value
-        textArea.value = text.slice(0, cursorPosition) + "<r>\n" + text.slice(cursorPosition, text.length)
-        $('.textItem').prop('selectionEnd', cursorPosition + 4)
-    }
-})
 
 //preview
 const btPreviews = document.getElementsByClassName('buttonPreview')
@@ -117,9 +107,6 @@ function rawToHtml(raw){
                 case 'i':
                     result += '<span style="font-style: italic">'
                     break
-                case 'r':
-                    result += '</br>'
-                    break
                 case 'p':
                     result += '<span style="font-size: ' + tag.substr(2, 2) + 'px">'
                     break
@@ -130,11 +117,14 @@ function rawToHtml(raw){
                     result += '</span>'
                     break
             }
-        } else {
+        }
+        else if(raw[cpt] === '\n'){
+            result += '</br>'
+        }
+        else {
             result += raw[cpt]
         }
     }
-    console.log(result);
     return result
 }
 
