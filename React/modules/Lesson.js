@@ -63,6 +63,7 @@ function test(text){
 function parseText(text){
   let tags = []
   let rawText = ""
+  //find tags
   for (let cpt = 0; cpt < text.length; cpt++) {
     if(text[cpt] === '<'){
       let tag = ''
@@ -82,7 +83,8 @@ function parseText(text){
       rawText += text[cpt]
     }
   }
-  let closingTagsPos = []
+  //find closing tags
+  let closingTags = []
   for (let cpt = tags.length - 1; cpt > -1; cpt--) {
     //find closing tag
     let closingTag = '</' + tags[cpt].tag.substr(1,  tags[cpt].tag.length)
@@ -97,13 +99,72 @@ function parseText(text){
         closingTagPos = index
       index++
     }
-    closingTagsPos.push({
+    closingTags.push({
       tag: closingTag,
       pos: closingTagPos
     })
   }
-  console.log(closingTagsPos);
-  return null
+  closingTags.reverse()
+  let index = 0
+  let result = []
+  console.log("\n\n\n\n\n\n\n\n\n\n\n");
+  while(index < tags.length){
+    result.push(createBalise(tags, closingTags, text, index))
+    index = result[result.length - 1].start
+    // console.log(index);
+  }
+  result.forEach(element => {
+    console.log(element.balise.props.children);
+  })
+  let tmp = []
+  result.forEach(element => {
+    tmp.push(element.balise)
+  });
+
+  return tmp
+}
+
+function createBalise(tags, closingTags, text, start){
+  let result
+  //case children tags
+  if(tags.length > start + 1){
+    if(closingTags[start].pos > tags[start + 1].pos){
+      let children = []
+      let parentStart = start
+      while(closingTags[start].pos > tags[start + 1].pos){
+        start++
+        children.push(createBalise(tags, closingTags, text, start))
+      }
+      result = {
+        balise: tagToBalise(tags[parentStart], closingTags[parentStart], text.substr(tags[parentStart].pos + tags[parentStart].tag.length, closingTags[parentStart].pos - tags[parentStart].pos - tags[parentStart].tag.length)),
+        // balise: tagToBalise(tags[parentStart], closingTags[parentStart], ["text", <Text key={1}> allo </Text>, "ciao"]),
+        start: start + 1
+      }
+      return result
+    }
+  }
+  result = {
+    balise: tagToBalise(tags[start], closingTags[start], text.substr(tags[start].pos + tags[start].tag.length, closingTags[start].pos - tags[start].pos - tags[start].tag.length)),
+    start: start + 1
+  }
+  return result
+}
+
+function tagToBalise(tag, closingTag, text){
+  let stylePerso
+  switch (tag.tag[1]) {
+    case 'g':
+      stylePerso = {fontWeight: 'bold'}
+      break;
+    case 'i':
+      stylePerso = {fontStyle: 'italic'}
+      break;
+    case 's':
+      stylePerso = {textDecorationLine: 'underline'}
+      break;
+  }
+  //console.log("<Text style=" + stylePerso + ">" + text + "</Text>");
+  return <Text style={stylePerso}>{text}</Text>
 }
 
 const ItemTexte = (item) => (
