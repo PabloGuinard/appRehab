@@ -51,8 +51,7 @@ class Popup
                             <label for="textItem">Texte</label>
                             <textarea name="textItem" class="textItem" id="textItem">';
         if($item["typeItem"] == 'Texte') $result .= $item["nom"];
-        $result .= '
-                                </textarea>
+        $result .= '</textarea>
                                     <div class="buttonsEditGroup">
                                     <div class="buttonPreview buttonEdit btModal">Preview</div>
                                     <div class="buttonBold buttonEdit">Gras</div>
