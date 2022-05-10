@@ -18,11 +18,11 @@ class Popup
     }
 
     function modalUpdateItem($item){
-        $result = '<div class="modal">
+        $result = '<div class="modal modalEditText">
                 <div class="modal-content red ">
                     <div class="btClose">x</div>
                     <p class="titleModal">Modifier l\'item '.$item["typeItem"].' ?</p>
-                    <form action="traitement/modifItem.php" method="post" enctype="multipart/form-data">
+                    <form action="traitement/modifItem.php" method="post" enctype="multipart/form-data" class="formEditText">
                         <div id="divRadioAjout">
                             <div class="classRadio divRadioTexte">
                                 <input type="radio" name="typeFichier" id="texteRadio" value="Texte" class="widthNormal noMargin" required="required" checked="checked">
@@ -49,7 +49,7 @@ class Popup
                         </div>
                         <div class="divInputLabel divInputTexte">
                             <label for="textItem">Texte</label>
-                            <textarea name="textItem" class="textItem" id="textItem">';
+                            <textarea name="textItem" class="textItem textEditText" id="textItem">';
         if($item["typeItem"] == 'Texte') $result .= $item["nom"];
         $result .= '</textarea>
                                     <div class="buttonsEditGroup">
@@ -78,7 +78,7 @@ class Popup
         $result .= '">
                             </div>
                             <input type="hidden" name="dropAjout" value="'.$item["id"].'">
-                            <button class="red" type="submit">Modifier</button>
+                            <button class="red submitEditText" type="submit">Modifier</button>
                         </form>
                     </div>
                 </div>

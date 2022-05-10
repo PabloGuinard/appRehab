@@ -1,8 +1,10 @@
 <?php session_start();
-if (!isset($_SESSION["connected"])){
-    header('Location: connexion.php');
-    die();
-}?>
+include "class/Db.php";
+$db = new Db();
+$db->authenticate();
+include "class/Popup.php";
+$popup = new Popup()
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,10 +12,6 @@ if (!isset($_SESSION["connected"])){
     <title>DashBoard | Base de données</title>
     <link href="css/style.css" rel="stylesheet">
 </head>
-<?php include "class/Db.php";
-$db = new Db();
-include "class/Popup.php";
-$popup = new Popup()?>
 <body>
 <div class="h1Button">
     <h1 class="h1DataBase">Dashboard</h1>

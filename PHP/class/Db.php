@@ -295,4 +295,19 @@ class Db {
         }
         return $result;
     }
+
+    public function authenticate(){
+        $cas_host = "portail.cpa01.fr";
+        $cas_port = 443;
+        $cas_context = "/cas";
+        $phpcas_path = "./vendor/jasig/phpcas";
+
+        require_once $phpcas_path . '/CAS.php';
+
+        phpCAS::setLogger();
+        phpCAS::setVerbose(true);
+        phpCAS::client(CAS_VERSION_3_0, $cas_host, $cas_port, $cas_context);
+        phpCAS::setNoCasServerValidation();
+        phpCAS::forceAuthentication();
+    }
 }

@@ -1,8 +1,10 @@
 <?php session_start();
-if (!$_SESSION["connected"]){
-    header('Location: connexion.php');
-    die();
-}?>
+include "class/Db.php";
+include "class/Popup.php";
+$db = new Db();
+$popup = new Popup();
+$db->authenticate();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,8 +12,6 @@ if (!$_SESSION["connected"]){
     <title>DashBoard | Commentaires</title>
     <link href="css/style.css" rel="stylesheet">
 </head>
-<?php include "class/Db.php";
-include "class/Popup.php"?>
 <body>
     <div class="h1Button">
         <h1 class="h1DataBase">Commentaires</h1>
@@ -23,8 +23,7 @@ include "class/Popup.php"?>
     </div>
     <p id="erreur"><?php if(isset($_SESSION["message"]))echo $_SESSION["message"];
     unset($_SESSION["message"])?></p>
-    <?php $db = new Db();
-    $popup = new Popup();
+    <?php 
     $allCommentaires = $db->getAllCommentaires();
     $allCommentaires = array_reverse($allCommentaires);
     foreach ($allCommentaires as $commentaire){
