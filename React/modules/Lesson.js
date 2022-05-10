@@ -3,6 +3,7 @@ import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, Text, Linki
 import ModalRate from './ModalRate';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import HTMLView from 'react-native-htmlview';
+import { TapGestureHandler } from 'react-native-gesture-handler';
 
 function printObject(item, params) {
   switch (item.type){
@@ -21,138 +22,93 @@ function printObject(item, params) {
   } 
 }
 
-function test(text){
-  let result = "<View style={styles.itemContentExercise}><Text style={style.data}>"
-  for (let cpt = 0; cpt < text.length; cpt++) {
-    if(text[cpt] === '<'){
-      let tag = ''
-      while (text[cpt] !== '>') {
-        tag += text[cpt]
-        cpt++
-      }
-      tag += '>'
-      switch(tag[1]){
-        case 'g':
-          result += <Text style={{fontWeight: 'bold'}}/>
-          break
-        case 's':
-          result += <Text style={{textDecorationLine: 'underline'}}/>
-          break
-        case 'i':
-          result += <Text style={{fontStyle: 'italic'}}/>
-          break
-        case 'p':
-          
-          break
-        case '#':
-          
-          break
-        case '/':
-          result += <Text/>
-          break
-      }
-    }
-    else{
-      result += text[cpt]
-    }
-  }
-  result += "</Text></View>"
-  return result
+function componentToString(component){
+  console.log(component.props.children + "");
 }
 
-function parseText(text){
-  let tags = []
-  let rawText = ""
-  //find tags
-  for (let cpt = 0; cpt < text.length; cpt++) {
-    if(text[cpt] === '<'){
-      let tag = ''
-      let pos = cpt
-      while (text[cpt] !== '>') {
-        tag += text[cpt]
-        cpt++
-      }
-      tag += '>'
-      if(tag[1] !== '/')
-        tags.push({
-          tag: tag,
-          pos: pos
-        })
-    }
-    else{
-      rawText += text[cpt]
-    }
-  }
-  //find closing tags
-  let closingTags = []
-  for (let cpt = tags.length - 1; cpt > -1; cpt--) {
-    //find closing tag
-    let closingTag = '</' + tags[cpt].tag.substr(1,  tags[cpt].tag.length)
-    let closingTagPos = -1
-    let index = tags[cpt].pos
-    while(closingTagPos === -1 && index <= text.length - closingTag.length){
-      let tmp = ""
-      for(let i = index; i < closingTag.length + index; i++){
-        tmp +=text[i]
-      }
-      if(closingTag === tmp)
-        closingTagPos = index
-      index++
-    }
-    closingTags.push({
-      tag: closingTag,
-      pos: closingTagPos
-    })
-  }
-  closingTags.reverse()
-  let index = 0
-  let result = []
-  console.log("\n\n\n\n\n\n\n\n\n\n\n");
-  while(index < tags.length){
-    result.push(createBalise(tags, closingTags, text, index))
-    index = result[result.length - 1].start
-    // console.log(index);
-  }
-  result.forEach(element => {
-    console.log(element.balise.props.children);
-  })
-  let tmp = []
-  result.forEach(element => {
-    tmp.push(element.balise)
+function getComponents(text){
+  console.log("\n\n\n\n\n\n\n\n\n\n\n")
+  global.key = -1
+  let tmp = parseText(text)
+  tmp.forEach(element => {
+    //componentToString(element)
   });
-
   return tmp
 }
 
-function createBalise(tags, closingTags, text, start){
-  let result
-  //case children tags
-  if(tags.length > start + 1){
-    if(closingTags[start].pos > tags[start + 1].pos){
-      let children = []
-      let parentStart = start
-      while(closingTags[start].pos > tags[start + 1].pos){
-        start++
-        children.push(createBalise(tags, closingTags, text, start))
-      }
-      result = {
-        balise: tagToBalise(tags[parentStart], closingTags[parentStart], text.substr(tags[parentStart].pos + tags[parentStart].tag.length, closingTags[parentStart].pos - tags[parentStart].pos - tags[parentStart].tag.length)),
-        // balise: tagToBalise(tags[parentStart], closingTags[parentStart], ["text", <Text key={1}> allo </Text>, "ciao"]),
-        start: start + 1
-      }
-      return result
+function findTag(text, pos){
+  let tmp = pos
+  while(text[tmp] !== '>')
+    tmp++
+  tmp++
+  let tag = {
+    close: tmp,
+    open: pos,
+    length: tmp - pos,
+    text: text.substr(pos, tmp - pos),
+    isClosing: false
+  }
+
+  if(tag.text[1] === '/')
+    tag.isClosing = true
+
+  return tag
+}
+
+function findClosingTag(text, tag){
+  let closingTag = '</' + tag.text.substr(1)
+  for (let cpt = tag.close; cpt < text.length; cpt++) {
+    let tmp = text.substr(cpt, closingTag.length)
+    if(tmp === closingTag)
+      return findTag(text, cpt)
+  }
+}
+
+function parseText(text){
+  //get tags
+  let tags = []
+  for (let char = 0; char < text.length; char++) {
+    if(text[char] === '<'){
+      tags.push(findTag(text, char))
+      tags.push(findClosingTag(text, tags[tags.length -1]))
+      char = tags[tags.length - 1].close
     }
   }
-  result = {
-    balise: tagToBalise(tags[start], closingTags[start], text.substr(tags[start].pos + tags[start].tag.length, closingTags[start].pos - tags[start].pos - tags[start].tag.length)),
-    start: start + 1
+  if(tags.length === 0)
+    return text
+  //get tags 's children
+  let children = []
+  for(let cpt = 0; cpt < tags.length; cpt += 2){
+    children.push(tagToComponent(tags[cpt], parseText(text.substr(tags[cpt].close, tags[cpt + 1].open - tags[cpt].close))))
+  }
+  //console.log(JSON.stringify(text.substr(tags[1].close, tags[1 + 1].open - tags[1].close)));
+  console.log('\n\n\n')
+  //children.forEach(child => componentToString(child))
+  
+  let result = []
+  let tmp
+
+  let char = 0
+  for(let cpt = 0; cpt < tags.length; cpt +=2){
+    tmp = text.substr(char, tags[cpt].open - char)
+    console.log(tmp);
+    global.key++
+    result.push(<Text key={global.key}>{tmp}</Text>)
+    result.push(children[cpt / 2])
+    char = tags[cpt + 1].close
+  }
+  if(char !== text.length){
+    tmp = text.substr(char)
+    global.key++
+    console.log(tmp);
+    result.push(<Text key={global.key}>{tmp}</Text>)
   }
   return result
 }
 
-function tagToBalise(tag, closingTag, text){
+function tagToComponent(tag, text){
   let stylePerso
-  switch (tag.tag[1]) {
+  switch (tag.text[1]) {
     case 'g':
       stylePerso = {fontWeight: 'bold'}
       break;
@@ -163,12 +119,12 @@ function tagToBalise(tag, closingTag, text){
       stylePerso = {textDecorationLine: 'underline'}
       break;
   }
-  //console.log("<Text style=" + stylePerso + ">" + text + "</Text>");
-  return <Text style={stylePerso}>{text}</Text>
+  global.key++
+  return <Text key={global.key} style={stylePerso}>{text}</Text>
 }
 
 const ItemTexte = (item) => (
-  parseText(item.data)
+  getComponents(item.data)
 );
 
 const ItemURL = (item) => (
