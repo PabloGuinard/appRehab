@@ -22,17 +22,9 @@ function printObject(item, params) {
   } 
 }
 
-function componentToString(component){
-  console.log(component.props.children + "");
-}
-
 function getComponents(text){
-  console.log("\n\n\n\n\n\n\n\n\n\n\n")
   global.key = -1
   let tmp = parseText(text)
-  tmp.forEach(element => {
-    //componentToString(element)
-  });
   return tmp
 }
 
@@ -51,7 +43,6 @@ function findTag(text, pos){
 
   if(tag.text[1] === '/')
     tag.isClosing = true
-
   return tag
 }
 
@@ -71,19 +62,18 @@ function parseText(text){
     if(text[char] === '<'){
       tags.push(findTag(text, char))
       tags.push(findClosingTag(text, tags[tags.length -1]))
-      char = tags[tags.length - 1].close
+      char = tags[tags.length - 1].close - 1
     }
   }
-  if(tags.length === 0)
-    return text
+  if(tags.length === 0){
+    global.key++
+    return <Text key={global.key}>{text}</Text>
+  }
   //get tags 's children
   let children = []
   for(let cpt = 0; cpt < tags.length; cpt += 2){
     children.push(tagToComponent(tags[cpt], parseText(text.substr(tags[cpt].close, tags[cpt + 1].open - tags[cpt].close))))
   }
-  //console.log(JSON.stringify(text.substr(tags[1].close, tags[1 + 1].open - tags[1].close)));
-  console.log('\n\n\n')
-  //children.forEach(child => componentToString(child))
   
   let result = []
   let tmp
@@ -91,18 +81,19 @@ function parseText(text){
   let char = 0
   for(let cpt = 0; cpt < tags.length; cpt +=2){
     tmp = text.substr(char, tags[cpt].open - char)
-    console.log(tmp);
-    global.key++
-    result.push(<Text key={global.key}>{tmp}</Text>)
+    if(tmp !== ''){
+      global.key++
+      result.push(<Text key={global.key}>{tmp}</Text>)
+    }
     result.push(children[cpt / 2])
     char = tags[cpt + 1].close
   }
   if(char !== text.length){
     tmp = text.substr(char)
     global.key++
-    console.log(tmp);
     result.push(<Text key={global.key}>{tmp}</Text>)
   }
+  result = <Text>{result}</Text>
   return result
 }
 
@@ -118,6 +109,12 @@ function tagToComponent(tag, text){
     case 's':
       stylePerso = {textDecorationLine: 'underline'}
       break;
+    case '#':
+      stylePerso = {color: tag.text.substr(1, tag.length - 2)}
+      break
+    case 'p':
+      stylePerso = {fontSize: (Number)(tag.text.substr(2, tag.length - 3))}
+      break
   }
   global.key++
   return <Text key={global.key} style={stylePerso}>{text}</Text>
