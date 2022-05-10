@@ -16,10 +16,16 @@ function printObject(item, params) {
       const source = ({uri:'http://10.39.20.77/'+ item.data + '?' + new Date()});
       return <ItemImage data={source}/>
     case 'Video':
-      return <ItemVideo data={item.data}/>
+      return <ItemVideo data={getIdFromUrl(item.data)}/>
     case 'Button':
       return <ModalRate id={params.content[0].id}/>
   } 
+}
+
+function getIdFromUrl(url){
+  let regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+  let match = url.match(regex)
+  return (match&&match[7].length == 11) ? match[7] : false
 }
 
 function getComponents(text){
