@@ -12,6 +12,16 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Listage de la structure de la table id18263011_databaselarehab. categories
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Listage des données de la table id18263011_databaselarehab.categories : ~6 rows (environ)
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VALUES
@@ -23,6 +33,18 @@ INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VAL
 	(10, 'Culture & Infos', 1, NULL, '2022-04-22 09:15:21');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
+-- Listage de la structure de la table id18263011_databaselarehab. commentaires
+CREATE TABLE IF NOT EXISTS `commentaires` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `note` int(11) DEFAULT NULL,
+  `commentaire` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `exerciceId` int(11) NOT NULL,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `exerciceId` (`exerciceId`),
+  CONSTRAINT `FK_commentaires_exercices` FOREIGN KEY (`exerciceId`) REFERENCES `exercices` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Listage des données de la table id18263011_databaselarehab.commentaires : ~4 rows (environ)
 /*!40000 ALTER TABLE `commentaires` DISABLE KEYS */;
 INSERT INTO `commentaires` (`id`, `note`, `commentaire`, `exerciceId`, `isDeleted`) VALUES
@@ -31,6 +53,20 @@ INSERT INTO `commentaires` (`id`, `note`, `commentaire`, `exerciceId`, `isDelete
 	(33, 5, 'J\'ai beaucoup aimé', 11, 0),
 	(34, 4, 'commentaire', 11, 0);
 /*!40000 ALTER TABLE `commentaires` ENABLE KEYS */;
+
+-- Listage de la structure de la table id18263011_databaselarehab. exercices
+CREATE TABLE IF NOT EXISTS `exercices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `parentId` int(11) NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `themeId` (`parentId`) USING BTREE,
+  CONSTRAINT `FK_exercices_themes` FOREIGN KEY (`parentId`) REFERENCES `themes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Listage des données de la table id18263011_databaselarehab.exercices : ~16 rows (environ)
 /*!40000 ALTER TABLE `exercices` DISABLE KEYS */;
@@ -53,7 +89,22 @@ INSERT INTO `exercices` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `crea
 	(28, 'test final', 8, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1);
 /*!40000 ALTER TABLE `exercices` ENABLE KEYS */;
 
--- Listage des données de la table id18263011_databaselarehab.items : ~32 rows (environ)
+-- Listage de la structure de la table id18263011_databaselarehab. items
+CREATE TABLE IF NOT EXISTS `items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(10000) CHARACTER SET utf8 NOT NULL,
+  `typeItem` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `parentId` int(11) NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `exerciceId` (`parentId`) USING BTREE,
+  CONSTRAINT `FK_items_exercices` FOREIGN KEY (`parentId`) REFERENCES `exercices` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Listage des données de la table id18263011_databaselarehab.items : ~36 rows (environ)
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
 INSERT INTO `items` (`id`, `nom`, `typeItem`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`) VALUES
 	(11, '<p15><g>Halloween</g>, c\'est la quête des bonbons des enfants dans leur quartier mais c\'est aussi la confection de recettes diverses et variées et surtout très <i>créatives</i>. \r\ndom, que nous surnommons <#00ff55>EtcheDom </#00ff55>nous livre ici quelques exemples trouvés sur internet.</p15>', 'Texte', 11, 0, '2022-05-10 13:40:43', '2022-04-22 09:16:36', 0),
@@ -94,7 +145,19 @@ INSERT INTO `items` (`id`, `nom`, `typeItem`, `parentId`, `isReady`, `modifiedAt
 	(52, '<g>un texte tout en gras avec <#137634>cette partie en vert et ce <s>mot </s>souligné </#137634>avant la suite</g>', 'Texte', 28, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
--- Listage des données de la table id18263011_databaselarehab.mots : ~13 rows (environ)
+-- Listage de la structure de la table id18263011_databaselarehab. mots
+CREATE TABLE IF NOT EXISTS `mots` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `definition` varchar(1000) CHARACTER SET utf8 NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Listage des données de la table id18263011_databaselarehab.mots : ~16 rows (environ)
 /*!40000 ALTER TABLE `mots` DISABLE KEYS */;
 INSERT INTO `mots` (`id`, `nom`, `definition`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`) VALUES
 	(4, 'Attention sélective test', 'Capacité à focaliser son attention sur des informations pertinentes en laissant de côté celles qui ne sont pas utiles pour l\'activité en cours.', 1, '2022-05-02 13:53:59', '2022-04-22 09:16:57', 0),
@@ -115,13 +178,36 @@ INSERT INTO `mots` (`id`, `nom`, `definition`, `isReady`, `modifiedAt`, `created
 	(19, 'bb', 'a', 1, NULL, '2022-05-02 16:09:13', 0);
 /*!40000 ALTER TABLE `mots` ENABLE KEYS */;
 
+-- Listage de la structure de la table id18263011_databaselarehab. presentation
+CREATE TABLE IF NOT EXISTS `presentation` (
+  `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`contenu`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Listage des données de la table id18263011_databaselarehab.presentation : ~1 rows (environ)
 /*!40000 ALTER TABLE `presentation` DISABLE KEYS */;
 INSERT INTO `presentation` (`contenu`, `isReady`, `modifiedAt`, `createdAt`) VALUES
 	('test L\'App\'Rehab a été créée en mars 2022 et a pour objectif de base de vous soutenir, toutes et tous. A l\'époque, nous avions décidé de vous accompagner quotidiennement en vous proposant de nombreuses activités à réaliser chez vous. Nous vous avons donc proposé différents outils de créativité et bien d\'autres thématiques encore. Il nous semblait fondamental de faire en sorte que le programme de Réhab que vous aviez engagé en début d\'année au sein du DSRPS puisse continuer.', 1, '2022-05-03 16:41:32', '2022-04-22 09:17:14');
 /*!40000 ALTER TABLE `presentation` ENABLE KEYS */;
 
--- Listage des données de la table id18263011_databaselarehab.themes : ~22 rows (environ)
+-- Listage de la structure de la table id18263011_databaselarehab. themes
+CREATE TABLE IF NOT EXISTS `themes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `parentId` int(11) NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `categorieId` (`parentId`) USING BTREE,
+  CONSTRAINT `FK_themes_categories` FOREIGN KEY (`parentId`) REFERENCES `categories` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Listage des données de la table id18263011_databaselarehab.themes : ~30 rows (environ)
 /*!40000 ALTER TABLE `themes` DISABLE KEYS */;
 INSERT INTO `themes` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`) VALUES
 	(8, 'Cuisine test', 1, 1, '2022-05-02 13:52:40', '2022-04-22 09:17:32', 0),
