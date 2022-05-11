@@ -1,5 +1,5 @@
 {
     "require": {
-        "jasig/phpcas": "^1.4"
+        "jasig/phpcas": "^1.5"
     }
 }

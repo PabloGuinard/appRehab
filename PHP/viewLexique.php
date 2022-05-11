@@ -40,6 +40,6 @@ foreach ($allMots as $mot){
             </div>
         </div>";
 }?>
-<script src="js/popup.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

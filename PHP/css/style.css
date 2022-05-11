@@ -77,10 +77,14 @@ input, select, textarea{
     height: 65px;
     resize: none;
 }
-#textItem{
+#textItem, .textPreview{
     width: 100%;
     resize: vertical;
     min-height: 50px;
+}
+.textPreview{
+    font-size: 20px;
+    text-align: left;
 }
 .classThemeExercice{
     width: 48%;
@@ -296,7 +300,7 @@ a{
     border-radius: 10px;
     margin: 10px;
 }
-.modal {
+.modal{
     display: none;
     position: fixed;
     z-index: 1;
@@ -305,7 +309,6 @@ a{
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
 .modal-content {
@@ -373,6 +376,30 @@ img{
 }
 .newMargin{
     margin: 0 10px;
+}
+.buttonEdit, .buttonEditDouble{
+    color: white;
+    background-color: #54aefc;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 100px;
+}
+.fontSize, .textColor{
+    width: 100px;
+    margin: 0 10px;
+}
+.block{
+    display: block;
+}
+.preview{
+    width: 50vw;
 }
 @media (max-width: 1000px) {
     .divThemeExercice{

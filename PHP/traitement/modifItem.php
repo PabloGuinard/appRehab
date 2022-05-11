@@ -17,6 +17,9 @@ switch ($_POST["typeFichier"]){
     case "Lien":
         $_SESSION["message"] = $db->updateItem($_POST["lienItem"], $_POST["dropAjout"], "Lien");
         break;
+    case "Video":
+        $_SESSION["message"] = $db->updateItem($_POST["videoItem"], $_POST["dropAjout"], "Video");
+        break;
     case "Texte":
         $_SESSION["message"] = $db->updateItem($_POST["textItem"], $_POST["dropAjout"], "Texte");
         break;

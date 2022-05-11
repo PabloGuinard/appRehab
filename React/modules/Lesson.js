@@ -1,6 +1,9 @@
 import React from 'react';
 import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, Text, Linking, Platform} from 'react-native';
 import ModalRate from './ModalRate';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import HTMLView from 'react-native-htmlview';
+import { TapGestureHandler } from 'react-native-gesture-handler';
 
 function printObject(item, params) {
   switch (item.type){
@@ -12,15 +15,119 @@ function printObject(item, params) {
       // const source = ({uri:'https://apprehab.000webhostapp.com/'+ item.data + '?' + new Date()});
       const source = ({uri:'http://10.39.20.77/'+ item.data + '?' + new Date()});
       return <ItemImage data={source}/>
+    case 'Video':
+      return <ItemVideo data={getIdFromUrl(item.data)}/>
     case 'Button':
       return <ModalRate id={params.content[0].id}/>
+  } 
+}
+
+function getIdFromUrl(url){
+  let regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+  let match = url.match(regex)
+  return (match&&match[7].length == 11) ? match[7] : false
+}
+
+function getComponents(text){
+  global.key = -1
+  let tmp = parseText(text)
+  return tmp
+}
+
+function findTag(text, pos){
+  let tmp = pos
+  while(text[tmp] !== '>')
+    tmp++
+  tmp++
+  let tag = {
+    close: tmp,
+    open: pos,
+    length: tmp - pos,
+    text: text.substr(pos, tmp - pos),
+    isClosing: false
+  }
+
+  if(tag.text[1] === '/')
+    tag.isClosing = true
+  return tag
+}
+
+function findClosingTag(text, tag){
+  let closingTag = '</' + tag.text.substr(1)
+  for (let cpt = tag.close; cpt < text.length; cpt++) {
+    let tmp = text.substr(cpt, closingTag.length)
+    if(tmp === closingTag)
+      return findTag(text, cpt)
   }
 }
 
+function parseText(text){
+  //get tags
+  let tags = []
+  for (let char = 0; char < text.length; char++) {
+    if(text[char] === '<'){
+      tags.push(findTag(text, char))
+      tags.push(findClosingTag(text, tags[tags.length -1]))
+      char = tags[tags.length - 1].close - 1
+    }
+  }
+  if(tags.length === 0){
+    global.key++
+    return <Text key={global.key}>{text}</Text>
+  }
+  //get tags 's children
+  let children = []
+  for(let cpt = 0; cpt < tags.length; cpt += 2){
+    children.push(tagToComponent(tags[cpt], parseText(text.substr(tags[cpt].close, tags[cpt + 1].open - tags[cpt].close))))
+  }
+  
+  let result = []
+  let tmp
+
+  let char = 0
+  for(let cpt = 0; cpt < tags.length; cpt +=2){
+    tmp = text.substr(char, tags[cpt].open - char)
+    if(tmp !== ''){
+      global.key++
+      result.push(<Text key={global.key}>{tmp}</Text>)
+    }
+    result.push(children[cpt / 2])
+    char = tags[cpt + 1].close
+  }
+  if(char !== text.length){
+    tmp = text.substr(char)
+    global.key++
+    result.push(<Text key={global.key}>{tmp}</Text>)
+  }
+  result = <Text>{result}</Text>
+  return result
+}
+
+function tagToComponent(tag, text){
+  let stylePerso
+  switch (tag.text[1]) {
+    case 'g':
+      stylePerso = {fontWeight: 'bold'}
+      break;
+    case 'i':
+      stylePerso = {fontStyle: 'italic'}
+      break;
+    case 's':
+      stylePerso = {textDecorationLine: 'underline'}
+      break;
+    case '#':
+      stylePerso = {color: tag.text.substr(1, tag.length - 2)}
+      break
+    case 'p':
+      stylePerso = {fontSize: (Number)(tag.text.substr(2, tag.length - 3))}
+      break
+  }
+  global.key++
+  return <Text key={global.key} style={stylePerso}>{text}</Text>
+}
+
 const ItemTexte = (item) => (
-  <View style={styles.itemContentExercise}>
-    <Text style={styles.data}>{item.data}</Text>
-  </View>
+  getComponents(item.data)
 );
 
 const ItemURL = (item) => (
@@ -34,6 +141,14 @@ const ItemImage = (item) => (
     <Image source={item.data} style={styles.im}/>
   </View>
 );
+
+const ItemVideo = (item) => (
+  <YoutubePlayer
+    height={250}
+    play={false}
+    videoId={item.data}
+  />
+)
 
 const Lesson = (params) => {
   const renderItem =({item}) => (

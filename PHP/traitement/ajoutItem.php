@@ -21,6 +21,8 @@ if($_POST["textItem"] != null || $_POST["lienItem"] != null || $_FILES["imageIte
         case "Texte":
             $_SESSION["message"] = $db->addItem($_POST["textItem"], $_POST["dropAjout"], "Texte");
             break;
+        case "Video":
+            $_SESSION["message"] = $db->addItem($_POST["videoItem"], $_POST["dropAjout"], "Video");
     }
 } else {
     $_SESSION["message"] = "Item vide";
