@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `mots` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.mots : ~16 rows (environ)
+-- Listage des données de la table id18263011_databaselarehab.mots : ~17 rows (environ)
 DELETE FROM `mots`;
 /*!40000 ALTER TABLE `mots` DISABLE KEYS */;
 INSERT INTO `mots` (`id`, `nom`, `definition`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
