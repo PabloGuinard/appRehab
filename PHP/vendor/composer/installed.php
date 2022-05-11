@@ -1,22 +1,30 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
+<<<<<<< Updated upstream
         'reference' => 'b613f38f089836e1fd729a8651139376dc0f2191',
+=======
+        'reference' => NULL,
+>>>>>>> Stashed changes
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
+<<<<<<< Updated upstream
             'reference' => 'b613f38f089836e1fd729a8651139376dc0f2191',
+=======
+            'reference' => NULL,
+>>>>>>> Stashed changes
             'dev_requirement' => false,
         ),
         'jasig/phpcas' => array(

@@ -1,8 +1,17 @@
 <?php session_start();
+<<<<<<< Updated upstream
 if (!isset($_SESSION["connected"])){
     header('Location: connexion.php');
     die();
 }?>
+=======
+include "class/Db.php";
+$db = new Db();
+$db->authenticate();
+include "class/Popup.php";
+$popup = new Popup();
+?>
+>>>>>>> Stashed changes
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,6 +30,7 @@ $popup = new Popup()?>
         <a href="updateApp.php">Mettre à jour l'app</a>
         <a href="viewLexique.php">Voir le lexique</a>
         <a href="viewRates.php">Voir les commentaires</a>
+        <a href="logout.php">Connecté : <?=phpCAS::getAttributes()["cn"]?></a>
     </div>
 </div>
 <p id="erreur"><?php if(isset($_SESSION["message"]))echo $_SESSION["message"];

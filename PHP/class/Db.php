@@ -1,6 +1,10 @@
 <?php
 class Db {
     public $pdo;
+    public $cas_host = "portail.cpa01.fr";
+    public $cas_port = 443;
+    public $cas_context = "/cas";
+    public $phpcas_path = "./vendor/jasig/phpcas";
     function __construct(){
         try{
             try{
@@ -295,4 +299,22 @@ class Db {
         }
         return $result;
     }
+<<<<<<< Updated upstream
+=======
+
+    public function authenticate(){
+        require_once $this->phpcas_path . '/CAS.php';
+
+        phpCAS::setLogger();
+        phpCAS::setVerbose(true);
+        phpCAS::client(CAS_VERSION_3_0, $this->cas_host, $this->cas_port, $this->cas_context);
+        phpCAS::setNoCasServerValidation();
+        phpCAS::forceAuthentication();
+    }
+
+    public function logout(){
+        require_once $this->phpcas_path . '/CAS.php';
+        phpCAS::logoutWithUrl("http://localhost/index.php");
+    }
+>>>>>>> Stashed changes
 }

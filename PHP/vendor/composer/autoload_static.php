@@ -4,7 +4,11 @@
 
 namespace Composer\Autoload;
 
+<<<<<<< Updated upstream
 class ComposerStaticInit591e10f7d93f3f15c6e390ce7509823a
+=======
+class ComposerStaticInit3168fb79f2dee8d0a050e8e99818d5c9
+>>>>>>> Stashed changes
 {
     public static $prefixLengthsPsr4 = array (
         'P' => 
@@ -75,9 +79,15 @@ class ComposerStaticInit591e10f7d93f3f15c6e390ce7509823a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+<<<<<<< Updated upstream
             $loader->prefixLengthsPsr4 = ComposerStaticInit591e10f7d93f3f15c6e390ce7509823a::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit591e10f7d93f3f15c6e390ce7509823a::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit591e10f7d93f3f15c6e390ce7509823a::$classMap;
+=======
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3168fb79f2dee8d0a050e8e99818d5c9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3168fb79f2dee8d0a050e8e99818d5c9::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3168fb79f2dee8d0a050e8e99818d5c9::$classMap;
+>>>>>>> Stashed changes
 
         }, null, ClassLoader::class);
     }

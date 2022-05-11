@@ -29,4 +29,4 @@
 
 require_once __DIR__.'/source/CAS.php';
 
-trigger_error('Including CAS.php is deprecated. Install phpCAS using composer instead.', E_USER_DEPRECATED);
+//trigger_error('Including CAS.php is deprecated. Install phpCAS using composer instead.', E_USER_DEPRECATED);
