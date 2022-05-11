@@ -19,6 +19,7 @@ $db->authenticate();
         <a href="updateApp.php">Mettre à jour l'app</a>
         <a href="index.php">Retourner au dashboard</a>
         <a href="viewRates.php">Voir les commentaires</a>
+        <a href="logout.php">Connecté : <?=phpCAS::getAttributes()["cn"]?></a>
     </div>
 </div>
 <p id="erreur"><?php if(isset($_SESSION["message"]))echo $_SESSION["message"];
