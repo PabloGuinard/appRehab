@@ -1,5 +1,8 @@
 <?php
 session_start();
+include("../class/Db.php");
+$db = new Db();
+$db->authenticate();
 if($_FILES["challenge"]["size"] < 3145728 AND isset($_FILES['challenge']) AND $_FILES['challenge']['error'] == 0){
     if(file_exists('../database/challenge/challenge.jpg')){
         unlink('../database/challenge/challenge.jpg');

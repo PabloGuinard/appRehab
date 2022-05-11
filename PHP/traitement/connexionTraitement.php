@@ -1,5 +1,8 @@
 <?php
 session_start();
+include("../class/Db.php");
+$db = new Db();
+$db->authenticate();
 if($_POST["username"] == "team-laRehab" && password_verify($_POST["password"],'$2y$10$ul6xf/WM5UaWtved0/ofse4XI8zEdkDOZiBxv0mMFRHwpeWH/KUR2')){
     $_SESSION["connected"] = true;
     $_SESSION["connexion"] = "";

@@ -1,8 +1,10 @@
 <?php session_start();
-if (!isset($_SESSION["connected"])){
-    header('Location: connexion.php');
-    die();
-}?>
+include "class/Db.php";
+$db = new Db();
+$db->authenticate();
+include "class/Popup.php";
+$popup = new Popup();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,10 +12,6 @@ if (!isset($_SESSION["connected"])){
     <title>DashBoard | Base de données</title>
     <link href="css/style.css" rel="stylesheet">
 </head>
-<?php include "class/Db.php";
-$db = new Db();
-include "class/Popup.php";
-$popup = new Popup()?>
 <body>
 <div class="h1Button">
     <h1 class="h1DataBase">Dashboard</h1>
@@ -21,6 +19,7 @@ $popup = new Popup()?>
         <a href="updateApp.php">Mettre à jour l'app</a>
         <a href="viewLexique.php">Voir le lexique</a>
         <a href="viewRates.php">Voir les commentaires</a>
+        <a href="logout.php">Connecté : <?=phpCAS::getAttributes()["cn"]?></a>
     </div>
 </div>
 <p id="erreur"><?php if(isset($_SESSION["message"]))echo $_SESSION["message"];

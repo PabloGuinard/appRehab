@@ -2,6 +2,7 @@
 include "../class/Db.php";
 session_start();
 $db = new Db();
+$db->authenticate();
 if($_POST["textItem"] != null || $_POST["lienItem"] != null || $_FILES["imageItem"] != null){
     switch ($_POST["typeFichier"]){
         case "Image":

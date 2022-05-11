@@ -13,6 +13,11 @@
     --couleur3: #54aefc;
     list-style: none;
 }
+h2{
+    color: var(--couleurPrincipale);
+    font-size: 1rem;
+    margin: 10px;
+}
 h1{
     color: var(--couleurPrincipale);
 }
