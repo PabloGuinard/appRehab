@@ -2,6 +2,7 @@
 include "../class/Db.php";
 session_start();
 $db = new Db();
+$db->authenticate();
 switch ($_POST["typeFichier"]){
     case "Image":
         $_SESSION["message"] = $_FILES["imageItem"]["name"];

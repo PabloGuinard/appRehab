@@ -299,8 +299,6 @@ class Db {
         }
         return $result;
     }
-<<<<<<< Updated upstream
-=======
 
     public function authenticate(){
         require_once $this->phpcas_path . '/CAS.php';
@@ -316,5 +314,4 @@ class Db {
         require_once $this->phpcas_path . '/CAS.php';
         phpCAS::logoutWithUrl("http://localhost/index.php");
     }
->>>>>>> Stashed changes
 }

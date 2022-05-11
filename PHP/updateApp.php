@@ -1,10 +1,7 @@
 <?php session_start();
-if (!$_SESSION["connected"]){
-    header('Location: connexion.php');
-    die();
-}
 include 'class/Db.php';
 $db = new Db();
+$db->authenticate();
 
 $_SESSION["message"] = $db->setIsReadyTrue();
 

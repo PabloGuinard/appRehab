@@ -2,6 +2,7 @@
 include "../class/Db.php";
 session_start();
 $db = new Db();
+$db->authenticate();
 switch ($_POST["typeSuppr"]){
     case "Exercice":
         $_SESSION["message"] = $db->deleteLine($_POST["id"], "Exercices");

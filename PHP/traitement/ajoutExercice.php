@@ -2,6 +2,7 @@
 include "../class/Db.php";
 session_start();
 $db = new Db();
+$db->authenticate();
 if($_POST["titreExercice"] != null){
     $_SESSION["message"] = $db->addExercice($_POST["titreExercice"], $_POST["dropTheme"]);
 } else {
