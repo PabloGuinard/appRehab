@@ -4,7 +4,7 @@ class Db {
     public $cas_host = "portail.cpa01.fr";
     public $cas_port = 443;
     public $cas_context = "/cas";
-    public $phpcas_path = "./vendor/jasig/phpcas";
+    public $phpcas_path = __DIR__."/../vendor/jasig/phpcas";
     function __construct(){
         try{
             try{
@@ -21,6 +21,7 @@ class Db {
     }
 
     public function addTheme(string $nom, string $categorie){
+        $user = $this->getUserMail();
         $sth = $this->pdo->prepare("SELECT * FROM Categories WHERE nom= :categorie");
         $sth->execute(["categorie" => $categorie]);
         $result = $sth->fetch();
@@ -34,12 +35,13 @@ class Db {
         if($result != false){
             return "Thème déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Themes (nom, parentId, isReady) VALUES (:nom, :categorie, -1)");
-        $sth->execute(["nom" => $nom, "categorie" => $categorieId]);
+        $sth = $this->pdo->prepare("INSERT INTO Themes (nom, parentId, isReady, modifiedBy) VALUES (:nom, :categorie, -1, :user)");
+        $sth->execute(["nom" => $nom, "categorie" => $categorieId, "user" => $user]);
         return "Thème ajouté";
     }
 
     public function addExercice(string $nom, string $lesson){
+        $user = $this->getUserMail();
         $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nom= :lesson");
         $sth->execute(["lesson" => $lesson]);
         $result = $sth->fetch();
@@ -53,12 +55,13 @@ class Db {
         if($result != false){
             return "Exercice déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Exercices(nom, parentId, isReady) VALUES(:nom, :lessonId, -1)");
-        $sth->execute(["nom" => $nom, "lessonId" => $lessonId]);
+        $sth = $this->pdo->prepare("INSERT INTO Exercices(nom, parentId, isReady, modifiedBy) VALUES(:nom, :lessonId, -1, :user)");
+        $sth->execute(["nom" => $nom, "lessonId" => $lessonId, "user" => $user]);
         return "Exercice ajouté";
     }
 
     public function addItem(string $contenu, string $exercice, string $typeFile){
+        $user = $this->getUserMail();
         $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nom= :exercice");
         $sth->execute(["exercice" => $exercice]);
         $result = $sth->fetch();
@@ -72,24 +75,26 @@ class Db {
         if($result != false){
             return "Item déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Items(nom, typeItem, parentId, isReady) VALUES(:contenu, :typeFile, :exercice, -1)");
-        $sth->execute(["exercice" => $itemId, "contenu" => $contenu, "typeFile" => $typeFile]);
+        $sth = $this->pdo->prepare("INSERT INTO Items(nom, typeItem, parentId, isReady, modifiedBy) VALUES(:contenu, :typeFile, :exercice, -1, :user)");
+        $sth->execute(["exercice" => $itemId, "contenu" => $contenu, "typeFile" => $typeFile, "user" => $user]);
         return "Item ajouté";
     }
 
     public function addMot(string $mot, string $def){
+        $user = $this->getUserMail();
         $sth = $this->pdo->prepare("SELECT * FROM Mots WHERE nom= :mot AND isDeleted != 1");
         $sth->execute(["mot" => $mot]);
         $result = $sth->fetch();
         if($result != false){
             return "Mot déjà existant";
         }
-        $sth = $this->pdo->prepare("INSERT INTO Mots(nom, definition, isReady) VALUES(:mot, :def, -1)");
-        $sth->execute(["mot" => $mot, "def" => $def]);
+        $sth = $this->pdo->prepare("INSERT INTO Mots(nom, definition, isReady, modifiedBy) VALUES(:mot, :def, -1, :user)");
+        $sth->execute(["mot" => $mot, "def" => $def, "user" => $user]);
         return "Mot ajouté";
     }
 
     public function deleteLine(string $id, string $table){
+        $user = $this->getUserMail();
         $message = substr($table, 0, -1);
         switch($table){
             case("Themes"):
@@ -117,10 +122,10 @@ class Db {
             $result = $sth->fetchAll(PDO::FETCH_COLUMN, 0);
             foreach($result as $value){
                 echo $value;
-                $this->deleteLine($value, $childTable);
+                $this->deleteLine($value, $childTable, $user);
             }
         }
-        $request = "UPDATE " . $table . " SET isDeleted = 1, isReady = 0 WHERE id = " . $id;
+        $request = "UPDATE " . $table . " SET isDeleted = 1, isReady = 0, modifiedBy = '" . $user . "' WHERE id = " . $id;
         $sth = $this->pdo->prepare($request);
         $sth->execute();
         return $message . " supprimé";
@@ -206,34 +211,39 @@ class Db {
     }
 
     public function updateLine(string $newName, string $id, string $table){
-        $request = "UPDATE " . $table . " SET nom = '" . $newName . "', isReady = 0";
+        $user = $this->getUserMail();
+        $request = "UPDATE " . $table . " SET nom = '" . $newName . "', isReady = 0, modifiedBy = '" . $user . "'";
         $sth = $this->pdo->prepare($request . " WHERE id = :id");
         $sth->execute(["id" => $id]);
         return substr($table, 0, -1) . " mis à jour";
     }
 
     public function updateItem(string  $pathItem, string $id, string $typeItem){
-        $sth = $this->pdo->prepare("UPDATE Items SET typeItem= :typeItem, nom= :pathItem, isReady=0 WHERE id= :id");
-        $sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id]);
+        $user = $this->getUserMail();
+        $sth = $this->pdo->prepare("UPDATE Items SET typeItem= :typeItem, nom= :pathItem, isReady=0, modifiedBy= :user WHERE id= :id");
+        $sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id, "user" => $user]);
         return "Item mis à jour";
     }
 
     public function updatePresentation(string $contenu){
-        $sth = $this->pdo->prepare("UPDATE Presentation SET contenu= :contenu, isReady=0");
+        $user = $this->getUserMail();
+        $sth = $this->pdo->prepare("UPDATE Presentation SET contenu= :contenu, isReady=0, modifiedBy= " . $user);
         $sth->execute(["contenu" => $contenu]);
         echo $sth->fetch();
         return "Présentation mise à jour";
     }
 
     public function updateMot(string $mot, string $definition, string $id){
-        $sth = $this->pdo->prepare("UPDATE Mots SET nom= :mot, definition= :definition, isReady=0 WHERE id= :id");
-        $sth->execute(["mot" => $mot, "definition" => $definition, "id" => $id]);
+        $user = $this->getUserMail();
+        $sth = $this->pdo->prepare("UPDATE Mots SET nom= :mot, definition= :definition, isReady=0, modifiedBy= :user WHERE id= :id");
+        $sth->execute(["mot" => $mot, "definition" => $definition, "id" => $id, "user" => $user]);
         return "Mot modifié";
     }
 
     public function supprComm(string $id){
-        $sth = $this->pdo->prepare("UPDATE Commentaires SET isDeleted = 1 WHERE id= :id");
-        $sth->execute(["id" => $id]);
+        $user = $this->getUserMail();
+        $sth = $this->pdo->prepare("UPDATE Commentaires SET isDeleted = 1, modifiedBy= :user WHERE id= :id");
+        $sth->execute(["id" => $id, "user" => $user]);
         return "Commentaire supprimé";
     }
 
@@ -282,7 +292,6 @@ class Db {
 
     public function setDataInArray($data, $params){
         $arrayData = Array();
-        $arrayTmp = Array();
         $result = Array();
         $cpt = 0;
 
@@ -313,5 +322,9 @@ class Db {
     public function logout(){
         require_once $this->phpcas_path . '/CAS.php';
         phpCAS::logoutWithUrl("http://localhost/index.php");
+    }
+
+    public function getUserMail(){
+        return phpCAS::getAttributes()["mail"];
     }
 }
