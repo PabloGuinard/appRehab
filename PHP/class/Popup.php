@@ -53,16 +53,16 @@ class Popup
         if($item["typeItem"] == 'Texte') $result .= $item["nom"];
         $result .= '</textarea>
                                     <div class="buttonsEditGroup">
-                                    <div class="buttonPreview buttonEdit btModal">Preview</div>
-                                    <div class="buttonBold buttonEdit">Gras</div>
-                                    <div class="buttonUnderline buttonEdit">Souligné</div>
-                                    <div class="buttonItalic buttonEdit">Italique</div>
+                                    <div class="buttonPreview buttonEdit btModal"><img src="img/preview.png"></div>
+                                    <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
+                                    <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
+                                    <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
                                     <div>
-                                        <div class="buttonFont buttonEdit">Police</div>
+                                        <div class="buttonFont buttonEdit"><img src="img/font_size.png"></div>
                                         <input type="number" name="fontSize" class="fontSize" min="10" max = "99" value="20"/>
                                     </div>
                                     <div>
-                                        <div class="buttonColor buttonEdit red">Couleur</div>
+                                        <div class="buttonColor buttonEdit red"><img src="img/color_wheel.png"></div>
                                         <input type="color" name="textColor" class="textColor" value="#000000"/>
                                     </div>
                                 </div>
@@ -162,16 +162,16 @@ class Popup
                             <label for="textItem">Texte</label>
                             <textarea name="textItem" id="textItem" class="textItem"></textarea>
                             <div class="buttonsEditGroup">
-                                <div class="buttonPreview buttonEdit btModal">Preview</div>
-                                <div class="buttonBold buttonEdit">Gras</div>
-                                <div class="buttonUnderline buttonEdit">Souligné</div>
-                                <div class="buttonItalic buttonEdit">Italique</div>
+                                <div class="buttonPreview buttonEdit btModal"><img src="img/preview.png"></div>
+                                <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
+                                <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
+                                <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
                                 <div>
-                                    <div class="buttonFont buttonEdit">Police</div>
+                                    <div class="buttonFont buttonEdit"><img src="img/font_size.png"></div>
                                     <input type="number" name="fontSize" class="fontSize" min="10" max = "99" value="20"/>
                                 </div>
                                 <div>
-                                    <div class="buttonColor buttonEdit red">Couleur</div>
+                                    <div class="buttonColor buttonEdit red"><img src="img/color_wheel.png"></div>
                                     <input type="color" name="textColor" class="textColor" value="#000000"/>
                                 </div>
                             </div>

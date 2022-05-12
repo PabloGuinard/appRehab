@@ -7,7 +7,7 @@ const selectColor = document.getElementsByClassName('textColor')
 
 $('.buttonBold').mousedown(function(event){
     event.preventDefault()
-    putTagsInSelection('g')
+    putTagsInSelection('span style="font-weight: bold"')
 })
 
 $('.buttonUnderline').mousedown(function(event){
@@ -61,7 +61,7 @@ function putTagsInSelection(tag){
             if(text.substr(selStart + 1, tag.length) !== tag){
                 selection = selection.toString().slice(tag.length + 2, selection.toString().length - tag.length - 3)
                 result = text.slice(0, selStart) + selection + text.slice(selEnd, text.length)
-                result = text.slice(0, selStart) + "<" + tag + ">" + selection + "</" + tag + ">" + text.slice(selEnd, text.length)
+                result = text.slice(0, selStart) + "<" + tag + ">" + selection + "</span>" + text.slice(selEnd, text.length)
             }
             //delete
             else{
@@ -70,7 +70,7 @@ function putTagsInSelection(tag){
             }
         //add
         } else
-            result = text.slice(0, selStart) + "<" + tag + ">" + selection + "</" + tag + ">" + text.slice(selEnd, text.length)
+            result = text.slice(0, selStart) + "<" + tag + ">" + selection + "</span>" + text.slice(selEnd, text.length)
         activeEl.value = result
     }
 }
@@ -245,6 +245,7 @@ for (let i = 0; i < arrayExercices.length; i++){
     })
 }
 
+//close item udpate popup
 let arrayButtons = document.getElementsByClassName("submitEditText")
 let arrayTexts = document.getElementsByClassName("textEditText")
 let arrayForms = document.getElementsByClassName("formEditText")
