@@ -131,6 +131,7 @@ $popup = new Popup();
 
 </div>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="js/script.js"></script>
+<script src="js/popups.js"></script>
+<script src="js/treeStructure.js"></script>
 </body>
 </html>

@@ -49,6 +49,6 @@ $db->authenticate();
                 </div>
             </div>";
     }?>
-    <script src="js/popup.js"></script>
+    <script src="js/popups.js"></script>
 </body>
 </html>
