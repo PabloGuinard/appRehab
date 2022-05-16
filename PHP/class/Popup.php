@@ -48,25 +48,33 @@ class Popup
         $result .= '">
                         </div>
                         <div class="divInputLabel divInputTexte">
-                            <label for="textItem">Texte</label>
-                            <textarea name="textItem" class="textItem textEditText" id="textItem">';
-        if($item["typeItem"] == 'Texte') $result .= $item["nom"];
-        $result .= '</textarea>
-                                    <div class="buttonsEditGroup">
-                                    <div class="buttonPreview buttonEdit btModal"><img src="img/preview.png"></div>
-                                    <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
-                                    <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
-                                    <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
-                                    <div>
-                                        <div class="buttonFont buttonEdit"><img src="img/font_size.png"></div>
-                                        <input type="number" name="fontSize" class="fontSize" min="10" max = "99" value="20"/>
-                                    </div>
-                                    <div>
-                                        <div class="buttonColor buttonEdit red"><img src="img/color_wheel.png"></div>
-                                        <input type="color" name="textColor" class="textColor" value="#000000"/>
-                                    </div>
-                                </div>
-                            </div>
+                        <input type="hidden" name="textItem" class="inputTextItem">
+            <div id="textItem" class="editor" contenteditable="true">';
+                if($item["typeItem"] == 'Texte') $result .=  $item["nom"];
+                $result .= '</div>
+                    <div class="buttonsEditGroup">
+                    <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
+                    <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
+                    <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
+                    <select class="buttonFont buttonEdit">
+                        <option value="2">13</option>
+                        <option value="4" selected="selected">16</option>
+                        <option value="5">24</option>
+                        <option value="6">32</option>
+                    </select>
+                    <select class="buttonColor buttonEdit">
+                        <option value="black"class="black">Noir</option>
+                        <option value="grey"class="grey">Gris</option>
+                        <option value="purple"class="purple">Violet</option>
+                        <option value="blue"class="bleu">Bleu</option>
+                        <option value="green"class="green">Vert</option>
+                        <option value="yellow"class="yellow">Jaune</option>
+                        <option value="orange"class="orange">Orange</option>
+                        <option value="red"class="rouge">Rouge</option>
+                        <option value="pink"class="pink">Rose</option>
+                    </select>
+                </div>
+            </div>
                             <div class="divInputLabel hidden divInputImage">
                                 <label for="imageItem">Image</label>
                                 <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg" src="'.$item["nom"].'">
@@ -80,13 +88,6 @@ class Popup
                             <input type="hidden" name="dropAjout" value="'.$item["id"].'">
                             <button class="red submitEditText" type="submit">Modifier</button>
                         </form>
-                    </div>
-                </div>
-                <div class="modal">
-                    <div class="modal-content red preview">
-                        <div class="btClose">x</div>
-                        <p class="titleModal">Prévisualisation</p>
-                        <div class="textPreview"></div>    
                     </div>
                 </div>';
         return $result;
@@ -131,7 +132,7 @@ class Popup
                 <div class="modal-content red ">
                     <div class="btClose">x</div>
                     <p class="titleModal">Ajouter un item dans l\'exercice '.$parent.' ?</p>
-                    <form action="traitement/ajoutItem.php" method="post" enctype="multipart/form-data">
+                    <form action="traitement/ajoutItem.php" method="post" enctype="multipart/form-data" class="formEditText">
                         <div id="divRadioAjout">
                             <div class="classRadio divRadioTexte">
                                 <input type="radio" name="typeFichier" id="texteRadio" value="Texte" class="widthNormal noMargin" required="required" checked="checked">
@@ -159,37 +160,39 @@ class Popup
                             <input type="text" name="videoItem" id="videoItem" class="inputModal">
                         </div>
                         <div class="divInputLabel divInputTexte">
-                            <label for="textItem">Texte</label>
-                            <textarea name="textItem" id="textItem" class="textItem"></textarea>
+                        <input type="hidden" name="textItem" class="inputTextItem">
+                        <div id="textItem" class="editor" contenteditable="true">
+                        </div>
                             <div class="buttonsEditGroup">
-                                <div class="buttonPreview buttonEdit btModal"><img src="img/preview.png"></div>
-                                <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
-                                <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
-                                <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
-                                <div>
-                                    <div class="buttonFont buttonEdit"><img src="img/font_size.png"></div>
-                                    <input type="number" name="fontSize" class="fontSize" min="10" max = "99" value="20"/>
-                                </div>
-                                <div>
-                                    <div class="buttonColor buttonEdit red"><img src="img/color_wheel.png"></div>
-                                    <input type="color" name="textColor" class="textColor" value="#000000"/>
-                                </div>
-                            </div>
+                            <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
+                            <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
+                            <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
+                            <select class="buttonFont buttonEdit">
+                                <option value="2">13</option>
+                                <option value="4" selected="selected">16</option>
+                                <option value="5">24</option>
+                                <option value="6">32</option>
+                            </select>
+                            <select class="buttonColor buttonEdit">
+                                <option value="black"class="black">Noir</option>
+                                <option value="grey"class="grey">Gris</option>
+                                <option value="purple"class="purple">Violet</option>
+                                <option value="blue"class="bleu">Bleu</option>
+                                <option value="green"class="green">Vert</option>
+                                <option value="yellow"class="yellow">Jaune</option>
+                                <option value="orange"class="orange">Orange</option>
+                                <option value="red"class="rouge">Rouge</option>
+                                <option value="pink"class="pink">Rose</option>
+                            </select>
+                        </div>
                         </div>
                         <div class="divInputLabel hidden divInputImage">
                             <label for="imageItem">Image</label>
                             <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg">
                         </div>
                         <input type="hidden" name="dropAjout" value="'.$parent.'">
-                        <button class="red" type="submit">Ajouter</button>
+                        <button class="red submitEditText" type="submit">Ajouter</button>
                     </form>
-                </div>
-            </div>
-            <div class="modal">
-                <div class="modal-content red preview">
-                    <div class="btClose">x</div>
-                    <p class="titleModal">Prévisualisation</p>
-                    <div class="textPreview"></div>    
                 </div>
             </div>';
     }

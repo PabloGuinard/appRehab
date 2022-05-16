@@ -78,6 +78,7 @@ input, select, textarea{
     resize: none;
 }
 #textItem, .textPreview{
+    text-align: left;
     width: 100%;
     resize: vertical;
     min-height: 50px;
@@ -378,6 +379,7 @@ img{
     margin: 0 10px;
 }
 .buttonEdit, .buttonEditDouble{
+    width: 70px;
     color: white;
     background-color: #54aefc;
     margin: 10px;
@@ -398,6 +400,50 @@ img{
 }
 .preview{
     width: 50vw;
+}
+.editor{
+    border: 1px solid black;
+    cursor: text
+}
+select option{
+    color: black;
+    background-color: white;
+}
+.black, .grey, .purple, .bleu, .green, .yellow, .orange, .rouge, .pink{
+    width: 10px;
+    height: 10px;
+}
+.black{
+    background-color: black;
+    color: white;
+}
+.grey{
+    background-color: darkgrey;
+    color: white;
+}
+.purple{
+    background-color: blueviolet;
+    color: white;
+}
+.bleu{
+    background-color: darkblue;
+    color: white;
+}
+.green{
+    background-color: green;
+    color: white;
+}
+.yellow{
+    background-color: yellow;
+}
+.rouge{
+    background-color: red;
+}
+.orange{
+    background-color: orange;
+}
+.pink{
+    background-color: pink;
 }
 @media (max-width: 1000px) {
     .divThemeExercice{
