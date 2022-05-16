@@ -40,15 +40,14 @@ class Db {
         return "Thème ajouté";
     }
 
-    public function addExercice(string $nom, string $lesson){
+    public function addExercice(string $nom, string $lessonId){
         $user = $this->getUserMail();
-        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE nom= :lesson");
-        $sth->execute(["lesson" => $lesson]);
+        $sth = $this->pdo->prepare("SELECT * FROM Themes WHERE id= :lesson");
+        $sth->execute(["lesson" => $lessonId]);
         $result = $sth->fetch();
         if($result == false){
             return "Thème non existant";
         }
-        $lessonId = $result["id"];
         $sth = $this->pdo->prepare("SELECT * FROM Exercices WHERE nom= :nom AND isDeleted != 1");
         $sth->execute(["nom" => $nom]);
         $result = $sth->fetch();

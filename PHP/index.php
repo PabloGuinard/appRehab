@@ -111,7 +111,7 @@ $popup = new Popup();
                         <div class="exerciceDataBase noBorder">
                             <div class="buttonsForm">
                                 <div class="button btModal"><img src="img/add_exercice.png" alt="Ajouter"></div>
-                                ' .$popup->modalAdd('blue', 'Ajouter un exercice dans le thème ' .$theme["nom"], 'Exercice', 'Theme', $theme["nom"]).'
+                                ' .$popup->modalAdd('blue', 'Ajouter un exercice dans le thème ' .$theme["nom"], 'Exercice', 'Theme', $theme["id"]).'
                             </div>
                         </div>
                     </div>
