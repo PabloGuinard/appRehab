@@ -36,7 +36,7 @@ form{
     padding:  0 20px;
     width: 100%;
 }
-input, button, select, textarea, a{
+input, button, select, textarea, .link{
     font-size: 1rem;
     margin: 10px;
 }
@@ -104,14 +104,14 @@ fieldset, .divDataBase, .divCommentaire{
     border: 5px solid var(--couleurPrincipale);
     border-radius: 10px;
 }
-button, a{
+button, .link{
     background-color: var(--couleurPrincipale);
     border: var(--couleurPrincipale) 5px solid;
     color: white;
     border-radius: 10px;
     cursor: pointer;
 }
-a{
+.link{
     text-decoration: none;
     width: calc(100% - 40px);
     text-align: center;
@@ -266,7 +266,7 @@ a{
     display: flex;
     flex-wrap: wrap;
 }
-.divButtons a{
+.divButtons .link{
     width: 45%;
 }
 .caret {
@@ -403,7 +403,8 @@ img{
 }
 .editor{
     border: 1px solid black;
-    cursor: text
+    cursor: text;
+    padding: 2px;
 }
 select option{
     color: black;
@@ -447,6 +448,9 @@ select option{
 }
 .buttonsEditGroup{
     display: flex;
+}
+.divInputTexte{
+    flex-direction: column;
 }
 @media (max-width: 1000px) {
     .divThemeExercice{

@@ -16,10 +16,10 @@ $db->authenticate();
     <div class="h1Button">
         <h1 class="h1DataBase">Commentaires</h1>
         <div class="buttonsDataBase">
-            <a href="updateApp.php">Mettre à jour l'app</a>
-            <a href="index.php">Retourner au dashboard</a>
-            <a href="viewLexique.php">Voir le lexique</a>
-            <a href="logout.php">Connecté : <?=phpCAS::getAttributes()["cn"]?></a>
+            <a class="link" href="updateApp.php">Mettre à jour l'app</a>
+            <a class="link" href="index.php">Retourner au dashboard</a>
+            <a class="link" href="viewLexique.php">Voir le lexique</a>
+            <a class="link" href="logout.php">Connecté : <?=phpCAS::getAttributes()["cn"]?></a>
         </div>
     </div>
     <p id="erreur"><?php if(isset($_SESSION["message"]))echo $_SESSION["message"];

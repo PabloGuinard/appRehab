@@ -28,10 +28,6 @@ class Popup
                                 <input type="radio" name="typeFichier" id="texteRadio" value="Texte" class="widthNormal noMargin" required="required" checked="checked">
                                 <label for="texteRadio" class="widthNormal noMargin">Texte</label>
                             </div>
-                            <div class="classRadio divRadioLien">
-                                <input type="radio" name="typeFichier" id="lienRadio" value="Lien" class="widthNormal noMargin" required="required">
-                                <label for="lienRadio" class="widthNormal noMargin">Lien</label>
-                            </div>
                             <div class="classRadio divRadioImage">
                                 <input type="radio" name="typeFichier" id="imageRadio" value="Image" class="widthNormal noMargin" required="required">
                                 <label for="imageRadio" class="widthNormal noMargin">Image</label>
@@ -41,38 +37,34 @@ class Popup
                                 <label for="videoRadio" class="widthNormal noMargin">Video</label>
                             </div>
                         </div>
-                        <div class="divInputLabel hidden divInputLien">
-                            <label for="lienItem">Lien</label>
-                            <input type="text" name="lienItem" id="lienItem" class="inputModal"';
-        if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["nom"];
-        $result .= '">
-                        </div>
-                        <div class="buttonsEditGroup">
-                            <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
-                            <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
-                            <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
-                            <div class="buttonJustifyLeft buttonEdit"><img src="img/justify_left.png"></div>
-                            <div class="buttonJustifyCenter buttonEdit"><img src="img/justify_center.png"></div>
-                            <div class="buttonJustifyRight buttonEdit"><img src="img/justify_right.png"></div>
-                            <select class="buttonFont buttonEdit">
-                                <option value="2">13</option>
-                                <option value="4" selected="selected">16</option>
-                                <option value="5">24</option>
-                                <option value="6">32</option>
-                            </select>
-                            <select class="buttonColor buttonEdit">
-                                <option value="black"class="black">Noir</option>
-                                <option value="grey"class="grey">Gris</option>
-                                <option value="purple"class="purple">Violet</option>
-                                <option value="blue"class="bleu">Bleu</option>
-                                <option value="green"class="green">Vert</option>
-                                <option value="yellow"class="yellow">Jaune</option>
-                                <option value="orange"class="orange">Orange</option>
-                                <option value="red"class="rouge">Rouge</option>
-                                <option value="pink"class="pink">Rose</option>
-                            </select>
-                        </div>
                         <div class="divInputLabel divInputTexte">
+                        <div class="buttonsEditGroup">
+                        <div class="buttonBold buttonEdit"><img title="Gras" src="img/bold.png"></div>
+                        <div class="buttonUnderline buttonEdit"><img title="Souligné" src="img/underline.png"></div>
+                        <div class="buttonItalic buttonEdit"><img title="Italique" src="img/italic.png"></div>
+                        <div class="buttonJustifyLeft buttonEdit"><img title="Aligné à gauche" src="img/justify_left.png"></div>
+                        <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
+                        <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
+                        <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
+                        <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
+                        <select class="buttonFont buttonEdit">
+                            <option value="2">13</option>
+                            <option value="4" selected="selected">16</option>
+                            <option value="5">24</option>
+                            <option value="6">32</option>
+                        </select>
+                        <select class="buttonColor buttonEdit">
+                            <option value="black"class="black">Noir</option>
+                            <option value="grey"class="grey">Gris</option>
+                            <option value="purple"class="purple">Violet</option>
+                            <option value="blue"class="bleu">Bleu</option>
+                            <option value="green"class="green">Vert</option>
+                            <option value="yellow"class="yellow">Jaune</option>
+                            <option value="orange"class="orange">Orange</option>
+                            <option value="red"class="rouge">Rouge</option>
+                            <option value="pink"class="pink">Rose</option>
+                        </select>
+                    </div>
                         <input type="hidden" name="textItem" class="inputTextItem">
             <div id="textItem" class="editor" contenteditable="true">';
                 if($item["typeItem"] == 'Texte') $result .=  $item["nom"];
@@ -142,10 +134,6 @@ class Popup
                                 <input type="radio" name="typeFichier" id="texteRadio" value="Texte" class="widthNormal noMargin" required="required" checked="checked">
                                 <label for="texteRadio" class="widthNormal noMargin">Texte</label>
                             </div>
-                            <div class="classRadio divRadioLien">
-                                <input type="radio" name="typeFichier" id="lienRadio" value="Lien" class="widthNormal noMargin" required="required">
-                                <label for="lienRadio" class="widthNormal noMargin">Lien</label>
-                            </div>
                             <div class="classRadio divRadioImage">
                                 <input type="radio" name="typeFichier" id="imageRadio" value="Image" class="widthNormal noMargin" required="required">
                                 <label for="imageRadio" class="widthNormal noMargin">Image</label>
@@ -155,21 +143,20 @@ class Popup
                                 <label for="videoRadio" class="widthNormal noMargin">Video</label>
                             </div>
                         </div>
-                        <div class="divInputLabel hidden divInputLien">
-                            <label for="lienItem">Lien</label>
-                            <input type="text" name="lienItem" id="lienItem" class="inputModal">
-                        </div>
                         <div class="divInputLabel hidden divInputVideo">
                             <label for="videoItem">ID de la vidéo</label>
                             <input type="text" name="videoItem" id="videoItem" class="inputModal">
                         </div>
+                        <div class="divInputLabel divInputTexte">
                         <div class="buttonsEditGroup">
-                        <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
-                        <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
-                        <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
-                        <div class="buttonJustifyLeft buttonEdit"><img src="img/justify_left.png"></div>
-                        <div class="buttonJustifyCenter buttonEdit"><img src="img/justify_center.png"></div>
-                        <div class="buttonJustifyRight buttonEdit"><img src="img/justify_right.png"></div>
+                        <div class="buttonBold buttonEdit"><img title="Gras" src="img/bold.png"></div>
+                        <div class="buttonUnderline buttonEdit"><img title="Souligné" src="img/underline.png"></div>
+                        <div class="buttonItalic buttonEdit"><img title="Italique" src="img/italic.png"></div>
+                        <div class="buttonJustifyLeft buttonEdit"><img title="Aligné à gauche" src="img/justify_left.png"></div>
+                        <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
+                        <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
+                        <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
+                        <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
                         <select class="buttonFont buttonEdit">
                             <option value="2">13</option>
                             <option value="4" selected="selected">16</option>
@@ -188,7 +175,6 @@ class Popup
                             <option value="pink"class="pink">Rose</option>
                         </select>
                     </div>
-                        <div class="divInputLabel divInputTexte">
                         <input type="hidden" name="textItem" class="inputTextItem">
                         <div id="textItem" class="editor" contenteditable="true">
                         </div>

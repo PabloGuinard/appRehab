@@ -11,8 +11,6 @@ function printObject(item, params) {
   switch (item.type){
     case 'Texte':
       return <ItemTexte data={item.data}/>
-    case 'Lien':
-      return <ItemURL data={item.data}/>
     case 'Image':
       // const source = ({uri:'https://apprehab.000webhostapp.com/'+ item.data + '?' + new Date()});
       const source = ({uri:'http://10.39.20.77/'+ item.data + '?' + new Date()});
@@ -31,7 +29,6 @@ function getIdFromUrl(url){
 }
 
 function getComponents(text){
-  console.log(text);
   text = translateToHTML5(text)
   const {width} = useWindowDimensions()
   const source = {
@@ -76,10 +73,8 @@ function translateToHTML5(text){
 }
 
 function findSecondStyleInTag(tag, isColor){
-  console.log(tag.text);
   if(isColor){
     if(tag.text.length !== 22){
-      console.log("; color: " + tag.text.substr(22, 7));
         return "; color: " + tag.text.substr(22, 7)
     }
     return ""
@@ -124,12 +119,6 @@ function findTag(text, pos){
 
 const ItemTexte = (item) => (
   getComponents(item.data)
-);
-
-const ItemURL = (item) => (
-  <View style={styles.itemContentExercise}>
-    <Text style={styles.url} onPress={() => Linking.openURL(item.data)}>{item.data}</Text>
-  </View>
 );
 
 const ItemImage = (item) => (

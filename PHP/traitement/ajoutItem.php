@@ -3,7 +3,7 @@ include "../class/Db.php";
 session_start();
 $db = new Db();
 $db->authenticate();
-if($_POST["textItem"] != null || $_POST["lienItem"] != null || $_FILES["imageItem"] != null){
+if($_POST["textItem"] != null || $_FILES["imageItem"] != null){
     switch ($_POST["typeFichier"]){
         case "Image":
             $_SESSION["message"] = $_FILES["imageItem"]["name"];
@@ -14,9 +14,6 @@ if($_POST["textItem"] != null || $_POST["lienItem"] != null || $_FILES["imageIte
             else{
                 $_SESSION["message"] = "Image non ajoutée";
             }
-            break;
-        case "Lien":
-            $_SESSION["message"] = $db->addItem($_POST["lienItem"], $_POST["dropAjout"], "Lien");
             break;
         case "Texte":
             $_SESSION["message"] = $db->addItem($_POST["textItem"], $_POST["dropAjout"], "Texte");
