@@ -5,6 +5,7 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 import HTMLView from 'react-native-htmlview';
 import { TapGestureHandler } from 'react-native-gesture-handler';
 import RenderHTML from 'react-native-render-html';
+import style from 'react-native-modal-picker/style';
 
 function printObject(item, params) {
   switch (item.type){
@@ -42,19 +43,6 @@ function getComponents(text){
       source={source}
     />
   )
-  /* global.key = -1
-  let tmp = parseText(replaceLineBreaks(text))
-  return tmp */
-}
-
-function replaceLineBreaks(text){
-  text = text.replace(/<div>/gi,'<br>').replace(/<\/div>/gi,'')
-  for (let cpt = 0; cpt < text.length; cpt++){
-    if(text.substr(cpt, 4) === '<br>'){
-      text = text.substr(0, cpt) + '\r\n' + text.substr(cpt + 4)
-    }
-  }
-  return text
 }
 
 function translateToHTML5(text){
@@ -65,16 +53,16 @@ function translateToHTML5(text){
       let tag = findTag(text, char)
 
       if(tag.text.substr(0, 11) === "<font size="){
-        let fontSize = 15
+        let fontSize = 18
         switch (tag.text[12]){
           case '2':
-            fontSize = 12
+            fontSize = 15
             break
           case '5':
-            fontSize = 20
+            fontSize = 25
             break
           case '6':
-            fontSize = 25
+            fontSize = 30
             break
         }
         text = text.substr(0, tag.open) + '<span style="font-size: ' + fontSize + 'px' + findSecondStyleInTag(tag, true) + '">' + text.substr(tag.close)
@@ -84,8 +72,7 @@ function translateToHTML5(text){
       }
     }
   }
-  console.log("\n\n\n\n" + text);
-  return text
+  return '<span style="font-size: 18px; margin: 10px">' + text + '</span>'
 }
 
 function findSecondStyleInTag(tag, isColor){
@@ -99,16 +86,16 @@ function findSecondStyleInTag(tag, isColor){
   }
   else {
     if(tag.text.length !== 15){
-      let fontSize = 15
+      let fontSize = 18
         switch (tag.text[28]){
           case '2':
-            fontSize = 12
+            fontSize = 15
             break
           case '5':
-            fontSize = 20
+            fontSize = 25
             break
           case '6':
-            fontSize = 25
+            fontSize = 30
             break
         }
       return "; font-size: " + fontSize + "px"
@@ -133,99 +120,6 @@ function findTag(text, pos){
   if(tag.text[1] === '/')
     tag.isClosing = true
   return tag
-}
-
-function findClosingTag(text, tag){
-  let closingTag = '</' + tag.text.substr(1)
-  if(tag.text.substr(0, 5) === "<font")
-    closingTag = "</font"
-  for (let cpt = tag.close; cpt < text.length; cpt++) {
-    let tmp = text.substr(cpt, closingTag.length)
-    if(tmp === closingTag)
-      return findTag(text, cpt)
-  }
-}
-
-function parseText(text){
-  //get tags
-  let tags = []
-  for (let char = 0; char < text.length; char++) {
-    if(text[char] === '<'){
-      tags.push(findTag(text, char))
-      tags.push(findClosingTag(text, tags[tags.length -1]))
-      char = tags[tags.length - 1].close - 1
-    }
-  }
-  if(tags.length === 0){
-    global.key++
-    return <Text key={global.key}>{text}</Text>
-  }
-  //get tags 's children
-  let children = []
-  for(let cpt = 0; cpt < tags.length; cpt += 2){
-    children.push(tagToComponent(tags[cpt], parseText(text.substr(tags[cpt].close, tags[cpt + 1].open - tags[cpt].close))))
-  }
-  
-  let result = []
-  let tmp
-
-  let char = 0
-  for(let cpt = 0; cpt < tags.length; cpt +=2){
-    tmp = text.substr(char, tags[cpt].open - char)
-    if(tmp !== ''){
-      global.key++
-      result.push(<Text key={global.key}>{tmp}</Text>)
-    }
-    result.push(children[cpt / 2])
-    char = tags[cpt + 1].close
-  }
-  if(char !== text.length){
-    tmp = text.substr(char)
-    global.key++
-    result.push(<Text key={global.key}>{tmp}</Text>)
-  }
-  result = <Text>{result}</Text>
-  return result
-}
-
-function tagToComponent(tag, text){
-  let stylePerso
-  switch (tag.text[1]) {
-    case 'b':
-      stylePerso = {fontWeight: 'bold'}
-      break;
-    case 'i':
-      stylePerso = {fontStyle: 'italic'}
-      break;
-    case 'u':
-      stylePerso = {textDecorationLine: 'underline'}
-      break;
-    case 'f':
-      if(tag.text.substr(0, 12) === '<font size="'){
-        let fontSize = 15
-        switch (tag.text[12]){
-          case '2':
-            fontSize = 12
-            break
-          case '5':
-            fontSize = 20
-            break
-          case '6':
-            fontSize = 25
-            break
-        }
-        if(tag.text.length === 15)
-          stylePerso = {fontSize: fontSize}
-        else{
-          
-        }
-      } else if(tag.text.substr(0, 13) === '<font color="'){
-        stylePerso = {color: tag.text.substr(13, 7)}
-      }
-      break
-  }
-  global.key++
-  return <Text key={global.key} style={stylePerso}>{text}</Text>
 }
 
 const ItemTexte = (item) => (
@@ -279,7 +173,8 @@ const styleByPlatform = Platform.select({
     },
     im: {
       maxWidth: Dimensions.get('window').width,
-      height: Dimensions.get('window').height/3
+      height: Dimensions.get('window').height/3,
+      margin: 10
     },
     
     textStyle: {
@@ -307,7 +202,8 @@ const styleByPlatform = Platform.select({
     },
     im: {
       maxWidth: Dimensions.get('window').width,
-      height: Dimensions.get('window').height/3
+      height: Dimensions.get('window').height/3,
+      margin: 10
     },
     
     textStyle: {
