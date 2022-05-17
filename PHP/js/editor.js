@@ -31,11 +31,9 @@ for (let cpt = 0; cpt < arrayBolds.length; cpt++) {
     }) 
     arrayFonts[cpt].addEventListener("change", event => {
         insertTag('fontsize', cpt, arrayFonts[cpt].value)
-        arrayFonts[cpt].value = "4"
     }) 
     arrayColors[cpt].addEventListener("change", event => {
         insertTag('forecolor', cpt, arrayColors[cpt].value)
-        arrayColors[cpt].value = "black"
     }) 
 
     arrayButtonsEdit[cpt].addEventListener("click", function(event){

@@ -1,9 +1,10 @@
 import React from 'react';
-import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, Text, Linking, Platform} from 'react-native';
+import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, Text, Linking, Platform, useWindowDimensions} from 'react-native';
 import ModalRate from './ModalRate';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import HTMLView from 'react-native-htmlview';
 import { TapGestureHandler } from 'react-native-gesture-handler';
+import RenderHTML from 'react-native-render-html';
 
 function printObject(item, params) {
   switch (item.type){
@@ -29,9 +30,21 @@ function getIdFromUrl(url){
 }
 
 function getComponents(text){
-  global.key = -1
+  console.log(text);
+  text = translateToHTML5(text)
+  const {width} = useWindowDimensions()
+  const source = {
+    html: text
+  }
+  return (
+    <RenderHTML
+      contentWidth={width}
+      source={source}
+    />
+  )
+  /* global.key = -1
   let tmp = parseText(replaceLineBreaks(text))
-  return tmp
+  return tmp */
 }
 
 function replaceLineBreaks(text){
@@ -42,6 +55,66 @@ function replaceLineBreaks(text){
     }
   }
   return text
+}
+
+function translateToHTML5(text){
+  text = text.replace(/<\/font>/gi, '</span>')
+
+  for (let char = 0; char < text.length; char++) {
+    if(text[char] === '<'){
+      let tag = findTag(text, char)
+
+      if(tag.text.substr(0, 11) === "<font size="){
+        let fontSize = 15
+        switch (tag.text[12]){
+          case '2':
+            fontSize = 12
+            break
+          case '5':
+            fontSize = 20
+            break
+          case '6':
+            fontSize = 25
+            break
+        }
+        text = text.substr(0, tag.open) + '<span style="font-size: ' + fontSize + 'px' + findSecondStyleInTag(tag, true) + '">' + text.substr(tag.close)
+      }
+      else if(tag.text.substr(0, 12) === "<font color="){
+        text = text.substr(0, tag.open) + '<span style="color: ' + tag.text.substr(13, 7) + findSecondStyleInTag(tag, false) + '">' + text.substr(tag.close)
+      }
+    }
+  }
+  console.log("\n\n\n\n" + text);
+  return text
+}
+
+function findSecondStyleInTag(tag, isColor){
+  console.log(tag.text);
+  if(isColor){
+    if(tag.text.length !== 22){
+      console.log("; color: " + tag.text.substr(22, 7));
+        return "; color: " + tag.text.substr(22, 7)
+    }
+    return ""
+  }
+  else {
+    if(tag.text.length !== 15){
+      let fontSize = 15
+        switch (tag.text[28]){
+          case '2':
+            fontSize = 12
+            break
+          case '5':
+            fontSize = 20
+            break
+          case '6':
+            fontSize = 25
+            break
+        }
+      return "; font-size: " + fontSize + "px"
+    }
+    return ""
+  }
 }
 
 function findTag(text, pos){
@@ -141,7 +214,11 @@ function tagToComponent(tag, text){
             fontSize = 25
             break
         }
-        stylePerso = {fontSize: fontSize}
+        if(tag.text.length === 15)
+          stylePerso = {fontSize: fontSize}
+        else{
+          
+        }
       } else if(tag.text.substr(0, 13) === '<font color="'){
         stylePerso = {color: tag.text.substr(13, 7)}
       }
