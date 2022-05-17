@@ -19,12 +19,13 @@ $item = [
     "id" => 11,
     "parentId" => 11
 ];
+$parent = "text";
 
-$result = '<div class="modal modalEditText block">
-<div class="modal-content red">
+$result = '<div class="modal block">
+<div class="modal-content red ">
     <div class="btClose">x</div>
-    <p class="titleModal">Modifier l\'item '.$item["typeItem"].' ?</p>
-    <form action="traitement/modifItem.php" method="post" enctype="multipart/form-data" class="formEditText">
+    <p class="titleModal">Ajouter un item dans l\'exercice '.$parent.' ?</p>
+    <form action="traitement/ajoutItem.php" method="post" enctype="multipart/form-data" class="formEditText">
         <div id="divRadioAjout">
             <div class="classRadio divRadioTexte">
                 <input type="radio" name="typeFichier" id="texteRadio" value="Texte" class="widthNormal noMargin" required="required" checked="checked">
@@ -45,59 +46,50 @@ $result = '<div class="modal modalEditText block">
         </div>
         <div class="divInputLabel hidden divInputLien">
             <label for="lienItem">Lien</label>
-            <input type="text" name="lienItem" id="lienItem" class="inputModal"';
-if($item["typeItem"] == 'Lien') $result .= 'value="'.$item["nom"];
-$result .= '">
+            <input type="text" name="lienItem" id="lienItem" class="inputModal">
         </div>
+        <div class="divInputLabel hidden divInputVideo">
+            <label for="videoItem">ID de la vidéo</label>
+            <input type="text" name="videoItem" id="videoItem" class="inputModal">
+        </div>
+        <div class="buttonsEditGroup">
+        <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
+        <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
+        <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
+        <div class="buttonJustifyLeft buttonEdit"><img src="img/justify_left.png"></div>
+        <div class="buttonJustifyCenter buttonEdit"><img src="img/justify_center.png"></div>
+        <div class="buttonJustifyRight buttonEdit"><img src="img/justify_right.png"></div>
+        <select class="buttonFont buttonEdit">
+            <option value="2">13</option>
+            <option value="4" selected="selected">16</option>
+            <option value="5">24</option>
+            <option value="6">32</option>
+        </select>
+        <select class="buttonColor buttonEdit">
+            <option value="black"class="black">Noir</option>
+            <option value="grey"class="grey">Gris</option>
+            <option value="purple"class="purple">Violet</option>
+            <option value="blue"class="bleu">Bleu</option>
+            <option value="green"class="green">Vert</option>
+            <option value="yellow"class="yellow">Jaune</option>
+            <option value="orange"class="orange">Orange</option>
+            <option value="red"class="rouge">Rouge</option>
+            <option value="pink"class="pink">Rose</option>
+        </select>
+    </div>
         <div class="divInputLabel divInputTexte">
-            <label for="textItem">Texte</label>
-            <div id="textItem" class="editor" contenteditable="true">
-                <p>alo</p></div>
-
-                    <div class="buttonsEditGroup">
-                    <div class="buttonBold buttonEdit"><img src="img/bold.png"></div>
-                    <div class="buttonUnderline buttonEdit"><img src="img/underline.png"></div>
-                    <div class="buttonItalic buttonEdit"><img src="img/italic.png"></div>
-                    <select class="buttonFont buttonEdit">
-                        <option value="2">13</option>
-                        <option value="4" selected="selected">16</option>
-                        <option value="5">24</option>
-                        <option value="6">32</option>
-                    </select>
-                    <select class="buttonColor buttonEdit">
-                        <option value="black"class="black">Noir</option>
-                        <option value="grey"class="grey">Gris</option>
-                        <option value="purple"class="purple">Violet</option>
-                        <option value="bleu"class="blue">Bleu</option>
-                        <option value="green"class="green">Vert</option>
-                        <option value="yellow"class="yellow">Jaune</option>
-                        <option value="orange"class="orange">Orange</option>
-                        <option value="red"class="rouge">Rouge</option>
-                        <option value="pink"class="pink">Rose</option>
-                    </select>
-                </div>
-            </div>
-            <div class="divInputLabel hidden divInputImage">
-                <label for="imageItem">Image</label>
-                <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg" src="'.$item["nom"].'">
-            </div>
-            <div class="divInputLabel hidden divInputVideo">
-                <label for="videoItem">ID de la vidéo</label>
-                <input type="text" name="videoItem" id="videoItem" class="inputModal"';
-if($item["typeItem"] == 'Video') $result .= 'value="'.$item["nom"];
-$result .= '">
-            </div>
-            <input type="hidden" name="dropAjout" value="'.$item["id"].'">
-            <button class="red submitEditText" type="submit">Modifier</button>
-        </form>
-    </div>
+        <input type="hidden" name="textItem" class="inputTextItem">
+        <div id="textItem" class="editor" contenteditable="true">
+        </div>
+        </div>
+        <div class="divInputLabel hidden divInputImage">
+            <label for="imageItem">Image</label>
+            <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg">
+        </div>
+        <input type="hidden" name="dropAjout" value="'.$parent.'">
+        <button class="red submitEditText" type="submit">Ajouter</button>
+    </form>
 </div>
-<div class="modal">
-    <div class="modal-content red preview">
-        <div class="btClose">x</div>
-        <p class="titleModal">Prévisualisation</p>
-        <div class="textPreview"></div>    
-    </div>
 </div>';
 echo $result;
 ?>

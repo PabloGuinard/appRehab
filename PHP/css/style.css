@@ -379,7 +379,7 @@ img{
     margin: 0 10px;
 }
 .buttonEdit, .buttonEditDouble{
-    width: 70px;
+    min-width: 40px;
     color: white;
     background-color: #54aefc;
     margin: 10px;
@@ -444,6 +444,9 @@ select option{
 }
 .pink{
     background-color: pink;
+}
+.buttonsEditGroup{
+    display: flex;
 }
 @media (max-width: 1000px) {
     .divThemeExercice{

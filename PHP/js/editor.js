@@ -5,6 +5,9 @@ const arrayUnderlines = document.getElementsByClassName('buttonUnderline')
 const arrayItalics = document.getElementsByClassName('buttonItalic')
 const arrayFonts = document.getElementsByClassName('buttonFont')
 const arrayColors = document.getElementsByClassName('buttonColor')
+const arrayJustifyLeft = document.getElementsByClassName('buttonJustifyLeft')
+const arrayJustifyCenter = document.getElementsByClassName('buttonJustifyCenter')
+const arrayJustifyRight = document.getElementsByClassName('buttonJustifyRight')
 
 const selectFont = document.getElementsByClassName('fontSize')
 const selectColor = document.getElementsByClassName('textColor')
@@ -34,6 +37,15 @@ for (let cpt = 0; cpt < arrayBolds.length; cpt++) {
     }) 
     arrayColors[cpt].addEventListener("change", event => {
         insertTag('forecolor', cpt, arrayColors[cpt].value)
+    }) 
+    arrayJustifyLeft[cpt].addEventListener("click", event => {
+        insertTag('justifyleft', cpt)
+    }) 
+    arrayJustifyCenter[cpt].addEventListener("click", event => {
+        insertTag('justifycenter', cpt)
+    }) 
+    arrayJustifyRight[cpt].addEventListener("click", event => {
+        insertTag('justifyright', cpt)
     }) 
 
     arrayButtonsEdit[cpt].addEventListener("click", function(event){
