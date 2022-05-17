@@ -79,29 +79,18 @@ CREATE TABLE IF NOT EXISTS `exercices` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `themeId` (`parentId`) USING BTREE,
   CONSTRAINT `FK_exercices_themes` FOREIGN KEY (`parentId`) REFERENCES `themes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.exercices : ~17 rows (environ)
+-- Listage des données de la table id18263011_databaselarehab.exercices : ~6 rows (environ)
 DELETE FROM `exercices`;
 /*!40000 ALTER TABLE `exercices` DISABLE KEYS */;
 INSERT INTO `exercices` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
-	(11, 'Les recettes de EtcheDom test', 8, 1, '2022-04-28 09:13:41', '2022-04-22 09:16:20', 0, NULL),
+	(11, 'Les recettes de EtcheDom', 8, 1, '2022-04-28 09:13:41', '2022-04-22 09:16:20', 0, NULL),
 	(13, 'Frigo Magic', 8, 1, '2022-04-26 09:37:58', '2022-04-22 09:16:20', 0, NULL),
 	(14, 'Le monde de la chocolaterie', 8, 1, '2022-04-26 13:19:16', '2022-04-22 09:16:20', 0, NULL),
-	(15, 'exercice test', 8, 1, '2022-05-02 15:36:41', '2022-05-02 14:03:48', 0, NULL),
-	(16, '1', 8, 1, NULL, '2022-05-02 15:36:41', 0, NULL),
-	(17, 'test vidéo', 8, 1, NULL, '2022-05-03 15:10:50', 0, NULL),
-	(18, 'test texte', 8, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(20, 'allo', 12, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(21, 'test 2', 21, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(22, 'bonjour', 16, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(23, 'au revoir', 37, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(24, 'test texte exercice', 21, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(25, '2', 21, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(26, 'test', 8, 1, '2022-05-10 14:02:00', '2022-05-10 10:14:17', 1, NULL),
-	(27, 'test raw', 8, 1, NULL, '2022-05-10 11:03:36', 0, NULL),
-	(28, 'test final', 8, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1, NULL),
-	(29, 'nouvel exercice modifié', 38, 0, NULL, '2022-05-11 11:11:11', 1, 'pablo.guinard@orsac-cpa01.fr');
+	(41, 'tout marche', 44, 1, NULL, '2022-05-16 15:56:53', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(42, 'texte', 44, 1, '2022-05-17 11:35:18', '2022-05-17 09:12:18', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(43, 'Un, deux, trois scoops', 44, 1, '2022-05-17 14:26:45', '2022-05-17 14:14:29', 0, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `exercices` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. items
@@ -119,49 +108,34 @@ CREATE TABLE IF NOT EXISTS `items` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `exerciceId` (`parentId`) USING BTREE,
   CONSTRAINT `FK_items_exercices` FOREIGN KEY (`parentId`) REFERENCES `exercices` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.items : ~37 rows (environ)
+-- Listage des données de la table id18263011_databaselarehab.items : ~22 rows (environ)
 DELETE FROM `items`;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
 INSERT INTO `items` (`id`, `nom`, `typeItem`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
-	(11, '<p15><g>Halloween</g>, c\'est la quête des bonbons des enfants dans leur quartier mais c\'est aussi la confection de recettes diverses et variées et surtout très <i>créatives</i>. \r\ndom, que nous surnommons <#00ff55>EtcheDom </#00ff55>nous livre ici quelques exemples trouvés sur internet.</p15>', 'Texte', 11, 1, '2022-05-11 10:45:52', '2022-04-22 09:16:36', 0, NULL),
-	(13, 'texte cool', 'Texte', 11, 1, '2022-05-03 14:36:42', '2022-04-22 09:16:36', 1, NULL),
-	(14, '/database/images/canva Idées cuisine pour Halloween 2021-10-13.jpg', 'Image', 11, 1, '2022-04-25 13:36:26', '2022-04-22 09:16:36', 0, NULL),
-	(16, 'http://localhost/index.php', 'Lien', 11, 1, '2022-05-11 10:45:52', '2022-04-22 09:16:36', 0, NULL),
-	(17, '/database/images/giphy.gif', 'Image', 11, 1, '2022-04-25 11:54:34', '2022-04-22 09:16:36', 0, NULL),
-	(22, 'Cette application vous propose des idées de recettes pour vos repas avec les produits qui sont disponibles dans votre frigo et dans les placards de votre cuisine.\r\n                            \r\n                            ', 'Texte', 13, 1, '2022-04-26 13:19:16', '2022-04-22 09:16:36', 0, NULL),
-	(23, 'Comment faire une fois sur l’application Frigo Magic ?', 'Texte', 13, 1, NULL, '2022-04-22 09:16:36', 0, NULL),
-	(24, 'http://localhost/index.php', 'Lien', 13, 1, '2022-04-26 09:14:12', '2022-04-22 09:16:36', 0, NULL),
-	(25, 'Bonjour,\r\n\r\nPour ce lundi de Pâques, nous vous avons élaboré un programme avec différentes activités à essayer à votre domicile autour de la thématique du... chocolat ! Quelle surprise !', 'Texte', 14, 1, NULL, '2022-04-22 09:16:36', 0, NULL),
-	(26, 'Il fallait forcément qu’on vous parle de recettes pour cette occasion particulière et de recettes au chocolat bien évidemment ! Nous vous proposons des Truffes au chocolat (c’est presque comme des œufs en chocolat).', 'Texte', 14, 1, NULL, '2022-04-22 09:16:36', 0, NULL),
-	(27, 'https://www.marmiton.org/recettes/recette_truffes-au-chocolat_15660.aspx', 'Lien', 14, 1, NULL, '2022-04-22 09:16:36', 0, NULL),
-	(28, '/database/images/dessert-813278_1280.jpg', 'Image', 14, 1, NULL, '2022-04-22 09:16:36', 0, NULL),
-	(29, 'http://localhost/', 'Lien', 15, 1, NULL, '2022-05-02 14:39:39', 0, NULL),
-	(30, 'http://youtu.be/0zM3nApSvMg', 'Video', 16, 1, '2022-05-10 11:52:21', '2022-05-03 13:30:52', 0, NULL),
-	(31, 'nouvelle vidéo', 'Video', 11, 1, '2022-05-03 14:36:42', '2022-05-03 14:13:32', 1, NULL),
-	(32, 'c\'est un texte pour introduire la vidéo', 'Texte', 17, 1, NULL, '2022-05-03 15:10:50', 0, NULL),
-	(33, 'allez ion la remplace\r\n', 'Texte', 17, 1, '2022-05-03 15:28:35', '2022-05-03 15:10:50', 0, NULL),
-	(34, 'U2vVpEeXnag', 'Video', 17, 1, '2022-05-03 15:32:31', '2022-05-03 15:10:50', 1, NULL),
-	(35, 'U2vVpEeXnag', 'Video', 17, 1, NULL, '2022-05-03 15:32:31', 0, NULL),
-	(36, '<i>Titre\r\n</i>intro de l\'article\r\ncorps où on dit plein de choses\r\n<i><#00ff11>bisous</#00ff11> au revoir</i>\r\n', 'Texte', 11, 1, '2022-05-10 13:42:48', '2022-05-05 09:26:49', 0, NULL),
-	(37, '<r>\r\n<r>\r\nzefa<r>\r\nefa<r>\r\naz<r>\r\nzef<r>\r\nefa<r>\r\nfaz<r>\r\nfea<r>\r\najdpeasuper', 'Texte', 17, 1, NULL, '2022-05-05 09:29:06', 0, NULL),
-	(38, 'textealoo\r\n\r\ntexte', 'Texte', 11, 1, '2022-05-10 11:31:55', '2022-05-05 09:30:35', 0, NULL),
-	(39, '<g>titre de l\'exercice </g>\r\n<i>contenu en <g>gras</g> et <s>souligné </s>\r\n</i>fin en <i>italique </i>\r\n<s>nouveau texte souligné</s>\r\n                                ', 'Texte', 18, 1, '2022-05-10 10:12:20', '2022-05-05 16:06:52', 0, NULL),
-	(40, 'on commence normal , ensuite retour à la ligne\r\n<g>on se met en gras, on souligne ce <s>mot </s>et la fin de la <i>phrase en italique</i></g>\r\n<p30>police <#ff0000>30</#ff0000> , soyons fous</p30>\r\n<g><s><i><p25><#3f7bca>maintenant on met tout ensemble</#3f7bca></p25></i></s></g>\r\non peut finir sur du <#2bff00>vert fluo</#2bff00> en <p10>police 10</p10>', 'Texte', 26, 1, '2022-05-10 14:02:00', '2022-05-10 10:14:17', 1, NULL),
-	(41, 'on essaie du texte simple sans balise', 'Texte', 26, 1, '2022-05-10 14:02:00', '2022-05-10 11:03:36', 1, NULL),
-	(42, 'texte raw svp ça marche', 'Texte', 27, 1, '2022-05-10 12:01:51', '2022-05-10 11:03:36', 0, NULL),
-	(43, '', 'Texte', 11, 1, NULL, '2022-05-10 11:31:55', 0, NULL),
-	(44, 'bonjour', 'Texte', 11, 1, NULL, '2022-05-10 11:31:55', 0, NULL),
-	(45, 'bonjour', 'Texte', 11, 1, NULL, '2022-05-10 11:31:55', 0, NULL),
-	(46, 'allo', 'Texte', 11, 1, '2022-05-10 11:46:03', '2022-05-10 11:31:55', 1, NULL),
-	(47, '../database/images/dashboard.PNG', 'Image', 26, 1, '2022-05-10 14:02:00', '2022-05-10 13:50:21', 1, NULL),
-	(48, 'https://www.youtube.com/watch?v=aY1QuPR1ibY', 'Video', 28, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1, NULL),
-	(49, 'https://youtu.be/aY1QuPR1ibY', 'Video', 28, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1, NULL),
-	(50, 'Texte sans balises', 'Texte', 28, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1, NULL),
-	(51, 'Texte avec toutes les balises donc <g>gras</g>, <s>souligné</s>, <i>italique</i>, <p25>police \r\n25</p25>, <#c74343>couleur rouge</#c74343>', 'Texte', 28, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1, NULL),
-	(52, '<g>un texte tout en gras avec <#137634>cette partie en vert et ce <s>mot </s>souligné </#137634>avant la suite</g>', 'Texte', 28, 1, '2022-05-10 14:10:18', '2022-05-10 14:02:00', 1, NULL),
-	(53, 'nouvel item modifié 2\r\n                            ', 'Texte', 29, 0, NULL, '2022-05-11 11:11:20', 1, 'pablo.guinard@orsac-cpa01.fr');
+	(56, 'http://localhost/index.php', 'Lien', 41, 1, '2022-05-17 16:14:50', '2022-05-16 15:56:53', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(65, '../database/images/20220512_124513.jpg', 'Image', 41, 1, NULL, '2022-05-16 16:57:09', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(66, 'https://youtu.be/aY1QuPR1ibY', 'Video', 41, 1, NULL, '2022-05-17 09:08:45', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(67, 'texte raw', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 09:12:18', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(68, 'texte avec du<b> gras ici</b>, du <u>souligné là</u> et de <i>l\'italique ici.</i><div><b><u><i>Mtn on met les 3</i></u></b></div>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 09:12:18', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(69, '<i>Texte au début en italique <u>avec</u></i><u><b><i> du gra</i>s au milieu</b> et du souligné à la fin</u>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 09:46:45', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(70, '<font size="5">texte en gros</font> avec <font color="#ff0000">du rouge</font> et du<font size="2"> petit à la fin</font>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 09:52:00', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(71, '<div>Enorme texte</div><div>Gros texte</div><div>Texte normal</div><div>Petit texte</div><div><br></div><div>gras souligné italique tout</div><div><br></div><div>noir <font color="#808080">gris </font><font color="#800080">violet </font><font color="#0000ff">bleu </font><font color="#008000">vert </font><font color="#ffff00">jaune </font><font color="#ffa500">orange </font><font color="#ff0000">rouge </font><font color="#ffc0cb">rose</font></div>', 'Texte', 42, 1, '2022-05-17 11:44:50', '2022-05-17 10:47:42', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(72, 'noir <font color="#808080">gris </font><font color="#800080">violet </font><font color="#0000ff">bleu </font><font color="#008000">vert </font><font color="#ffff00">jaune </font><font color="#ffa500">orange </font><font color="#ff0000">rouge </font><font color="#ffc0cb">rose</font>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 10:53:21', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(73, '<b>Gras </b><i>italique </i><u>souligné</u>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 10:54:37', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(74, '<font size="5" color="#ff0000">On met les 2 en même temps</font>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 10:56:51', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(75, '<font color="#0000ff" size="5"><u>2eme essai</u></font>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 11:04:38', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(76, '<u><font size="5" color="#ffa500">3eme essai</font></u>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 11:06:28', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(77, '<i>D</i><font color="#008000" style="font-style: italic;">ans cette<font size="6"> partie </font></font><u style="font-style: italic;"><font size="6" color="#008000">o</font><font color="#800080" size="6">n m</font><font color="#800080" size="2">élange tout</font></u><u style="font-style: italic; font-weight: bold;"><font color="#800080" size="2"> pou</font></u><b style="font-style: italic;">r essay<font color="#ffa500">er d</font></b><font size="5" style="color: rgb(255, 165, 0);"><b style=""><i>e fai</i>r</b>e </font><font size="5" style="color: rgb(255, 165, 0);">d</font><font color="#ff0000">e</font><i style=""><font color="#ff0000">s b</font><font color="#ffa500">ugs</font></i>', 'Texte', 42, 1, '2022-05-17 11:35:18', '2022-05-17 11:13:42', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(78, '<font size="6">Très gros texte</font><div><font size="5">Gros texte</font></div><div>texte normal&nbsp;</div><div><font size="2">petit texte</font></div><div>noir <font color="#808080">gris </font><font color="#0000ff">bleu </font><font color="#008000">vert </font><font color="#ffff00">jaune </font><font color="#ffa500">orange </font><font color="#ff0000">rouge </font><font color="#ffc0cb">rose</font></div><div><b>gras</b> <u>souligné </u><i>italique <u><b>les 3</b></u></i></div><div><a href="http://localhost/index.php">lien</a></div><div style="text-align: center;">centré</div><div style="text-align: right;">à droite</div><div><u style=""><i style=""><font size="6" color="#ff0000">Gros titre où on met tout</font></i></u></div><div><u style=""><font size="4">suivi d\'un texte tout souligné dans lequel on met un </font><font color="#ffa500" style="font-size: large;">mot </font><font size="4">en o</font><font size="2">range,</font><b style=""><font size="2"> on met</font><font size="4"> en gras par</font><font size="2"> ici et o</font></b><font size="2">n met du texte en petit tout autour</font><font size="4">, ce </font><font size="5"><i>MOT </i></font><font size="4">est rouge, gros et en italique. </font><i style=""><font size="2" color="#ffc0cb">Pour finir, on met un texte italique en petit et rose</font></i></u></div><div><u style=""><i style=""><font size="2" color="#ffc0cb"><br></font></i></u></div><div><u style=""><i style=""><font size="2" color="#ffc0cb"><br></font></i></u></div><div><u style=""><i style=""><font size="2" color="#ffc0cb"><br></font></i></u></div><div>&nbsp; &nbsp; &nbsp;Pour finir, on saute 3 lignes avant ce paragraphe et on met un alinéa</div>', 'Texte', 42, 1, '2022-05-17 16:17:42', '2022-05-17 11:43:51', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(80, '<div style="text-align: center;"><b><font size="5" color="#808080">Bonjour la blogosphère de la Réhab,</font></b></div>', 'Texte', 43, 1, '2022-05-17 15:31:58', '2022-05-17 14:15:10', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(81, '../database/images/Joyeux.gif', 'Image', 43, 1, '2022-05-17 14:26:45', '2022-05-17 14:16:01', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(83, '<div style="text-align: center;"><b style="color: rgb(128, 128, 128); font-size: x-large;">Et pour commencer, gros scoop : nous fêtons nos 2 ans, ce n\'est pas rien !</b></div><div><div style="text-align: center;"><b style="color: rgb(128, 128, 128); font-size: x-large;">Souhaitons-nous un bon anniversaire !!</b></div><div><font size="5" color="#808080"><b><br></b></font></div><div>Et on profite de cette fin de semaine et de notre anniversaire pour vous parler de deux projets qui nous tiennent <font color="#800080">particulièrement à coeur</font> et qui redonnent une bonne dose d\'optimisme pour la suite des aventures de la Réhab !&nbsp;</div><div><i>(et si vous voulez encore plus d\'optimisme, n\'oubliez pas de vous rendre sur l\'article d\'il y a 2 semaines,<a href="https://rehabourg.blogspot.com/2022/04/une-bonne-dose-doptimisme.html"> juste ici</a>)</i></div></div>', 'Texte', 43, 1, '2022-05-17 16:00:53', '2022-05-17 14:26:45', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(84, 'https://rehabourg.blogspot.com/2022/04/une-bonne-dose-doptimisme.html', 'Lien', 43, 1, '2022-05-17 16:14:50', '2022-05-17 14:26:45', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(85, 'Mais alors, quels sont <font color="#800080">les deux fameux autres scoops/surprises ?</font> N\'attendons plus et découvrons-les dans la vidéo ci-dessous. Prenez le temps de la visionner et nous dire par la suite vos impressions avec un petit commentaire (tout en bas de l\'article) !', 'Texte', 43, 1, NULL, '2022-05-17 14:26:45', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(86, 'https://youtu.be/aY1QuPR1ibY', 'Video', 43, 1, NULL, '2022-05-17 14:26:45', 0, 'pablo.guinard@orsac-cpa01.fr'),
+	(87, 'texte avec des balise au hasardazefazefbonjour monsieurilfaut paritr là', 'Texte', 42, 1, '2022-05-17 17:05:00', '2022-05-17 17:04:24', 0, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. mots
@@ -176,29 +150,19 @@ CREATE TABLE IF NOT EXISTS `mots` (
   `isDeleted` tinyint(4) DEFAULT '0',
   `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.mots : ~17 rows (environ)
+-- Listage des données de la table id18263011_databaselarehab.mots : ~7 rows (environ)
 DELETE FROM `mots`;
 /*!40000 ALTER TABLE `mots` DISABLE KEYS */;
 INSERT INTO `mots` (`id`, `nom`, `definition`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
-	(4, 'Attention sélective test', 'Capacité à focaliser son attention sur des informations pertinentes en laissant de côté celles qui ne sont pas utiles pour l\'activité en cours.', 1, '2022-05-02 13:53:59', '2022-04-22 09:16:57', 0, NULL),
+	(4, 'Attention sélective', 'Capacité à focaliser son attention sur des informations pertinentes en laissant de côté celles qui ne sont pas utiles pour l\'activité en cours.', 1, '2022-05-02 13:53:59', '2022-04-22 09:16:57', 0, NULL),
 	(5, 'Attention soutenue', 'Capacité à maintenir son attention sur du long terme et de façon stable. ', 1, '2022-04-28 10:51:53', '2022-04-22 09:16:57', 1, NULL),
 	(6, 'Cognition sociale', 'Ensemble des processus cognitifs (aussi appelés « capacités cognitives ») permettant de comprendre les autres et d\'interagir avec eux. La sphère de la cognition sociale comprend 4 domaines : la perception émotionnelle, la perception et connaissances sociales, la théorie de l’esprit et les biais attributionnels. ', 1, '2022-05-02 13:53:59', '2022-04-22 09:16:57', 1, NULL),
 	(7, 'Contrôle inhibiteur', 'Capacité à faire abstraction (ou à supprimer) des pensées, des actions ou des informations qui sont inappropriées pour la situation ou la tâche en cours. Il peut s\'agir de pensées/actions/informations automatiques, distrayantes ou qui ne sont plus utiles pour la situation donnée. Cette capacité nous permet de sélectionner des informations cohérentes en vue d’un objectif. L’inhibition fait partie des fonctions exécutives (cf. définition ci-après) qui sont des compétences cognitives permettant de réagir dans des situations imprévues, peu connues ou complexes et nous y adapter. ', 1, '2022-04-26 10:22:28', '2022-04-22 09:16:57', 0, NULL),
 	(8, 'Flexibilité cognitive', 'Capacité à réorienter son attention et son action pour s\'adapter à un changement ou à une situation différente. Cette capacité permet de passer d\'une activité à une autre (c\'est-à-dire d\'alterner entre plusieurs activités) spontanément ou à la demande de quelqu\'un d\'autre. La flexibilité fait partie des fonctions exécutives (cf. définition ci-après) qui sont des compétences cognitives permettant de réagir dans des situations imprévues, peu connues ou complexes et de nous y adapter. ', 1, '2022-04-25 16:32:46', '2022-04-22 09:16:57', 0, NULL),
 	(9, 'Fonctions exécutives', 'Terme qui regroupe plusieurs fonctions cognitives élaborées : la planification, le contrôle inhibiteur, la flexibilité, l’initiation et la planification (certains auteurs en rajoutent d\'autres). Les fonctions exécutives interviennent quand une situation nouvelle, imprévue et / ou complexe se déroule. Dans ce type de situation, nous ne pouvons plus nous laisser porter par nos automatismes et nous devons mettre en place une autre façon de procéder pour nous adapter à la situation. Les fonctions exécutives nous permettent donc de nous adapter aux situations pour lesquelles il n\'y a pas de solution toute faite. ', 1, NULL, '2022-04-22 09:16:57', 0, NULL),
-	(10, 'Initiation', 'Capacité à amorcer, à mettre en route une action. ', 1, '2022-04-26 11:15:08', '2022-04-22 09:16:57', 0, NULL),
-	(11, 'Mémoire à court terme', 'Capacité à retenir des informations pendant un très court laps de temps.', 1, '2022-04-26 11:02:47', '2022-04-22 09:16:57', 0, NULL),
-	(12, 'test', 'aaa', 1, '2022-04-28 11:21:20', '2022-04-28 10:51:53', 1, NULL),
-	(13, 'Nouveau mot', 'aaa', 1, '2022-04-28 11:24:24', '2022-04-28 11:21:20', 1, NULL),
-	(14, 'teste-_çl', 'aae', 1, '2022-04-29 14:29:24', '2022-04-29 14:13:55', 1, NULL),
-	(15, 'testfe', '', 1, '2022-04-29 14:28:45', '2022-04-29 14:28:36', 1, NULL),
-	(16, 'Nouveau mot', '', 1, NULL, '2022-04-29 14:28:45', 0, NULL),
-	(17, 'test', 'aa', 1, NULL, '2022-05-02 13:53:59', 0, NULL),
-	(18, 'aa', 'aze', 1, NULL, '2022-05-02 16:09:13', 0, NULL),
-	(19, 'bb', 'a', 1, NULL, '2022-05-02 16:09:13', 0, NULL),
-	(20, 'mot test modifié', 'def test modifié', 0, NULL, '2022-05-11 11:24:24', 1, 'pablo.guinard@orsac-cpa01.fr');
+	(11, 'Mémoire à court terme', 'Capacité à retenir des informations pendant un très court laps de temps.', 1, '2022-04-26 11:02:47', '2022-04-22 09:16:57', 0, NULL);
 /*!40000 ALTER TABLE `mots` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. presentation
@@ -233,13 +197,13 @@ CREATE TABLE IF NOT EXISTS `themes` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `categorieId` (`parentId`) USING BTREE,
   CONSTRAINT `FK_themes_categories` FOREIGN KEY (`parentId`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.themes : ~31 rows (environ)
+-- Listage des données de la table id18263011_databaselarehab.themes : ~11 rows (environ)
 DELETE FROM `themes`;
 /*!40000 ALTER TABLE `themes` DISABLE KEYS */;
 INSERT INTO `themes` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
-	(8, 'Cuisine test', 1, 1, '2022-05-02 13:52:40', '2022-04-22 09:17:32', 0, NULL),
+	(8, 'Cuisine', 1, 1, '2022-05-02 13:52:40', '2022-04-22 09:17:32', 0, NULL),
 	(9, 'On poursuit les présentations', 1, 1, '2022-04-25 15:28:38', '2022-04-22 09:17:32', 0, NULL),
 	(10, 'J\'ai le smile !', 1, 1, NULL, '2022-04-22 09:17:32', 0, NULL),
 	(11, 'C\'est la rentrée !', 1, 1, '2022-04-26 14:05:41', '2022-04-22 09:17:32', 0, NULL),
@@ -249,27 +213,7 @@ INSERT INTO `themes` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `created
 	(15, 'La santé pour tous !', 4, 1, NULL, '2022-04-22 09:17:32', 0, NULL),
 	(16, 'Le plein d\'activités dans les valises', 3, 1, NULL, '2022-04-22 09:17:32', 0, NULL),
 	(17, 'A vos podcasts', 5, 1, NULL, '2022-04-22 09:17:32', 0, NULL),
-	(18, 'Nature et bien être', 6, 1, NULL, '2022-04-22 09:17:32', 0, NULL),
-	(19, 'Sortie automnales', 10, 1, NULL, '2022-04-22 09:17:32', 0, NULL),
-	(20, '1', 1, 1, '2022-04-28 10:21:45', '2022-04-28 10:21:32', 1, NULL),
-	(21, '2', 1, 1, '2022-04-28 10:36:52', '2022-04-28 10:21:45', 1, NULL),
-	(22, 'Test', 1, 1, '2022-04-28 10:36:30', '2022-04-28 10:22:45', 1, NULL),
-	(23, '4', 1, 1, '2022-04-28 10:51:06', '2022-04-28 10:27:21', 1, NULL),
-	(24, '5', 1, 1, '2022-04-28 10:36:30', '2022-04-28 10:27:21', 1, NULL),
-	(25, '1', 1, 1, '2022-04-28 10:37:15', '2022-04-28 10:37:07', 1, NULL),
-	(26, '2', 1, 1, '2022-04-28 10:51:06', '2022-04-28 10:37:15', 1, NULL),
-	(27, '1', 1, 1, '2022-04-28 11:06:15', '2022-04-28 10:51:53', 1, NULL),
-	(28, '1', 1, 1, '2022-04-28 11:24:24', '2022-04-28 11:06:49', 1, NULL),
-	(29, '2', 1, 1, '2022-04-28 11:24:24', '2022-04-28 11:06:49', 1, NULL),
-	(30, '3', 1, 1, '2022-04-28 11:07:18', '2022-04-28 11:07:09', 1, NULL),
-	(31, '4', 1, 1, '2022-04-28 11:21:20', '2022-04-28 11:07:18', 1, NULL),
-	(32, 'Test', 1, 1, '2022-04-28 11:24:24', '2022-04-28 11:21:20', 1, NULL),
-	(33, '1', 1, 1, '2022-04-29 14:07:57', '2022-04-29 14:07:52', 1, NULL),
-	(34, 'Test 1', 1, 1, '2022-05-02 13:57:14', '2022-05-02 13:52:40', 1, NULL),
-	(35, '2', 1, 1, '2022-05-02 13:57:54', '2022-05-02 13:57:47', 0, NULL),
-	(36, '1', 1, 1, '2022-05-02 13:58:33', '2022-05-02 13:58:29', 1, NULL),
-	(37, 'fin', 3, 1, NULL, '2022-05-05 16:04:04', 0, NULL),
-	(38, 'nouveau thème modifié', 1, 0, NULL, '2022-05-11 11:11:03', 1, 'pablo.guinard@orsac-cpa01.fr');
+	(44, 'test', 1, 1, NULL, '2022-05-16 15:56:53', 0, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `themes` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
