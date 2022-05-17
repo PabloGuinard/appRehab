@@ -30,8 +30,18 @@ function getIdFromUrl(url){
 
 function getComponents(text){
   global.key = -1
-  let tmp = parseText(text)
+  let tmp = parseText(replaceLineBreaks(text))
   return tmp
+}
+
+function replaceLineBreaks(text){
+  text = text.replace(/<div>/gi,'<br>').replace(/<\/div>/gi,'')
+  for (let cpt = 0; cpt < text.length; cpt++){
+    if(text.substr(cpt, 4) === '<br>'){
+      text = text.substr(0, cpt) + '\r\n' + text.substr(cpt + 4)
+    }
+  }
+  return text
 }
 
 function findTag(text, pos){
@@ -54,6 +64,8 @@ function findTag(text, pos){
 
 function findClosingTag(text, tag){
   let closingTag = '</' + tag.text.substr(1)
+  if(tag.text.substr(0, 5) === "<font")
+    closingTag = "</font"
   for (let cpt = tag.close; cpt < text.length; cpt++) {
     let tmp = text.substr(cpt, closingTag.length)
     if(tmp === closingTag)
@@ -106,20 +118,33 @@ function parseText(text){
 function tagToComponent(tag, text){
   let stylePerso
   switch (tag.text[1]) {
-    case 'g':
+    case 'b':
       stylePerso = {fontWeight: 'bold'}
       break;
     case 'i':
       stylePerso = {fontStyle: 'italic'}
       break;
-    case 's':
+    case 'u':
       stylePerso = {textDecorationLine: 'underline'}
       break;
-    case '#':
-      stylePerso = {color: tag.text.substr(1, tag.length - 2)}
-      break
-    case 'p':
-      stylePerso = {fontSize: (Number)(tag.text.substr(2, tag.length - 3))}
+    case 'f':
+      if(tag.text.substr(0, 12) === '<font size="'){
+        let fontSize = 15
+        switch (tag.text[12]){
+          case '2':
+            fontSize = 12
+            break
+          case '5':
+            fontSize = 20
+            break
+          case '6':
+            fontSize = 25
+            break
+        }
+        stylePerso = {fontSize: fontSize}
+      } else if(tag.text.substr(0, 13) === '<font color="'){
+        stylePerso = {color: tag.text.substr(13, 7)}
+      }
       break
   }
   global.key++

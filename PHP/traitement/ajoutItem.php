@@ -8,7 +8,7 @@ if($_POST["textItem"] != null || $_POST["lienItem"] != null || $_FILES["imageIte
         case "Image":
             $_SESSION["message"] = $_FILES["imageItem"]["name"];
             if($_FILES["imageItem"]["size"] < 3145728 AND isset($_FILES['imageItem']) AND $_FILES['imageItem']['error'] == 0){
-                move_uploaded_file($_FILES["imageItem"]["tmp_name"], "/database/images/".basename($_FILES["imageItem"]["name"]));
+                move_uploaded_file($_FILES["imageItem"]["tmp_name"], "../database/images/".basename($_FILES["imageItem"]["name"]));
                 $_SESSION["message"] = $db->addItem("../database/images/".$_FILES["imageItem"]["name"], $_POST["dropAjout"], "Image");
             }
             else{
