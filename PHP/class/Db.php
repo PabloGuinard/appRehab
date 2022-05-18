@@ -36,8 +36,9 @@ class Db {
             return "Thème déjà existant";
         }
         $sth = $this->pdo->prepare("INSERT INTO Themes (nom, parentId, isReady, modifiedBy) VALUES (:nom, :categorie, -1, :user)");
-        $sth->execute(["nom" => $nom, "categorie" => $categorieId, "user" => $user]);
-        return "Thème ajouté";
+        if($sth->execute(["nom" => $nom, "categorie" => $categorieId, "user" => $user]) == 1)
+            return "Thème ajouté";
+        return "Thème non ajouté";
     }
 
     public function addExercice(string $nom, string $lessonId){
@@ -55,8 +56,9 @@ class Db {
             return "Exercice déjà existant";
         }
         $sth = $this->pdo->prepare("INSERT INTO Exercices(nom, parentId, isReady, modifiedBy) VALUES(:nom, :lessonId, -1, :user)");
-        $sth->execute(["nom" => $nom, "lessonId" => $lessonId, "user" => $user]);
-        return "Exercice ajouté";
+        if($sth->execute(["nom" => $nom, "lessonId" => $lessonId, "user" => $user]) == 1)
+            return "Exercice ajouté";
+        return "Exercice non ajouté";
     }
 
     public function addItem(string $contenu, string $exercice, string $typeFile){
@@ -75,8 +77,9 @@ class Db {
             return "Item déjà existant";
         }
         $sth = $this->pdo->prepare("INSERT INTO Items(nom, typeItem, parentId, isReady, modifiedBy) VALUES(:contenu, :typeFile, :exercice, -1, :user)");
-        $sth->execute(["exercice" => $itemId, "contenu" => $contenu, "typeFile" => $typeFile, "user" => $user]);
-        return "Item ajouté";
+        if($sth->execute(["exercice" => $itemId, "contenu" => $contenu, "typeFile" => $typeFile, "user" => $user]) == 1)
+            return "Item ajouté";
+        return "Item non ajouté";
     }
 
     public function addMot(string $mot, string $def){
@@ -88,8 +91,9 @@ class Db {
             return "Mot déjà existant";
         }
         $sth = $this->pdo->prepare("INSERT INTO Mots(nom, definition, isReady, modifiedBy) VALUES(:mot, :def, -1, :user)");
-        $sth->execute(["mot" => $mot, "def" => $def, "user" => $user]);
-        return "Mot ajouté";
+        if($sth->execute(["mot" => $mot, "def" => $def, "user" => $user]) == 1)
+            return "Mot ajouté";
+        "Mot non ajouté";
     }
 
     public function deleteLine(string $id, string $table){
