@@ -41,7 +41,7 @@ $result = '<div class="modal block">
             </div>
         </div>
         <div class="divInputLabel hidden divInputVideo">
-            <label for="videoItem">ID de la vidéo</label>
+            <label for="videoItem">URL de la vidéo</label>
             <input type="text" name="videoItem" id="videoItem" class="inputModal">
         </div>
         <div class="divInputLabel divInputTexte">

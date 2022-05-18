@@ -73,13 +73,13 @@ class Popup
                             <div class="divInputLabel hidden divInputImage">
                                 <label for="imageItem">Image</label>
                                 <input type="file" name="imageItem" class="inputModal" id="imageItem" accept="image/jpeg"';
-        if($item["typeItem"] == 'Image') $result .='src="'.$item["nom"];
+        if($item["typeItem"] == 'Image') $result .='src="'.$item["nom"] . '"';
                             $result .= '>   </div>
                             <div class="divInputLabel hidden divInputVideo">
-                                <label for="videoItem">ID de la vidéo</label>
+                                <label for="videoItem">URL de la vidéo</label>
                                 <input type="text" name="videoItem" id="videoItem" class="inputModal"';
-        if($item["typeItem"] == 'Video') $result .= 'value="'.$item["nom"];
-        $result .= '">
+        if($item["typeItem"] == 'Video') $result .= 'value="'.$item["nom"].'"';
+                        $result .= '>
                             </div>
                             <input type="hidden" name="dropAjout" value="'.$item["id"].'">
                             <button class="red submitEditText" type="submit">Modifier</button>
@@ -144,7 +144,7 @@ class Popup
                             </div>
                         </div>
                         <div class="divInputLabel hidden divInputVideo">
-                            <label for="videoItem">ID de la vidéo</label>
+                            <label for="videoItem">URL de la vidéo</label>
                             <input type="text" name="videoItem" id="videoItem" class="inputModal">
                         </div>
                         <div class="divInputLabel divInputTexte">

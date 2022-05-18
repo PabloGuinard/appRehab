@@ -81,7 +81,7 @@ input, select, textarea{
     text-align: left;
     width: 100%;
     resize: vertical;
-    min-height: 50px;
+    min-height: 20vh;
 }
 .textPreview{
     font-size: 20px;
@@ -405,6 +405,7 @@ img{
     border: 1px solid black;
     cursor: text;
     padding: 2px;
+    min-height: 20vh;
 }
 select option{
     color: black;
