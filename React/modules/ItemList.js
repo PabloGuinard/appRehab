@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     item: {
-        padding: 20,
+        padding: 15,
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: 15,
@@ -193,7 +193,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 25,
         color: 'white',
-        fontWeight: 'bold',
+        textAlign: 'center',
+        fontWeight: 'bold'
     },
 });
 
