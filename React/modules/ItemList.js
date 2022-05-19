@@ -2,12 +2,9 @@ import React from 'react';
 import { SafeAreaView, View, StyleSheet, FlatList, Text } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export function forceUpdate(){
-}
-
 function checkTitle(element){
     return this == element.nom
-}
+}   
 
 async function setStorage(key: string, value: string){
     if(typeof value === Object){
@@ -23,8 +20,7 @@ async function navigation(params) {
     let DATA = []
     if (params.title === 'Lexique') {
         const motsArray = JSON.parse(await AsyncStorage.getItem('motAll'))
-        
-        console.log(motsArray.sort((a, b) => {
+        motsArray.sort((a, b) => {
             a = a.nom.toLowerCase()
             b = b.nom.toLowerCase()
             if(a < b)
@@ -32,12 +28,13 @@ async function navigation(params) {
             if(a > b)
                 return 1
             return 0
-        }));
+        });
         motsArray.forEach(mot => {
             DATA[DATA.length] = {
                 id: mot.id,
                 title: mot.nom,
                 link: 'LessonPage',
+                isNew: 0
             }
         })
     }  
@@ -50,7 +47,8 @@ async function navigation(params) {
                     id: cptId,
                     title: item.title,
                     color: item.color,
-                    link: item.link
+                    link: item.link,
+                    isNew: false
                 })
                 cptId++
             })
@@ -62,6 +60,9 @@ async function navigation(params) {
         let themesArray = JSON.parse(await AsyncStorage.getItem('themeAll'))
         let parentIndex = themesArray.findIndex(checkTitle, params.title)
         let parent = themesArray[parentIndex]
+        parent.isNew = "0"
+        themesArray[parentIndex] = parent
+        setStorage('themeAll', JSON.stringify(themesArray))
 
         let exercicesArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
         exercicesArray = exercicesArray.filter(exercice => exercice.parentId === parent.id)
@@ -70,7 +71,8 @@ async function navigation(params) {
             DATA[DATA.length] = {
                 id: exercice.id,
                 title: exercice.nom,
-                link: 'LessonPage'
+                link: 'LessonPage',
+                isNew: exercice.isNew
             }
         })
     } 
@@ -141,7 +143,7 @@ async function navigation(params) {
             }
         }
     }
-    
+
     params.nav.navigate(params.link, {DATA: {DATA}, color: params.color, title: params.title});
 }
 
@@ -165,7 +167,11 @@ const Item = (item) => (
 const ItemList = (props) => {
     const renderItem = ({item}) => (
         checkColor(props, item),
-        <Item title={item.title} color={color} link={item.link} nav={props.navigation}/>
+        console.log(item.isNew),
+        <View style={styles.fullItem}>
+            <View style={styles.new} opacity={+item.isNew}/>
+            <Item title={item.title} color={color} link={item.link} nav={props.navigation}/>
+        </View>
     )
 
     return (
@@ -186,9 +192,9 @@ const styles = StyleSheet.create({
     },
     item: {
         padding: 15,
-        marginVertical: 8,
-        marginHorizontal: 16,
+        marginHorizontal: 15,
         borderRadius: 15,
+        alignSelf: 'stretch'
     },
     title: {
         fontSize: 25,
@@ -196,6 +202,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold'
     },
+    new: {
+        backgroundColor: 'red',
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+        marginBottom: -15,
+        marginTop: 15,
+        marginRight: 10,
+        zIndex: 2
+    },
+    fullItem: {
+        alignItems: 'flex-end'
+    }
 });
 
 export default ItemList;

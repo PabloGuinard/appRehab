@@ -10,21 +10,25 @@ const DATA = [
     id: '1',
     title: 'Statistiques',
     link: 'StatistiquesPage',
+    isNew: 0  
   },
   {
     id: '2',
     title: 'Lexique',
     link: 'LexiquePage',
+    isNew: 0  
   },
   {
     id: '3',
     title: 'Historique',
     link: 'HistoriquePage',
+    isNew: 0  
   },
   {
     id:'4',
     title:'Qui sommes-nous ?',
-    link: 'PresentationPage'
+    link: 'PresentationPage',
+    isNew: 0  
   }
 ];
 
@@ -88,16 +92,8 @@ async function getPresentation(){
   } catch (e){}
   if(tmp != null){
 
-    global.presentation = removeQuote(tmp)
+    global.presentation = JSON.parse(tmp)
   }
-}
-
-function removeQuote(toRemove){
-  let result = ''
-  for (let cpt = 1; cpt < toRemove.length - 1; cpt++){
-    result += toRemove.charAt(cpt)
-  }
-  return result
 }
 
 const ProfilePage = ({navigation}) => {

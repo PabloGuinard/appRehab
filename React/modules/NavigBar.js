@@ -2,7 +2,7 @@ import React from 'react';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image } from 'react-native';
 
-var ROW = []
+let ROW = []
 
 function checkRoot(params) {
   if (params == 'ProfilePage') {

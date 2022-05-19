@@ -105,8 +105,11 @@ const getAllDataFromApi = async () => {
             if(news.categories != undefined)
                 await concatOldNewData(news.categories, "categorie")
             if(news.themes != undefined)
+                news.themes.forEach(item => { item.isNew = 1 })
                 await concatOldNewData(news.themes, "theme")
             if(news.exercices != undefined)
+                news.exercices.forEach(item => { item.isNew = 1 })
+                console.log(news.exercices);
                 await concatOldNewData(news.exercices, "exercice")
             if(news.items != undefined)
                 await concatOldNewData(news.items, "item")
