@@ -12,8 +12,6 @@ class ThemesPage extends React.Component{
         this.state = {
             data : props.route.params.DATA.DATA
         }
-        if(props.refresh)
-            this.forceUpdate()
     }
 
     filterThemes(data) {

@@ -76,8 +76,7 @@ async function navigation(params){
     DATA.push({
       id: theme.id,
       title: theme.nom,
-      link: "ExercisesPage",
-      isNew: theme.isNew
+      link: "ExercisesPage"
     })
   })
   params.nav.navigate('ThemesPage', {DATA:{DATA}, color:params.color});

@@ -2,8 +2,9 @@ let arrayCategories = document.getElementsByClassName("categorieDataBase");
 let arrayThemes = document.getElementsByClassName("titleTheme");
 let arrayExercices = document.getElementsByClassName("titleExercice");
 
-let arrayOpenNodes
-arrayOpenNodes = JSON.parse(localStorage.getItem("arrayOpenNodes"))
+
+let arrayOpenNodes = JSON.parse(localStorage.getItem("arrayOpenNodes"))
+console.log(arrayOpenNodes);
 if(arrayOpenNodes === null){
     arrayOpenNodes = {
         categories: Array(),
