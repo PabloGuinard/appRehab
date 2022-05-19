@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar, StyleSheet } from 'react-native';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
 import ThemeSelected from '../modules/ThemeSelected';
@@ -10,7 +10,7 @@ const ExercisesPage = ({route, navigation}) => {
     const color = route.params.color;
 
     return (
-        <View style={{flex: 2}}>
+        <View style={styles.safeAreaView}>
             <View style={{flex: 1}}>
                 <ThemeSelected navigation={navigation} title={"< " + title} color={color}/>
             </View>
@@ -23,5 +23,12 @@ const ExercisesPage = ({route, navigation}) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    safeAreaView: {
+      marginTop: StatusBar.currentHeight - 10,
+      flex: 2
+    },
+  })
 
 export default ExercisesPage;

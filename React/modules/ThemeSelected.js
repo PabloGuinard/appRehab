@@ -22,7 +22,9 @@ const styles = StyleSheet.create({
   },
   itemTheme: {
     padding: 30,
-    borderRadius: 5,     
+    borderRadius: 15,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0     
   },
   title: {
     fontSize: 25,

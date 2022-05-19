@@ -27,7 +27,7 @@ const ClearHistorique = (params) => {
 const styles = StyleSheet.create({
     item: {
       padding: 20,
-      borderRadius: 10,
+      borderRadius: 15,
       justifyContent: 'center',
       textAlign: 'center',
       marginHorizontal: 10,
@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
       marginTop: StatusBar.currentHeight
     },
     title: {
-      fontSize: 15,
+      fontSize: 20,
       fontWeight: 'bold',
       color: 'white',
-      textAlign: 'justify'
+      textAlign: 'center'
     },
 });
 

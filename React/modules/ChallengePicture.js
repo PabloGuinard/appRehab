@@ -24,7 +24,7 @@ const styleByPlatform = Platform.select({
   
     im: {
       borderWidth: 5,
-      borderRadius: 5,
+      borderRadius: 15,
       marginHorizontal: 5,
       maxWidth: Dimensions.get('window').width,
       height: Dimensions.get('window').height-255,
@@ -40,7 +40,7 @@ const styleByPlatform = Platform.select({
   
     im: {
       borderWidth: 5,
-      borderRadius: 5,
+      borderRadius: 15,
       marginHorizontal: 5,
       maxWidth: Dimensions.get('window').width,
       height: Dimensions.get('window').height-230,
