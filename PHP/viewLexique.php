@@ -28,6 +28,11 @@ $db->authenticate();
 <?php 
 echo $popup->modalAddWord();
 $allMots = $db->getAllMots();
+$motsTitle = array_column($allMots, 'nom');
+for ($i=0; $i < sizeof($motsTitle); $i++) { 
+    $motsTitle[$i] = strtolower($motsTitle[$i]);
+}
+array_multisort($motsTitle, SORT_ASC, $allMots);
 foreach ($allMots as $mot){
     echo "
         <div class='divCommentaire mainColor'>
