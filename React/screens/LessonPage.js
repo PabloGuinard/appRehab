@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import ThemeSelected from '../modules/ThemeSelected';
 import Lesson from '../modules/Lesson';
 import NavigBar from '../modules/NavigBar';
@@ -10,7 +10,7 @@ const LessonPage = ({route, navigation}) => {
     const content = route.params.DATA.DATA;
         
     return (
-        <View style={{flex: 1}}>
+        <View style={styles.safeAreaView}>
             <View style={{flex: 1}}>
                 <ThemeSelected navigation={navigation} title={"< "+ title} color={color}/>
             </View>
@@ -23,5 +23,12 @@ const LessonPage = ({route, navigation}) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    safeAreaView: {
+      marginTop: StatusBar.currentHeight - 10,
+      flex: 1
+    },
+  })
 
 export default LessonPage;

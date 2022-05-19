@@ -83,8 +83,6 @@ const NavigBar = (params) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
     marginTop: 20,
   },
   item: {
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
     margin: 2,
     marginTop: 7,
     padding: 0,
-    borderRadius: 10,
+    borderRadius: 30,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },

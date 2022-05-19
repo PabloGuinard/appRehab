@@ -126,7 +126,7 @@ const styleByPlatform = Platform.select({
     modalView: {
       margin: 10,
       backgroundColor: "white",
-      borderRadius: 20,
+      borderRadius: 15,
       padding: 30,
       alignItems: "center",
       shadowColor: "#000",
@@ -139,7 +139,7 @@ const styleByPlatform = Platform.select({
       elevation: 5
     },
     button: {
-      borderRadius: 20,
+      borderRadius: 15,
       padding: 10,
       elevation: 2
     },
@@ -178,7 +178,7 @@ const styleByPlatform = Platform.select({
     modalView: {
       margin: 10,
       backgroundColor: "white",
-      borderRadius: 20,
+      borderRadius: 15,
       padding: 30,
       alignItems: "center",
       shadowColor: "#000",
@@ -191,7 +191,7 @@ const styleByPlatform = Platform.select({
       elevation: 5
     },
     button: {
-      borderRadius: 20,
+      borderRadius: 15,
       padding: 10,
       elevation: 2
     },
