@@ -92,13 +92,15 @@ const getAllDataFromApi = async () => {
     try {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
-    const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
+    const url = 'http://10.39.20.130/api/api.php?timestamp=' + timestamp
+    // const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
     //const url = 'https://apprehab.000webhostapp.com/api/api.php?timestamp=' + timestamp
     const response = await fetch(url)
     console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
     const json = await response.json();
     if(json.nothing == undefined){
+        global.isThereNewContent = true
         //add new content
         const news = json.news
         if(news != undefined){
@@ -153,6 +155,7 @@ const getAllDataFromApi = async () => {
             } catch(error){}
         }
     } else {
+        global.isThereNewContent = false
         console.log("nothing new");
     }
 };
