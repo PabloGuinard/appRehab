@@ -230,9 +230,8 @@ class Db {
 
     public function updatePresentation(string $contenu){
         $user = $this->getUserMail();
-        $sth = $this->pdo->prepare("UPDATE Presentation SET contenu= :contenu, isReady=0, modifiedBy= " . $user);
-        $sth->execute(["contenu" => $contenu]);
-        echo $sth->fetch();
+        $sth = $this->pdo->prepare("UPDATE Presentation SET contenu= :contenu, isReady=0, modifiedBy= :user");
+        $sth->execute(["contenu" => $contenu, "user" => $user]);
         return "Présentation mise à jour";
     }
 
