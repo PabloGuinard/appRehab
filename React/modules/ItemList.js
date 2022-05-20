@@ -24,7 +24,7 @@ async function navigation(params) {
     if (params.title === 'Lexique') {
         const motsArray = JSON.parse(await AsyncStorage.getItem('motAll'))
         
-        console.log(motsArray.sort((a, b) => {
+        motsArray.sort((a, b) => {
             a = a.nom.toLowerCase()
             b = b.nom.toLowerCase()
             if(a < b)
@@ -32,7 +32,7 @@ async function navigation(params) {
             if(a > b)
                 return 1
             return 0
-        }));
+        });
         motsArray.forEach(mot => {
             DATA[DATA.length] = {
                 id: mot.id,
