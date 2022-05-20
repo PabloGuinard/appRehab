@@ -62,6 +62,8 @@ async function navigation(params) {
         let themesArray = JSON.parse(await AsyncStorage.getItem('themeAll'))
         let parentIndex = themesArray.findIndex(checkTitle, params.title)
         let parent = themesArray[parentIndex]
+        themesArray[parentIndex].isNew = 0
+        await setStorage('themeAll', JSON.stringify(themesArray))
 
         let exercicesArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
         exercicesArray = exercicesArray.filter(exercice => exercice.parentId === parent.id)
@@ -70,7 +72,8 @@ async function navigation(params) {
             DATA[DATA.length] = {
                 id: exercice.id,
                 title: exercice.nom,
-                link: 'LessonPage'
+                link: 'LessonPage',
+                isNew: exercice.isNew
             }
         })
     } 
@@ -156,16 +159,24 @@ function checkColor(props, item) {
     }
 }
 
+function refreshOnBack(props){
+    props.navigation.addListener('willFocus', payload => {console.log("zebi");this.forceUpdate()})
+}
+
 const Item = (item) => (
-    <View style={styles.item} backgroundColor={item.color} onMoveShouldSetResponder={() => true} onResponderRelease={() => {navigation(item)}}>
-        <Text style={styles.title}>{item.title}</Text>
+    <View style={styles.fullItem}>
+    <View style={styles.chip} opacity={item.isNew}/>
+        <View style={styles.item} backgroundColor={item.color} onMoveShouldSetResponder={() => true} onResponderRelease={() => {navigation(item)}}>
+            <Text style={styles.title}>{item.title}</Text>
+        </View>
     </View>
 )
 
 const ItemList = (props) => {
     const renderItem = ({item}) => (
         checkColor(props, item),
-        <Item title={item.title} color={color} link={item.link} nav={props.navigation}/>
+        refreshOnBack(props),
+        <Item title={item.title} color={color} link={item.link} isNew={item.isNew} nav={props.navigation}/>
     )
 
     return (
@@ -186,9 +197,9 @@ const styles = StyleSheet.create({
     },
     item: {
         padding: 15,
-        marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: 15,
+        alignSelf: 'stretch'
     },
     title: {
         fontSize: 25,
@@ -196,6 +207,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold'
     },
+    chip : {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: 'red',
+        marginTop: 20,
+        marginBottom: -12,
+        marginRight: 8,
+        zIndex: 2
+    },
+    fullItem: {
+        alignItems: 'flex-end'
+    }
 });
 
 export default ItemList;
