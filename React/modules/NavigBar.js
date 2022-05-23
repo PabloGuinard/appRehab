@@ -13,18 +13,21 @@ function checkRoot(params) {
         title: 'Challenge',
         icon: require('../assets/icones/challenge.png'),
         link: 'Challenge',
+        isNew: 1
       },
       {
         id: '02',
         title: 'Accueil',
         icon: require('../assets/icones/accueil.png'),
         link: 'MainPage',
+        isNew: 0
       },
       {
         id: '03',
         title:'Profile',
         icon: require('../assets/icones/profil.png'),
         link: 'ProfilePage',
+        isNew: 0
       }
     ]
   }
@@ -36,18 +39,21 @@ function checkRoot(params) {
         title: 'Challenge',
         icon: require('../assets/icones/challenge.png'),
         link: 'Challenge',
+        isNew: 1
       },
       {
         id: '02',
         title: 'Accueil',
         icon: require('../assets/icones/accueil.png'),
         link: 'MainPage',
+        isNew: 0
       },
       {
         id: '03',
         title:'Profile',
         icon: require('../assets/icones/profil.png'),
         link: 'Profile',
+        isNew: 0
       }
     ]
   }
@@ -55,17 +61,20 @@ function checkRoot(params) {
 
 const Item = (item) => (
   <SafeAreaView style={styles.item} onStartShouldSetResponder={() => {item.nav.navigate(item.link, {routeName:item.route})}}>
-    <Image
-      style={styles.icon}
-      source={item.icon}
-    />
+    <View style={styles.fullItem}>
+      <View style={styles.chip} opacity={item.isNew}/>
+      <Image
+        style={styles.icon}
+        source={item.icon}
+      />
+    </View>
   </SafeAreaView>
 );
 
 const NavigBar = (params) => {
   checkRoot(params.root)
   const renderItem = ({ item }) => (
-    <Item icon={item.icon} nav={params.navigation} route={params.route} link={item.link}/>
+    <Item icon={item.icon} isNew={item.isNew} nav={params.navigation} route={params.route} link={item.link}/>
   );
 
   return (
@@ -100,6 +109,18 @@ const styles = StyleSheet.create({
     width:  Dimensions.get('window').width/5.8,
     height:  Dimensions.get('window').width/5.8
   },
+  chip : {
+      width: 20,
+      height: 20,
+      borderRadius: 10,
+      backgroundColor: 'red',
+      marginTop: 20,
+      marginBottom: -20,
+      zIndex: 2
+  },
+  fullItem: {
+      alignItems: 'flex-end'
+  }
 });
 
 export default NavigBar;
