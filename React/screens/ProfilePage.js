@@ -10,21 +10,25 @@ const DATA = [
     id: '1',
     title: 'Statistiques',
     link: 'StatistiquesPage',
+    isNew: 0,
   },
   {
     id: '2',
     title: 'Lexique',
     link: 'LexiquePage',
+    isNew: 0
   },
   {
     id: '3',
     title: 'Historique',
     link: 'HistoriquePage',
+    isNew: 0
   },
   {
     id:'4',
     title:'Qui sommes-nous ?',
-    link: 'PresentationPage'
+    link: 'PresentationPage',
+    isNew: 0
   }
 ];
 

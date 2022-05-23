@@ -20,7 +20,7 @@ class ItemList extends React.Component{
             nav: this.nav
         },
         <View style={styles.fullItem}>
-            <View style={styles.chip} opacity={/* item.isNew} */0}/>
+            <View style={styles.chip} opacity={item.isNew}/>
             <View style={styles.item} backgroundColor={item.color} onMoveShouldSetResponder={() => true} onResponderRelease={() => {this.navigation(item)}}>
                 <Text style={styles.title}>{item.title}</Text>
             </View>
@@ -77,6 +77,7 @@ finalColor = '';
                     id: mot.id,
                     title: mot.nom,
                     link: 'LessonPage',
+                    isNew: 0
                 }
             })
         }  
@@ -89,7 +90,8 @@ finalColor = '';
                         id: cptId,
                         title: item.title,
                         color: item.color,
-                        link: item.link
+                        link: item.link,
+                        isNew: 0
                     })
                     cptId++
                 })
