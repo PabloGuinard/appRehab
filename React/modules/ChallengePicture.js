@@ -1,53 +1,32 @@
 import React from 'react';
 
 import { SafeAreaView, StyleSheet, Dimensions, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 // const source = {uri:'https://apprehab.000webhostapp.com/database/challenge/challenge.jpg'+ '?' + new Date()};
 const source = {uri:'http://10.39.20.77/database/challenge/challenge.jpg'+ '?' + new Date()};
 
 const ChallengePicture = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image source={source} style={styles.im} borderColor={mainColor}/>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
-const styleByPlatform = Platform.select({
-  ios: {
-    container: {
-      flex: 1,
-      borderTopRightRadius: 10,
-      borderTopLeftRadius: 10,
-      marginTop: 35,
-    },
-  
-    im: {
-      borderWidth: 5,
-      borderRadius: 15,
-      marginHorizontal: 5,
-      maxWidth: Dimensions.get('window').width,
-      height: Dimensions.get('window').height-255,
-    },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 35,
   },
-  android: {
-    container: {
-      flex: 1,
-      borderTopRightRadius: 10,
-      borderTopLeftRadius: 10,
-      marginTop: 35,
-    },
-  
-    im: {
-      borderWidth: 5,
-      borderRadius: 15,
-      marginHorizontal: 5,
-      maxWidth: Dimensions.get('window').width,
-      height: Dimensions.get('window').height-230,
-    },
-  }
-});
 
-const styles = StyleSheet.create(styleByPlatform);
+  im: {
+    borderWidth: 5,
+    marginHorizontal: 5,
+    width: Dimensions.get('window').width - 20,
+    height: Dimensions.get('window').height,
+    resizeMode: 'contain'
+  },
+});
 
 export default ChallengePicture;

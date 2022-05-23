@@ -61,20 +61,17 @@ function checkRoot(params) {
 
 const Item = (item) => (
   <SafeAreaView style={styles.item} onStartShouldSetResponder={() => {item.nav.navigate(item.link, {routeName:item.route})}}>
-    <View style={styles.fullItem}>
-      <View style={styles.chip} opacity={item.isNew}/>
-      <Image
-        style={styles.icon}
-        source={item.icon}
-      />
-    </View>
+    <Image
+      style={styles.icon}
+      source={item.icon}
+    />
   </SafeAreaView>
 );
 
 const NavigBar = (params) => {
   checkRoot(params.root)
   const renderItem = ({ item }) => (
-    <Item icon={item.icon} isNew={/* item.isNew */0} nav={params.navigation} route={params.route} link={item.link}/>
+    <Item icon={item.icon} nav={params.navigation} route={params.route} link={item.link}/>
   );
 
   return (
@@ -108,18 +105,6 @@ const styles = StyleSheet.create({
   icon: {
     width:  Dimensions.get('window').width/5.8,
     height:  Dimensions.get('window').width/5.8
-  },
-  chip : {
-      width: 20,
-      height: 20,
-      borderRadius: 10,
-      backgroundColor: 'red',
-      marginTop: 20,
-      marginBottom: -20,
-      zIndex: 2
-  },
-  fullItem: {
-      alignItems: 'flex-end'
   }
 });
 
