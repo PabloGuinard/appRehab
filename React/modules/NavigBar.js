@@ -74,7 +74,7 @@ const Item = (item) => (
 const NavigBar = (params) => {
   checkRoot(params.root)
   const renderItem = ({ item }) => (
-    <Item icon={item.icon} isNew={item.isNew} nav={params.navigation} route={params.route} link={item.link}/>
+    <Item icon={item.icon} isNew={/* item.isNew */0} nav={params.navigation} route={params.route} link={item.link}/>
   );
 
   return (

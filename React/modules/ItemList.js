@@ -20,7 +20,7 @@ class ItemList extends React.Component{
             nav: this.nav
         },
         <View style={styles.fullItem}>
-            <View style={styles.chip} opacity={item.isNew}/>
+            <View style={styles.chip} opacity={/* item.isNew} */0}/>
             <View style={styles.item} backgroundColor={item.color} onMoveShouldSetResponder={() => true} onResponderRelease={() => {this.navigation(item)}}>
                 <Text style={styles.title}>{item.title}</Text>
             </View>
