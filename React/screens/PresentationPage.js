@@ -7,13 +7,15 @@ const PresentationPage=({navigation})=>{
     const TextPresentation = global.presentation;
     return(
         <View style={{flex:1}}>
-            <ScrollView style={{flex: 6}}>
-                <View style={styles.logos}>
-                    <Image style={styles.im1} source={require("../assets/pictures/logo-dispositifs.png")} />
-                    <Image style={styles.im2} source={require("../assets/pictures/logo-lyon-1.png")} />
-                </View>
-                <Text style={styles.data}>{TextPresentation}</Text>
-            </ScrollView>
+            <View style={{flex: 6}}>
+                <ScrollView>
+                    <View style={styles.logos}>
+                        <Image style={styles.im1} source={require("../assets/pictures/logo-dispositifs.png")} />
+                        <Image style={styles.im2} source={require("../assets/pictures/logo-lyon-1.png")} />
+                    </View>
+                    <Text style={styles.data}>{TextPresentation}</Text>
+                </ScrollView>
+            </View>
             <View style={{flex:1}}>
                 <NavigBar navigation={navigation}/>
             </View>

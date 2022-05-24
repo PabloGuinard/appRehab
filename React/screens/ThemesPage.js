@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, StyleSheet, TextInput, View, StatusBar, Image, Dimensions, Platform} from 'react-native';
+import {Pressable, StyleSheet, TextInput, View, StatusBar, Image, Dimensions, Text} from 'react-native';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
+
 class ThemesPage extends React.Component{
     constructor(props) {
         super(props);
@@ -15,7 +16,9 @@ class ThemesPage extends React.Component{
     }
 
     filterThemes(data) {
+        console.log("filtre");
         if (this.searchedText === "") {
+            console.log("nul");
             return
         }
         let newData = Array()
@@ -25,6 +28,7 @@ class ThemesPage extends React.Component{
                 newData[newData.length] = data[cpt]
             }
         }
+        console.log(newData.length);
         this.setState({
             data: newData
         })
@@ -43,15 +47,18 @@ class ThemesPage extends React.Component{
         return (
             <View style={{flex: 1}}>
                 <View style={styles.main_container}>
-                    <TextInput style={styles.textinput} onChangeText={(text) => {
+                    <TextInput style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
                         this.updateSearchedText(text)
                     }}/>
-                    <Button style={styles.button} color={this.color} title='Rechercher' onPress={() => this.filterThemes(this.data)}/>
-                    <Image
-                        style={styles.cross}
-                        source={require('../assets/icones/cross.png')}
-                        onStartShouldSetResponder={() => {this.resetFilters()}}
-                    />
+                    <View style={styles.buttonsContainer}>
+                        <Pressable style={styles.button} marginLeft={10} borderBottomLeftRadius={10} backgroundColor={this.color} onPress={() => {this.resetFilters()}}>
+                            <Text style={styles.text}>ANNULER</Text>
+                        </Pressable>
+                        <View style={styles.break}></View>
+                        <Pressable style={styles.button} backgroundColor={this.color} borderBottomRightRadius={10} onPress={() => {this.filterThemes(this.data)}}>
+                            <Text style={styles.text}>RECHERCHER</Text>
+                        </Pressable>
+                    </View>
                 </View>
                 <View style={{flex: 5, marginTop: -50}}>
                     <ItemList navigation={this.navigation} DATA={this.state.data} color={this.color}/>
@@ -64,47 +71,38 @@ class ThemesPage extends React.Component{
     }
 }
 
-const styleSheetByPlatform = Platform.select({
-    ios: {
-        main_container: {
-            flex: 1,
-            marginTop: StatusBar.currentHeight + 40
-        },
-        textinput: {
-            marginLeft: 5,
-            marginRight: 5,
-            height: 50,
-            borderWidth: 1,
-            paddingLeft: 5
-        },
-        cross: {
-            width: 35,
-            height: 35,
-            marginTop: -80,
-            marginLeft: Dimensions.get('window').width - 50
-        }
+const styles = StyleSheet.create({
+    main_container: {
+        flex: 1,
+        marginTop: StatusBar.currentHeight
     },
-    android: {
-        main_container: {
-            flex: 1,
-            marginTop: StatusBar.currentHeight
-        },
-        textinput: {
-            marginLeft: 5,
-            marginRight: 5,
-            height: 50,
-            borderWidth: 1,
-            paddingLeft: 5
-        },
-        cross: {
-            width: 35,
-            height: 35,
-            marginTop: -80,
-            marginLeft: Dimensions.get('window').width - 50
-        }
+    textinput: {
+        marginLeft: 10,
+        marginRight: 10,
+        height: 50,
+        borderWidth: 5,
+        paddingLeft: 5,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+    },
+    button: {
+        height: 50,
+        width: Dimensions.get('window').width / 2 - 11,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text: {
+        fontSize: 15,
+        color: 'white'
+    },
+    buttonsContainer: {
+        flexDirection: 'row'
+    },
+    break: {
+        height: 50,
+        width: 2,
+        backgroundColor: 'black'
     }
-});
-
-const styles = StyleSheet.create(styleSheetByPlatform)
+})
 
 export default ThemesPage;
