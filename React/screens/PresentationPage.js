@@ -22,53 +22,31 @@ const PresentationPage=({navigation})=>{
         </View>
     )
 }
-
-const styleByPlatform = Platform.select({
-    ios: {
-        data: {
-            marginHorizontal: 15,
-            fontSize: 20,
-            textAlign: 'justify',
-          },
-          im1: {
-            marginTop: StatusBar.currentHeight,
-            maxWidth: Dimensions.get('window').width/1.1,
-            maxHeight: Dimensions.get('window').height/4.8
-          },
-    
-          im2: {
-            marginTop: StatusBar.currentHeight,
-            maxWidth: Dimensions.get('window').width,
-            maxHeight: Dimensions.get('window').height/10,
-          }
+  
+const styles = StyleSheet.create({
+    logos: {
+        marginTop: StatusBar.currentHeight,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
     },
-    android: {
-        logos: {
-            marginTop: StatusBar.currentHeight,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-evenly'
-        },
-        data: {
-            marginTop: 10,
-            marginHorizontal: 15,
-            fontSize: 20,
-            textAlign: 'justify',
-        },
-        im1: {
-            maxWidth: Dimensions.get('window').width / 2.2,
-            maxHeight: Dimensions.get('window').height / 6,
-            resizeMode: 'contain',
-        },
+    data: {
+        marginTop: 10,
+        marginHorizontal: 15,
+        fontSize: 20,
+        textAlign: 'justify',
+    },
+    im1: {
+        maxWidth: Dimensions.get('window').width / 2.2,
+        maxHeight: Dimensions.get('window').height / 6,
+        resizeMode: 'contain',
+    },
 
-        im2: {
-            maxWidth: Dimensions.get('window').width / 2.2,
-            maxHeight: Dimensions.get('window').height/ 10,
-            resizeMode: 'contain',
-        }
+    im2: {
+        maxWidth: Dimensions.get('window').width / 2.2,
+        maxHeight: Dimensions.get('window').height/ 10,
+        resizeMode: 'contain',
     }
 });
-  
-const styles = StyleSheet.create(styleByPlatform);
 
 export default PresentationPage;

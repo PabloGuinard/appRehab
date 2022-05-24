@@ -116,112 +116,59 @@ const ModalRate = (params) => {
 };
 
 const styleByPlatform = Platform.select({
-  ios: {
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    modalView: {
-      margin: 10,
-      backgroundColor: "white",
-      borderRadius: 15,
-      padding: 30,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    button: {
-      borderRadius: 15,
-      padding: 10,
-      elevation: 2
-    },
-    buttonOpen: {
-      width: Dimensions.get('window').width/2,
-      height: Dimensions.get('window').width/8
-    },
-    buttonClose: {
-      backgroundColor: "#2196F3",
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center",
-      fontSize: 18
-    },
-    modalText: {
-      marginTop:15,
-      marginBottom: 15,
-      textAlign: "center"
-    },
-    cross: {
-      width: 30,
-      height: 30,
-      marginLeft:200,
-      marginTop:-5
-    }
-  },
-  android: {
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    modalView: {
-      margin: 10,
-      backgroundColor: "white",
-      borderRadius: 15,
-      padding: 30,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    button: {
-      borderRadius: 15,
-      padding: 10,
-      elevation: 2
-    },
-    buttonOpen: {
-      width: Dimensions.get('window').width/2,
-      height: Dimensions.get('window').width/8
-    },
-    buttonClose: {
-      backgroundColor: "#2196F3",
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center",
-      fontSize: 18
-    },
-    modalText: {
-      marginTop:15,
-      marginBottom: 15,
-      textAlign: "center"
-    },
-    cross: {
-      width: 30,
-      height: 30,
-      marginLeft:200,
-      marginTop:-5
-    }
-  }
 });
 
-const styles = StyleSheet.create(styleByPlatform);
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 15,
+    padding: 30,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 15,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    width: Dimensions.get('window').width/2,
+    height: Dimensions.get('window').width/8
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 18
+  },
+  modalText: {
+    marginTop:15,
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  cross: {
+    width: 30,
+    height: 30,
+    marginLeft:200,
+    marginTop:-5
+  }
+});
 
 export default ModalRate;

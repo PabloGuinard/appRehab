@@ -150,67 +150,34 @@ const Lesson = (params) => {
   );
 };
 
-const styleByPlatform = Platform.select({
-  ios: {
-    container: {
-      flex: 1,
-    },
-    data: {
-      marginHorizontal: 15,
-      fontSize: 20,
-      textAlign: 'justify',
-    },
-    im: {
-      maxWidth: Dimensions.get('window').width,
-      height: Dimensions.get('window').height/3,
-      margin: 10
-    },
-    
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
-    },
-  
-    url: {
-      color: 'blue',
-      marginHorizontal: 15,
-      fontSize: 20,
-      textAlign: 'justify',
-      textDecorationLine: 'underline'
-    },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
   },
-  android: {
-    container: {
-      flex: 1,
-    },
-    data: {
-      marginHorizontal: 15,
-      fontSize: 20,
-      textAlign: 'justify',
-    },
-    im: {
-      maxWidth: Dimensions.get('window').width,
-      height: Dimensions.get('window').height/3,
-      margin: 10
-    },
-    
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
-    },
+  data: {
+    marginHorizontal: 15,
+    fontSize: 20,
+    textAlign: 'justify',
+  },
+  im: {
+    maxWidth: Dimensions.get('window').width,
+    height: Dimensions.get('window').height/3,
+    margin: 10
+  },
   
-    url: {
-      color: 'blue',
-      marginHorizontal: 15,
-      fontSize: 20,
-      textAlign: 'justify',
-      textDecorationLine: 'underline'
-    },
-  }
-});
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
 
-const styles = StyleSheet.create(styleByPlatform);
+  url: {
+    color: 'blue',
+    marginHorizontal: 15,
+    fontSize: 20,
+    textAlign: 'justify',
+    textDecorationLine: 'underline'
+  },
+});
   
 export default Lesson;

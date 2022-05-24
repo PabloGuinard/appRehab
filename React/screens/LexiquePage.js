@@ -68,68 +68,45 @@ class LexiquePage extends React.Component {
   }
 };
 
-const styleByPlatform = Platform.select({
-  ios: {
-    main_container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight + 40
-    },
-    textinput: {
-        marginLeft: 5,
-        marginRight: 5,
-        height: 50,
-        borderWidth: 1,
-        paddingLeft: 5
-    },
-    cross: {
-      width: 35,
-      height: 35,
-      marginTop: -80,
-      marginLeft: Dimensions.get('window').width - 50
-    }
+const styles = StyleSheet.create({
+  main_container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight
   },
-  android: {
-    main_container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight
-    },
-    textinput: {
-        marginLeft: 10,
-        marginRight: 10,
-        height: 50,
-        borderWidth: 5,
-        paddingLeft: 5,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        borderColor: global.mainColor
-    },
-    cross: {
-      width: 35,
-      height: 35,
-      marginTop: -80,
-      marginLeft: Dimensions.get('window').width - 50
-    },
-    button: {
-        height: 40,
-        width: Dimensions.get('window').width / 2 - 11,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    text: {
-        fontSize: 15,
-        color: 'white'
-    },
-    buttonsContainer: {
-        flexDirection: 'row'
-    },
-    break: {
-        height: 40,
-        width: 2,
-        backgroundColor: 'white'
-    }
+  textinput: {
+      marginLeft: 10,
+      marginRight: 10,
+      height: 50,
+      borderWidth: 5,
+      paddingLeft: 5,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      borderColor: global.mainColor
+  },
+  cross: {
+    width: 35,
+    height: 35,
+    marginTop: -80,
+    marginLeft: Dimensions.get('window').width - 50
+  },
+  button: {
+      height: 40,
+      width: Dimensions.get('window').width / 2 - 11,
+      justifyContent: 'center',
+      alignItems: 'center'
+  },
+  text: {
+      fontSize: 15,
+      color: 'white'
+  },
+  buttonsContainer: {
+      flexDirection: 'row'
+  },
+  break: {
+      height: 40,
+      width: 2,
+      backgroundColor: 'white'
   }
-});
-
-const styles = StyleSheet.create(styleByPlatform)
+})
 
 export default LexiquePage;
