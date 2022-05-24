@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
-import { View, StyleSheet, Button, TextInput, StatusBar, Platform, Image, Text, Dimensions, Pressable} from 'react-native';
+import { View, StyleSheet, TextInput, StatusBar, Text, Dimensions, Pressable} from 'react-native';
 
 class LexiquePage extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class LexiquePage extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.main_container}>
-          <TextInput style={styles.textinput} onChangeText={(text) => {
+          <TextInput style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
               this.updateSearchedText(text)}}/>
           <View style={styles.buttonsContainer}>
             <Pressable style={styles.button} marginLeft={10} borderBottomLeftRadius={10} backgroundColor={this.color} onPress={() => {this.resetFilters()}}>
@@ -80,8 +80,7 @@ const styles = StyleSheet.create({
       borderWidth: 5,
       paddingLeft: 5,
       borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      borderColor: global.mainColor
+      borderTopRightRadius: 10
   },
   cross: {
     width: 35,

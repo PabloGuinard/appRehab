@@ -34,7 +34,7 @@ const ROW_2 = [
   },
   {
     id: '04',
-    title: 'Psycho-éducation',
+    title: 'Psycho éducation',
     color: '#4bc2ee',
     icon: require('../assets/icones/psycho-education.png'),
   },
@@ -101,18 +101,21 @@ const Categories = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={ROW_1}
+        contentContainerStyle={styles.flatlistContent}
         horizontal={true}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
       <FlatList
         data={ROW_2}
+        contentContainerStyle={styles.flatlistContent}
         horizontal={true}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
       <FlatList
         data={ROW_3}
+        contentContainerStyle={styles.flatlistContent}
         horizontal={true}
         renderItem={renderItem}
         keyExtractor={item => item.id}
@@ -124,29 +127,32 @@ const Categories = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 10,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
+    alignItems: 'center'
+  },
+  flatlistContent: {
+    width: '100%',
+    justifyContent: 'space-evenly'
   },
   item: {
     flex: 1,
-    width: Dimensions.get('window').height/4.7,
-    height: Dimensions.get('window').height/4.7,
-    marginHorizontal: Dimensions.get('window').width/25,
-    marginVertical : Dimensions.get('window').height/35,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    aspectRatio: 1,
+    height: '90%',
+    
   },
   title: {
-    fontSize: Dimensions.get('window').width/24,
+    fontSize: 15,
     fontWeight: 'bold',
     color: 'white',
   },
   icon: {
-    width: Dimensions.get('window').width/2.5,
-    height: Dimensions.get('window').width/2.5,
+    height: '100%',
     margin: -20,
+    aspectRatio: 1
   }
 });
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet,View, Platform, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet,View, Text, Image, TouchableOpacity } from 'react-native';
 export default class StarRating extends Component {
   constructor() {
     super();

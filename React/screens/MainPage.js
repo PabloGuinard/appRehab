@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import Header from '../modules/Header';
 import Categories from '../modules/Categories'
 import NavigBar from '../modules/NavigBar';
@@ -8,10 +8,11 @@ import NavigBar from '../modules/NavigBar';
 const MainPage = ({navigation}) => {
     return (
         <View style={{flex: 1}}>
+            <View style={styles.statusbar}/>
             <View style={{flex: 1}}>
                 <Header/>
             </View>
-            <View style={{flex: 5}}>
+            <View style={{flex: 7}}>
                 <Categories navigation={navigation}/>
             </View>
             <View style={{flex: 1}}>
@@ -20,5 +21,12 @@ const MainPage = ({navigation}) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    statusbar: {
+        flex: 1,
+        maxHeight: StatusBar.currentHeight,
+    }
+})
 
 export default MainPage;

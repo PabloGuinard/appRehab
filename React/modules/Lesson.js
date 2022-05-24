@@ -1,11 +1,8 @@
 import React from 'react';
-import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, Text, Linking, Platform, useWindowDimensions} from 'react-native';
+import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, useWindowDimensions} from 'react-native';
 import ModalRate from './ModalRate';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import HTMLView from 'react-native-htmlview';
-import { TapGestureHandler } from 'react-native-gesture-handler';
 import RenderHTML from 'react-native-render-html';
-import style from 'react-native-modal-picker/style';
 
 function printObject(item, params) {
   switch (item.type){

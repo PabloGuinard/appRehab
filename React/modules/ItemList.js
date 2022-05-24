@@ -69,8 +69,7 @@ async function navigation(params) {
             DATA[DATA.length] = {
                 id: exercice.id,
                 title: exercice.nom,
-                link: 'LessonPage',
-                isNew: exercice.isNew
+                link: 'LessonPage'
             }
         })
     } 
@@ -156,10 +155,6 @@ function checkColor(props, item) {
     }
 }
 
-function refreshOnBack(props){
-    props.navigation.addListener('willFocus', payload => {console.log("zebi");this.forceUpdate()})
-}
-
 const Item = (item) => (
     <View style={styles.fullItem}>
         <View style={styles.item} backgroundColor={item.color} onMoveShouldSetResponder={() => true} onResponderRelease={() => {navigation(item)}}>
@@ -171,7 +166,6 @@ const Item = (item) => (
 const ItemList = (props) => {
     const renderItem = ({item}) => (
         checkColor(props, item),
-        refreshOnBack(props),
         <Item title={item.title} color={color} link={item.link} isNew={item.isNew} nav={props.navigation}/>
     )
 

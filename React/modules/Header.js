@@ -11,11 +11,11 @@ const Header = () =>{
 
 const styles = StyleSheet.create({
     imgBanner: {
-        marginTop: StatusBar.currentHeight - 10,
-        maxWidth: Dimensions.get('window').width,
-        maxHeight: Dimensions.get('window').height / 7.5,
+        width: Dimensions.get('window').width,
+        height: '100%',
         justifyContent: 'center',
         alignItems: "center",
+        resizeMode: 'contain',
     },
 });
 

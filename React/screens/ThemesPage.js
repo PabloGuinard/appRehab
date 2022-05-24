@@ -16,9 +16,7 @@ class ThemesPage extends React.Component{
     }
 
     filterThemes(data) {
-        console.log("filtre");
         if (this.searchedText === "") {
-            console.log("nul");
             return
         }
         let newData = Array()
@@ -28,7 +26,6 @@ class ThemesPage extends React.Component{
                 newData[newData.length] = data[cpt]
             }
         }
-        console.log(newData.length);
         this.setState({
             data: newData
         })

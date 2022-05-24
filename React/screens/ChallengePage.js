@@ -1,6 +1,5 @@
 import React from 'react';
 import {View} from "react-native";
-import Header from '../modules/Header';
 import ChallengePicture from '../modules/ChallengePicture';
 import NavigBar from '../modules/NavigBar';
 import AsyncStorage from "@react-native-async-storage/async-storage";

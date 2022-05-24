@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SafeAreaView, StyleSheet, Dimensions, Image } from 'react-native';
+import { StyleSheet, Dimensions, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 // const source = {uri:'https://apprehab.000webhostapp.com/database/challenge/challenge.jpg'+ '?' + new Date()};
