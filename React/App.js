@@ -195,7 +195,7 @@ global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    //AsyncStorage.clear()
+    AsyncStorage.clear()
     initialisation()
     return (
       <NavigationContainer>

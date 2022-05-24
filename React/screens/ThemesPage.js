@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
     },
     button: {
-        height: 50,
+        height: 40,
         width: Dimensions.get('window').width / 2 - 11,
         justifyContent: 'center',
         alignItems: 'center'
@@ -99,9 +99,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     break: {
-        height: 50,
+        height: 40,
         width: 2,
-        backgroundColor: 'black'
+        backgroundColor: 'white'
     }
 })
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
-import { View, StyleSheet, Button, TextInput, StatusBar, Platform, Image, Dimensions} from 'react-native';
+import { View, StyleSheet, Button, TextInput, StatusBar, Platform, Image, Text, Dimensions, Pressable} from 'react-native';
 
 class LexiquePage extends React.Component {
   constructor(props) {
@@ -47,12 +47,15 @@ class LexiquePage extends React.Component {
         <View style={styles.main_container}>
           <TextInput style={styles.textinput} onChangeText={(text) => {
               this.updateSearchedText(text)}}/>
-          <Button style={styles.button} color={this.color} title='Rechercher' onPress={() => this.filterThemes(this.data)}/>
-          <Image
-              style={styles.cross}
-              source={require('../assets/icones/cross.png')}
-              onStartShouldSetResponder={() => {this.resetFilters()}}
-          />
+          <View style={styles.buttonsContainer}>
+            <Pressable style={styles.button} marginLeft={10} borderBottomLeftRadius={10} backgroundColor={this.color} onPress={() => {this.resetFilters()}}>
+                <Text style={styles.text}>ANNULER</Text>
+            </Pressable>
+            <View style={styles.break}></View>
+            <Pressable style={styles.button} backgroundColor={this.color} borderBottomRightRadius={10} onPress={() => {this.filterThemes(this.data)}}>
+                <Text style={styles.text}>RECHERCHER</Text>
+            </Pressable>
+          </View>
         </View>
         <View style={{flex: 5, marginTop: -50}}>
           <ItemList navigation={this.navigation} DATA={this.state.data} color={this.color}/>
@@ -91,17 +94,38 @@ const styleByPlatform = Platform.select({
       marginTop: StatusBar.currentHeight
     },
     textinput: {
-        marginLeft: 5,
-        marginRight: 5,
+        marginLeft: 10,
+        marginRight: 10,
         height: 50,
-        borderWidth: 1,
-        paddingLeft: 5
+        borderWidth: 5,
+        paddingLeft: 5,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderColor: global.mainColor
     },
     cross: {
       width: 35,
       height: 35,
       marginTop: -80,
       marginLeft: Dimensions.get('window').width - 50
+    },
+    button: {
+        height: 40,
+        width: Dimensions.get('window').width / 2 - 11,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text: {
+        fontSize: 15,
+        color: 'white'
+    },
+    buttonsContainer: {
+        flexDirection: 'row'
+    },
+    break: {
+        height: 40,
+        width: 2,
+        backgroundColor: 'white'
     }
   }
 });
