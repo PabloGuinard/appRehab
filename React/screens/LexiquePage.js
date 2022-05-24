@@ -57,7 +57,7 @@ class LexiquePage extends React.Component {
             </Pressable>
           </View>
         </View>
-        <View style={{flex: 5, marginTop: -50}}>
+        <View style={{flex: 7}}>
           <ItemList navigation={this.navigation} DATA={this.state.data} color={this.color}/>
         </View>
         <View style={{flex: 1}}>

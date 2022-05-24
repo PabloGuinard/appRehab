@@ -6,8 +6,9 @@ import NavigBar from '../modules/NavigBar';
 
 const StatistiquesPage = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <View style={{flex: 6}}>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.statusbar}/>
+      <View style={{flex: 8}}>
           <CategoriePref title={global.catPref}/>
           <NumActivite/>
       </View>
@@ -19,10 +20,10 @@ const StatistiquesPage = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  safeAreaView: {
-    marginTop: StatusBar.currentHeight - 10,
-    flex: 1
-  },
+  statusbar: {
+      flex: 1,
+      maxHeight: StatusBar.currentHeight,
+  }
 })
   
 export default StatistiquesPage;

@@ -43,6 +43,7 @@ class ThemesPage extends React.Component{
     render() {
         return (
             <View style={{flex: 1}}>
+                <View style={{flex: 8.5}}>
                 <View style={styles.main_container}>
                     <TextInput style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
                         this.updateSearchedText(text)
@@ -57,9 +58,10 @@ class ThemesPage extends React.Component{
                         </Pressable>
                     </View>
                 </View>
-                <View style={{flex: 5, marginTop: -50}}>
+                <View style={{flex: 8}}>
                     <ItemList navigation={this.navigation} DATA={this.state.data} color={this.color}/>
                 </View>
+            </View>
                 <View style={{flex: 1}}>
                     <NavigBar navigation={this.navigation}/>
                 </View>

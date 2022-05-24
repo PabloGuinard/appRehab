@@ -7,7 +7,8 @@ const PresentationPage=({navigation})=>{
     const TextPresentation = global.presentation;
     return(
         <View style={{flex:1}}>
-            <View style={{flex: 6}}>
+            <View style={styles.statusbar}/>
+            <View style={{flex: 8}}>
                 <ScrollView>
                     <View style={styles.logos}>
                         <Image style={styles.im1} source={require("../assets/pictures/logo-dispositifs.png")} />
@@ -25,7 +26,6 @@ const PresentationPage=({navigation})=>{
   
 const styles = StyleSheet.create({
     logos: {
-        marginTop: StatusBar.currentHeight,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly'
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
         maxWidth: Dimensions.get('window').width / 2.2,
         maxHeight: Dimensions.get('window').height/ 10,
         resizeMode: 'contain',
+    },
+    statusbar: {
+        flex: 1,
+        maxHeight: StatusBar.currentHeight,
     }
 });
 

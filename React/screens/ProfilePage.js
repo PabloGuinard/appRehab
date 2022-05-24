@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from "react-native";
+import { View, StyleSheet, StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from '../modules/Header';
 import ItemList from '../modules/ItemList';
@@ -95,10 +95,11 @@ const ProfilePage = ({navigation}) => {
   getPresentation()
   return (
     <View style={{flex: 1}}>
+    <View style={styles.statusbar}/>
       <View style={{flex: 1}}>
         <Header/>
       </View>
-      <View style={{flex: 5}}>
+      <View style={{flex: 7}}>
         <ItemList navigation={navigation} DATA={DATA} color= {mainColor}/>
       </View>
       <View style={{flex: 1}}>
@@ -107,5 +108,12 @@ const ProfilePage = ({navigation}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+    statusbar: {
+        flex: 1,
+        maxHeight: StatusBar.currentHeight,
+    }
+})
 
 export default ProfilePage;

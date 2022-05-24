@@ -14,7 +14,7 @@ const LessonPage = ({route, navigation}) => {
             <View style={{flex: 1}}>
                 <ThemeSelected navigation={navigation} title={title} color={color}/>
             </View>
-            <View style={{flex: 5}}>
+            <View style={{flex: 7}}>
                 <Lesson content={content} color={color} />
             </View>
             <View style={{flex: 1}}>
@@ -26,7 +26,7 @@ const LessonPage = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     safeAreaView: {
-      marginTop: StatusBar.currentHeight - 10,
+      marginTop: StatusBar.currentHeight,
       flex: 1
     },
   })
