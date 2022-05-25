@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     data: {
         marginTop: 10,
         marginHorizontal: 15,
-        fontSize: 20,
+        fontSize: 15,
         textAlign: 'justify',
     },
     im1: {

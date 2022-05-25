@@ -187,13 +187,13 @@ const styles = StyleSheet.create({
     },
     item: {
         padding: 15,
-        marginHorizontal: 16,
+        marginHorizontal: 15,
         borderRadius: 15,
         alignSelf: 'stretch',
         margin: 10
     },
     title: {
-        fontSize: 25,
+        fontSize: 15,
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold'

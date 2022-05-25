@@ -41,7 +41,7 @@ const ModalRate = (params) => {
 
   function closeModal(exerciceId){
     setModalVisible(!modalVisible)
-    setStorage('exerciceEnded' + exerciceId, 'true')
+    //setStorage('exerciceEnded' + exerciceId, 'true')
     global.amountExercicesEndedMonth++
     setStorage('amountExercicesEndedMonth', global.amountExercicesEndedMonth.toString())
   }
@@ -62,7 +62,7 @@ const ModalRate = (params) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleBis, setModalVisibleBis] = useState(false);
   return (
-    <View style={styles.centeredView}>
+    <View>
       <Modal
           animationType="slide"
           transparent={true}
@@ -76,7 +76,6 @@ const ModalRate = (params) => {
               />
 
             </Pressable>
-            <Text style={styles.modalText}>Exercice terminé ! Bien joué !</Text>
             <StarRating/>
             <CommentTextInput/>
             <Pressable
@@ -104,13 +103,15 @@ const ModalRate = (params) => {
           </View>
         </View>
       </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        backgroundColor={mainColor}
-        onPress={() => openModal()}
-      >
-        <Text style={styles.textStyle}>Finir l'exercice</Text>
-      </Pressable>
+      <View style={{width: '100%', alignContent: 'stretch', marginBottom: 20}}>
+        <Pressable
+          style={[styles.button]}
+          backgroundColor={mainColor}
+          onPress={() => openModal()}
+        >
+          <Text style={styles.textStyle}>Finir l'exercice</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -123,7 +124,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
+    backgroundColor: 'blue'
   },
   modalView: {
     margin: 10,
@@ -137,17 +139,15 @@ const styles = StyleSheet.create({
       height: 2
     },
     shadowOpacity: 0.25,
+    width: '100%',
     shadowRadius: 4,
     elevation: 5
   },
   button: {
     borderRadius: 15,
-    padding: 10,
-    elevation: 2
-  },
-  buttonOpen: {
-    width: Dimensions.get('window').width/2,
-    height: Dimensions.get('window').width/8
+    padding: 15,
+    elevation: 2,
+    marginHorizontal: 15
   },
   buttonClose: {
     backgroundColor: "#2196F3",
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18
+    fontSize: 15,
   },
   modalText: {
     marginTop:15,

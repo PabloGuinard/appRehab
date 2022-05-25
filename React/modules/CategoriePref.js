@@ -27,12 +27,11 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   txt: {
-    fontSize: 25,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: 'white',
   },
   title: {
-    fontSize: 25,
+    fontSize: 15,
     fontWeight: 'bold',
     color: 'white',
     },

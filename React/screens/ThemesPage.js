@@ -44,24 +44,24 @@ class ThemesPage extends React.Component{
         return (
             <View style={{flex: 1}}>
                 <View style={{flex: 8.5}}>
-                <View style={styles.main_container}>
-                    <TextInput style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
-                        this.updateSearchedText(text)
-                    }}/>
-                    <View style={styles.buttonsContainer}>
-                        <Pressable style={styles.button} marginLeft={10} borderBottomLeftRadius={10} backgroundColor={this.color} onPress={() => {this.resetFilters()}}>
-                            <Text style={styles.text}>ANNULER</Text>
-                        </Pressable>
-                        <View style={styles.break}></View>
-                        <Pressable style={styles.button} backgroundColor={this.color} borderBottomRightRadius={10} onPress={() => {this.filterThemes(this.data)}}>
-                            <Text style={styles.text}>RECHERCHER</Text>
-                        </Pressable>
+                    <View style={styles.main_container}>
+                        <TextInput style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
+                            this.updateSearchedText(text)
+                        }}/>
+                        <View style={styles.buttonsContainer}>
+                            <Pressable style={styles.button} marginLeft={10} borderBottomLeftRadius={10} backgroundColor={this.color} onPress={() => {this.resetFilters()}}>
+                                <Text style={styles.text}>Annuler</Text>
+                            </Pressable>
+                            <View style={styles.break}></View>
+                            <Pressable style={styles.button} backgroundColor={this.color} borderBottomRightRadius={10} onPress={() => {this.filterThemes(this.data)}}>
+                                <Text style={styles.text}>Rechercher</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                    <View style={{flex: 8}}>
+                        <ItemList navigation={this.navigation} DATA={this.state.data} color={this.color}/>
                     </View>
                 </View>
-                <View style={{flex: 8}}>
-                    <ItemList navigation={this.navigation} DATA={this.state.data} color={this.color}/>
-                </View>
-            </View>
                 <View style={{flex: 1}}>
                     <NavigBar navigation={this.navigation}/>
                 </View>
@@ -73,7 +73,7 @@ class ThemesPage extends React.Component{
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        marginTop: StatusBar.currentHeight
+        marginTop: StatusBar.currentHeight,
     },
     textinput: {
         marginLeft: 10,

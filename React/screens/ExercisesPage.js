@@ -26,8 +26,8 @@ const ExercisesPage = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     safeAreaView: {
-      marginTop: StatusBar.currentHeight - 10,
-      flex: 2
+      marginTop: StatusBar.currentHeight,
+      flex: 1
     },
   })
 

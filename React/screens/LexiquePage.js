@@ -49,11 +49,11 @@ class LexiquePage extends React.Component {
               this.updateSearchedText(text)}}/>
           <View style={styles.buttonsContainer}>
             <Pressable style={styles.button} marginLeft={10} borderBottomLeftRadius={10} backgroundColor={this.color} onPress={() => {this.resetFilters()}}>
-                <Text style={styles.text}>ANNULER</Text>
+                <Text style={styles.text}>Annuler</Text>
             </Pressable>
             <View style={styles.break}></View>
             <Pressable style={styles.button} backgroundColor={this.color} borderBottomRightRadius={10} onPress={() => {this.filterThemes(this.data)}}>
-                <Text style={styles.text}>RECHERCHER</Text>
+                <Text style={styles.text}>Rechercher</Text>
             </Pressable>
           </View>
         </View>
@@ -81,12 +81,6 @@ const styles = StyleSheet.create({
       paddingLeft: 5,
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10
-  },
-  cross: {
-    width: 35,
-    height: 35,
-    marginTop: -80,
-    marginLeft: Dimensions.get('window').width - 50
   },
   button: {
       height: 40,

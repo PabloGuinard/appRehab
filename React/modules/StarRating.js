@@ -51,9 +51,8 @@ export default class StarRating extends Component {
 const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     paddingTop: 0,
+    backgroundColor: 'red',
   },
   childView: {
     justifyContent: 'center',
@@ -74,15 +73,12 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     textAlign: 'center',
-    fontSize: 23,
-    color: '#000',
+    fontSize: 15,
     marginTop: 15,
   },
   textStyleSmall: {
     textAlign: 'center',
-    fontSize: 16,
-
-    color: '#000',
+    fontSize: 15,
     marginTop: 15,
   },
 });

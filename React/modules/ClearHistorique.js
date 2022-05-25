@@ -32,10 +32,9 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginHorizontal: 10,
       marginVertical: -1,
-      marginTop: StatusBar.currentHeight
     },
     title: {
-      fontSize: 20,
+      fontSize: 15,
       fontWeight: 'bold',
       color: 'white',
       textAlign: 'center'

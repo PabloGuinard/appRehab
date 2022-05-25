@@ -35,8 +35,7 @@ const styles = StyleSheet.create({
       marginVertical: 10
     },
     title: {
-      fontSize: 20,
-      fontWeight: 'bold',
+      fontSize: 15,
       color: 'white',
       textAlign: 'justify'
     },
