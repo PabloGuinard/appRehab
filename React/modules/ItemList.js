@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         borderRadius: 15,
         alignSelf: 'stretch',
-        margin: 10
+        margin: 8
     },
     title: {
         fontSize: 15,
