@@ -24,7 +24,7 @@ async function isEndedFunction(exerciceId){
 
 async function sendComment(rate: string, comment: string, exerciceId: string) {
   // let url = 'https://apprehab.000webhostapp.com/api/apiTraitement.php?rate=' + rate + '&comment='
-  let url = 'https://10.39.20.77/api/apiTraitement.php?rate=' + rate + '&comment='
+  let url = 'http://10.39.20.77/api/apiTraitement.php?rate=' + rate + '&comment='
       + comment + '&exerciceId=' + exerciceId
   await fetch(url)
 }
@@ -62,7 +62,7 @@ const ModalRate = (params) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleBis, setModalVisibleBis] = useState(false);
   return (
-    <View>
+    <View width={'100%'}>
       <Modal
           animationType="slide"
           transparent={true}
@@ -70,21 +70,22 @@ const ModalRate = (params) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Pressable onPress={()=>closeModal(params.id)}>
+            <Pressable flexDirection={'row-reverse'} onPress={()=>closeModal(params.id)}>
               <Image source={require('../assets/icones/cross.png')}
                      style={styles.cross}
               />
-
             </Pressable>
             <StarRating/>
             <CommentTextInput/>
             <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={styles.button}
+                backgroundColor={global.mainColor}
                 onPress={() => closeSendComment(global.rate, global.comment, params.id)}>
               <Text style={styles.textStyle}>Envoyer</Text>
             </Pressable>
           </View>
         </View>
+        <View style={styles.background}/>
       </Modal>
       <Modal
           animationType="slide"
@@ -106,6 +107,7 @@ const ModalRate = (params) => {
       <View style={{width: '100%', alignContent: 'stretch', marginBottom: 20}}>
         <Pressable
           style={[styles.button]}
+          marginHorizontal={15}
           backgroundColor={mainColor}
           onPress={() => openModal()}
         >
@@ -120,18 +122,25 @@ const styleByPlatform = Platform.select({
 });
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: 'black',
+    opacity: 0.5,
+    width: '100%',
+    height: '100%',
+    position: 'absolute'
+  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
-    backgroundColor: 'blue'
+    alignItems: 'stretch',
+    zIndex: 2
   },
   modalView: {
-    margin: 10,
+    margin: 30,
     backgroundColor: "white",
     borderRadius: 15,
-    padding: 30,
+    padding: 15,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -139,18 +148,15 @@ const styles = StyleSheet.create({
       height: 2
     },
     shadowOpacity: 0.25,
-    width: '100%',
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
   },
   button: {
     borderRadius: 15,
     padding: 15,
     elevation: 2,
-    marginHorizontal: 15
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
   },
   textStyle: {
     color: "white",
@@ -166,8 +172,6 @@ const styles = StyleSheet.create({
   cross: {
     width: 30,
     height: 30,
-    marginLeft:200,
-    marginTop:-5
   }
 });
 

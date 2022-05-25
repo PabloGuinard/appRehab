@@ -33,14 +33,10 @@ export default class StarRating extends Component {
       );
     }
     return (
-      <View style={styles.MainContainer}>
-        <Text style={styles.textStyle}>Avez-vous apprécié l'exercice ?</Text>
-        
-        {}
+      <View style={styles.container} backgroundColor={global.mainColor}>
+        <Text style={styles.textStyle}>Avez-vous apprécié l'article ?</Text>
         <View style={styles.childView}>{React_Native_Rating_Bar}</View>
-        
         <Text style={styles.textStyle}>
-        {}
           {this.state.Default_Rating} / {this.state.Max_Rating}
         </Text>
       </View>
@@ -49,22 +45,16 @@ export default class StarRating extends Component {
 }
 
 const styles = StyleSheet.create({
-  MainContainer: {
-    flex: 1,
-    paddingTop: 0,
-    backgroundColor: 'red',
+  container: {
+    borderRadius: 15,
+    paddingVertical: 15
   },
   childView: {
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     flexDirection: 'row',
-    marginTop: 30,
-  },
-  button: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginTop: 30,
-    padding: 15,
-    backgroundColor: '#8ad24e',
+    width: '100%',
+    paddingHorizontal: 5,
+    padding: 10
   },
   StarImage: {
     width: 40,
@@ -74,11 +64,6 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: 'center',
     fontSize: 15,
-    marginTop: 15,
-  },
-  textStyleSmall: {
-    textAlign: 'center',
-    fontSize: 15,
-    marginTop: 15,
-  },
+    color: 'white'
+  }
 });

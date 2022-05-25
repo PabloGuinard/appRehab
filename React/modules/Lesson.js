@@ -78,7 +78,7 @@ function findSecondStyleInTag(tag, isColor){
   }
   else {
     if(tag.text.length !== 15){
-      let fontSize = 18 
+      let fontSize = 18
         switch (tag.text[28]){
           case '2':
             fontSize = 15

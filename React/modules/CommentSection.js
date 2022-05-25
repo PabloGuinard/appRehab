@@ -5,16 +5,8 @@ const CommentTextInput = () => {
     return(
         <SafeAreaView>
             <TextInput
-                style={{
-                    borderColor: global.mainColor,
-                    height: 300,
-                    margin: 12,
-                    borderWidth: 5,
-                    borderRadius: 10,
-                    padding: 10,
-                    width: '0%',
-                    textAlignVertical: 'top'
-                }}
+                style={styles.input}
+                borderColor={global.mainColor}
                 onChangeText={newText => global.comment = newText}
                 placeholder='Entrez votre commentaire...'
                 multiline={true}
@@ -26,11 +18,12 @@ const CommentTextInput = () => {
 
 const styles = StyleSheet.create({
     input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 5,
-      borderRadius: 10,
-      padding: 10,
+        height: 300,
+        marginVertical: 15,
+        borderWidth: 5,
+        borderRadius: 10,
+        padding: 10,
+        textAlignVertical: 'top'
     },
 });
 
