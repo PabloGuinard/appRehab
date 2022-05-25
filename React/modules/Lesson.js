@@ -47,16 +47,16 @@ function translateToHTML5(text){
       let tag = findTag(text, char)
 
       if(tag.text.substr(0, 11) === "<font size="){
-        let fontSize = 18
+        let fontSize = 15
         switch (tag.text[12]){
           case '2':
-            fontSize = 15
+            fontSize = 12
             break
           case '5':
-            fontSize = 25
+            fontSize = 20
             break
           case '6':
-            fontSize = 30
+            fontSize = 25
             break
         }
         text = text.substr(0, tag.open) + '<span style="font-size: ' + fontSize + 'px' + findSecondStyleInTag(tag, true) + '">' + text.substr(tag.close)
@@ -66,7 +66,7 @@ function translateToHTML5(text){
       }
     }
   }
-  return '<span style="font-size: 18px; margin: 10px">' + text + '</span>'
+  return '<span style="font-size: 15px; margin: 10px">' + text + '</span>'
 }
 
 function findSecondStyleInTag(tag, isColor){
@@ -78,16 +78,16 @@ function findSecondStyleInTag(tag, isColor){
   }
   else {
     if(tag.text.length !== 15){
-      let fontSize = 18
+      let fontSize = 15
         switch (tag.text[28]){
           case '2':
-            fontSize = 15
+            fontSize = 12
             break
           case '5':
-            fontSize = 25
+            fontSize = 20
             break
           case '6':
-            fontSize = 30
+            fontSize = 25
             break
         }
       return "; font-size: " + fontSize + "px"

@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
+    elevation: 5
   },
   title: {
     fontSize: 20,

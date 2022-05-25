@@ -41,7 +41,7 @@ const ModalRate = (params) => {
 
   function closeModal(exerciceId){
     setModalVisible(!modalVisible)
-    //setStorage('exerciceEnded' + exerciceId, 'true')
+    setStorage('exerciceEnded' + exerciceId, 'true')
     global.amountExercicesEndedMonth++
     setStorage('amountExercicesEndedMonth', global.amountExercicesEndedMonth.toString())
   }
@@ -62,7 +62,7 @@ const ModalRate = (params) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleBis, setModalVisibleBis] = useState(false);
   return (
-    <View width={'100%'}>
+    <View width={'100%'} marginTop={20}>
       <Modal
           animationType="slide"
           transparent={true}
@@ -94,13 +94,15 @@ const ModalRate = (params) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Pressable onPress={()=>closeModalBis()}>
+            <Pressable flexDirection={'row-reverse'} onPress={()=>closeModalBis()}>
               <Image source={require('../assets/icones/cross.png')}
                      style={styles.cross}
               />
 
             </Pressable>
-            <Text style={styles.modalText}>Exercice déjà terminé !</Text>
+            <View backgroundColor={global.mainColor} style={styles.textContainer}>
+              <Text style={styles.modalText}>Exercice déjà terminé !</Text>
+            </View>
           </View>
         </View>
       </Modal>
@@ -165,13 +167,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   modalText: {
-    marginTop:15,
+    textAlign: "center",
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  textContainer: {
+    marginTop: 10,
     marginBottom: 15,
-    textAlign: "center"
+    padding: 15,
+    borderRadius: 15,
   },
   cross: {
     width: 30,
     height: 30,
+    marginBottom: 5
   }
 });
 

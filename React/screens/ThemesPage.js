@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
         height: 40,
         width: Dimensions.get('window').width / 2 - 11,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        elevation: 5
     },
     text: {
         fontSize: 15,
