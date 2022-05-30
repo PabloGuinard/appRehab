@@ -18,7 +18,7 @@ const CommentTextInput = () => {
 
 const styles = StyleSheet.create({
     input: {
-        height: 300,
+        maxHeight: 700,
         marginVertical: 15,
         borderWidth: 5,
         borderRadius: 10,

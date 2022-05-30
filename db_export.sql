@@ -1,0 +1,137 @@
+-- --------------------------------------------------------
+-- Hôte:                         127.0.0.1
+-- Version du serveur:           5.7.33 - MySQL Community Server (GPL)
+-- SE du serveur:                Win64
+-- HeidiSQL Version:             11.2.0.6213
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Listage de la structure de la base pour id18263011_databaselarehab
+DROP DATABASE IF EXISTS `id18263011_databaselarehab`;
+CREATE DATABASE IF NOT EXISTS `id18263011_databaselarehab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `id18263011_databaselarehab`;
+
+-- Listage de la structure de la table id18263011_databaselarehab. categories
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de la table id18263011_databaselarehab. commentaires
+DROP TABLE IF EXISTS `commentaires`;
+CREATE TABLE IF NOT EXISTS `commentaires` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `note` int(11) DEFAULT NULL,
+  `commentaire` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `exerciceId` int(11) NOT NULL,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `exerciceId` (`exerciceId`),
+  CONSTRAINT `FK_commentaires_exercices` FOREIGN KEY (`exerciceId`) REFERENCES `exercices` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de la table id18263011_databaselarehab. exercices
+DROP TABLE IF EXISTS `exercices`;
+CREATE TABLE IF NOT EXISTS `exercices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `parentId` int(11) NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `themeId` (`parentId`) USING BTREE,
+  CONSTRAINT `FK_exercices_themes` FOREIGN KEY (`parentId`) REFERENCES `themes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de la table id18263011_databaselarehab. items
+DROP TABLE IF EXISTS `items`;
+CREATE TABLE IF NOT EXISTS `items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(10000) CHARACTER SET utf8 NOT NULL,
+  `typeItem` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `parentId` int(11) NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `exerciceId` (`parentId`) USING BTREE,
+  CONSTRAINT `FK_items_exercices` FOREIGN KEY (`parentId`) REFERENCES `exercices` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de la table id18263011_databaselarehab. mots
+DROP TABLE IF EXISTS `mots`;
+CREATE TABLE IF NOT EXISTS `mots` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `definition` varchar(1000) CHARACTER SET utf8 NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de la table id18263011_databaselarehab. presentation
+DROP TABLE IF EXISTS `presentation`;
+CREATE TABLE IF NOT EXISTS `presentation` (
+  `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`contenu`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de la table id18263011_databaselarehab. themes
+DROP TABLE IF EXISTS `themes`;
+CREATE TABLE IF NOT EXISTS `themes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `parentId` int(11) NOT NULL,
+  `isReady` tinyint(4) NOT NULL DEFAULT '0',
+  `modifiedAt` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(4) DEFAULT '0',
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `categorieId` (`parentId`) USING BTREE,
+  CONSTRAINT `FK_themes_categories` FOREIGN KEY (`parentId`) REFERENCES `categories` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

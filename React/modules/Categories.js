@@ -132,10 +132,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   flatlistContent: {
-    width: '100%',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   item: {
+    marginHorizontal: 10,
     flex: 1,
     borderRadius: 15,
     justifyContent: 'center',

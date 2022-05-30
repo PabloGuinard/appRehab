@@ -5,7 +5,7 @@ const back = require('../assets/icones/back.png')
 
 const Item = (item) =>(
   <View style={styles.itemTheme} backgroundColor={item.color} onStartShouldSetResponder={() => {item.nav.goBack()}}>
-    <Image source={back}/>
+    <Image height={13} width={13} marginLeft={10} source={back}/>
     <View style={{width: '100%', alignItems: 'center', marginLeft: -50}}>
       <Text style={styles.title}>{item.title}</Text>
     </View>
@@ -26,19 +26,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemTheme: {
-    padding: 15,
+    height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
-    elevation: 5
+    elevation: 5,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
     marginLeft: 50,
-    marginEnd: 20,
+    marginEnd: 50,
     textAlign: 'center'
   },
 });

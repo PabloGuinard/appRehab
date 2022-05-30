@@ -1,8 +1,9 @@
-import { View, StyleSheet, Dimensions, Pressable, Image, Text, Modal } from 'react-native';
+import { View, StyleSheet, Dimensions, Pressable, Image, Text, Modal, TouchableOpacity  } from 'react-native';
 import StarRating from '../modules/StarRating';
 import React, { useState } from 'react';
 import CommentTextInput from '../modules/CommentSection';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LinearGradient } from 'expo-linear-gradient';
 
 let isEnded
 
@@ -58,15 +59,15 @@ const ModalRate = (params) => {
      }
   }
 
-  let modalAlreadyEndedVisible = false
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleBis, setModalVisibleBis] = useState(false);
   return (
-    <View width={'100%'} marginTop={20}>
+    <View width={'100%'}>
       <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
+          backgroundColor={'blue'}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -85,7 +86,11 @@ const ModalRate = (params) => {
             </Pressable>
           </View>
         </View>
-        <View style={styles.background}/>
+        <LinearGradient 
+          style={styles.gradient}
+          colors={['transparent', 'black']}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}/>
       </Modal>
       <Modal
           animationType="slide"
@@ -93,6 +98,12 @@ const ModalRate = (params) => {
           visible={modalVisibleBis}
       >
         <View style={styles.centeredView}>
+          
+        <LinearGradient 
+          style={styles.gradient}
+          colors={['transparent', 'black']}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}/>
           <View style={styles.modalView}>
             <Pressable flexDirection={'row-reverse'} onPress={()=>closeModalBis()}>
               <Image source={require('../assets/icones/cross.png')}
@@ -105,6 +116,7 @@ const ModalRate = (params) => {
             </View>
           </View>
         </View>
+        <View style={styles.background}/>
       </Modal>
       <View style={{width: '100%', alignContent: 'stretch', marginBottom: 20}}>
         <Pressable
@@ -124,19 +136,19 @@ const styleByPlatform = Platform.select({
 });
 
 const styles = StyleSheet.create({
-  background: {
-    backgroundColor: 'black',
-    opacity: 0.5,
+  gradient: {
+    position: 'absolute',
     width: '100%',
     height: '100%',
-    position: 'absolute'
+    opacity: 0.7
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     alignItems: 'stretch',
-    zIndex: 2
+    zIndex: 2,
+    height: 500
   },
   modalView: {
     margin: 30,

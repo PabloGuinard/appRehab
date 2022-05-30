@@ -109,7 +109,8 @@ async function navigation(params) {
             if (toIncrease === null) {
                 toIncrease = -1;
             }
-            toIncrease++;
+            toIncrease++
+            console.log(toIncrease);
             await setStorage("amountExercicesStartedMonth", toIncrease.toString())
             global.amountExercicesStartedMonth = toIncrease
             
@@ -182,8 +183,7 @@ const ItemList = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        marginTop: 30,
+        flex: 1
     },
     item: {
         padding: 15,

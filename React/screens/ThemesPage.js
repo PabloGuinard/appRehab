@@ -72,7 +72,6 @@ class ThemesPage extends React.Component{
 
 const styles = StyleSheet.create({
     main_container: {
-        flex: 1,
         marginTop: StatusBar.currentHeight,
     },
     textinput: {

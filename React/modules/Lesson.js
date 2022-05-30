@@ -15,7 +15,11 @@ function printObject(item, params) {
     case 'Video':
       return <ItemVideo data={getIdFromUrl(item.data)}/>
     case 'Button':
-      return <ModalRate id={params.content[0].id}/>
+      return (
+        <View marginTop={20}>
+          <ModalRate id={params.content[0].id}/>
+        </View>
+      )
   } 
 }
 
@@ -125,11 +129,16 @@ const ItemImage = (item) => (
 );
 
 const ItemVideo = (item) => (
-  <YoutubePlayer
-    height={250}
-    play={false}
-    videoId={item.data}
-  />
+  <View 
+  width={'100%'}
+  padding={10}
+  aspectRatio={16/9}
+  resizeMode={'cover'}>
+    <YoutubePlayer
+      height={'100%'}
+      play={false}
+      videoId={item.data}/>
+  </View>
 )
 
 const Lesson = (params) => {

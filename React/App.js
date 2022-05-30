@@ -93,7 +93,7 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     // const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
-    const url = 'http://10.39.20.130/api/api.php?timestamp=' + timestamp
+    const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
     //const url = 'https://apprehab.000webhostapp.com/api/api.php?timestamp=' + timestamp
     const response = await fetch(url)
     console.log(url)
