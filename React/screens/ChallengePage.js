@@ -3,6 +3,7 @@ import {View, StyleSheet, StatusBar } from "react-native";
 import ChallengePicture from '../modules/ChallengePicture';
 import NavigBar from '../modules/NavigBar';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Header from '../modules/Header';
 
 async function setStorage(key: string, value: string){
     if(typeof value === Object){
@@ -17,7 +18,10 @@ const ChallengePage = ({navigation}) => {
     return (
         <View style={{flex: 1}}>
             <View style={styles.statusbar}/>
-            <View style={{flex: 8}}>
+            <View style={{flex: 1}}>
+                <Header/>
+            </View>
+            <View style={{flex: 7}}>
                 <ChallengePicture navigation={navigation}/>
             </View>
             <View style={{flex: 1}}>

@@ -95,7 +95,7 @@ const ProfilePage = ({navigation}) => {
   getPresentation()
   return (
     <View style={{flex: 1}}>
-    <View style={styles.statusbar}/>
+      <View style={styles.statusbar}/>
       <View style={{flex: 1}}>
         <Header/>
       </View>

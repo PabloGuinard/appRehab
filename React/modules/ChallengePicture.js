@@ -8,7 +8,7 @@ const source = {uri:'http://10.39.20.77/database/challenge/challenge.jpg'+ '?' +
 
 const ChallengePicture = () => {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{alignItems: 'center'}}>
       <Image source={source} style={styles.im} borderColor={mainColor}/>
     </ScrollView>
   );
@@ -17,14 +17,13 @@ const ChallengePicture = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 35,
+    marginTop: 20,
+    width: '100%',
   },
 
   im: {
-    borderWidth: 5,
-    marginHorizontal: 5,
     width: Dimensions.get('window').width - 20,
-    height: Dimensions.get('window').height,
+    height: Dimensions.get('window').height * 5 / 7,
     resizeMode: 'contain'
   },
 });

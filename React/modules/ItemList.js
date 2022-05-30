@@ -110,7 +110,6 @@ async function navigation(params) {
                 toIncrease = -1;
             }
             toIncrease++
-            console.log(toIncrease);
             await setStorage("amountExercicesStartedMonth", toIncrease.toString())
             global.amountExercicesStartedMonth = toIncrease
             
