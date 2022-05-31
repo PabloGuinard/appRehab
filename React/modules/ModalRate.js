@@ -112,7 +112,7 @@ const ModalRate = (params) => {
 
             </Pressable>
             <View backgroundColor={global.mainColor} style={styles.textContainer}>
-              <Text style={styles.modalText}>Exercice déjà terminé !</Text>
+              <Text style={styles.modalText}>Activité déjà terminée !</Text>
             </View>
           </View>
         </View>
@@ -125,7 +125,7 @@ const ModalRate = (params) => {
           backgroundColor={mainColor}
           onPress={() => openModal()}
         >
-          <Text style={styles.textStyle}>Finir l'exercice</Text>
+          <Text style={styles.textStyle}>Finir l'activité</Text>
         </Pressable>
       </View>
     </View>

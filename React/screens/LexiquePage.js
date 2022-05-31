@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
-import { View, StyleSheet, TextInput, StatusBar, Text, Dimensions, Pressable} from 'react-native';
+import { View, StyleSheet, TextInput, StatusBar, Text, Dimensions, Pressable, Keyboard } from 'react-native';
 
 class LexiquePage extends React.Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class LexiquePage extends React.Component {
   }
 
   filterThemes(data) {
+    Keyboard.dismiss()
     if (this.searchedText === "") {
         return
     }
@@ -36,16 +37,18 @@ class LexiquePage extends React.Component {
   }
 
   resetFilters() {
+    Keyboard.dismiss()
     this.setState({
         data : this.data
     })
+    this.textInput.clear()
   }
     
   render() {
     return (
       <View style={{flex: 1}}>
         <View style={styles.main_container}>
-          <TextInput style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
+          <TextInput ref={input => { this.textInput = input }} style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
               this.updateSearchedText(text)}}/>
           <View style={styles.buttonsContainer}>
             <Pressable style={styles.button} marginLeft={10} borderBottomLeftRadius={10} backgroundColor={this.color} onPress={() => {this.resetFilters()}}>

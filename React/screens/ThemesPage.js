@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, StyleSheet, TextInput, View, StatusBar, Image, Dimensions, Text} from 'react-native';
+import {Pressable, StyleSheet, TextInput, View, StatusBar, Image, Dimensions, Text, Keyboard } from 'react-native';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
 
@@ -16,6 +16,7 @@ class ThemesPage extends React.Component{
     }
 
     filterThemes(data) {
+        Keyboard.dismiss()
         if (this.searchedText === "") {
             return
         }
@@ -36,16 +37,18 @@ class ThemesPage extends React.Component{
     }
 
     resetFilters() {
+        Keyboard.dismiss()
         this.setState({
             data : this.data
         })
+        this.textInput.clear()
     }
     render() {
         return (
             <View style={{flex: 1}}>
                 <View style={{flex: 8.5}}>
                     <View style={styles.main_container}>
-                        <TextInput style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
+                        <TextInput ref={input => { this.textInput = input }} style={styles.textinput} borderColor={this.color} onChangeText={(text) => {
                             this.updateSearchedText(text)
                         }}/>
                         <View style={styles.buttonsContainer}>

@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from '../modules/Header';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
 
 const DATA = [
   {
@@ -76,13 +77,12 @@ async function setCatPref(){
 }
 
 async function getNumberActivities(){
-  let tmp
-  try {
-    tmp = await AsyncStorage.getItem("amountExercicesStartedMonth")
-  } catch (e) {}
-  if(tmp != null){
+  let tmp = await AsyncStorage.getItem("amountExercicesStartedMonth")
+  if(tmp != null)
     global.amountExercicesStartedMonth = tmp
-  }
+  tmp = await AsyncStorage.getItem("amountExercicesEndedMonth")
+  if(tmp != null)
+    global.amountExercicesEndedMonth = tmp
 }
 
 async function getPresentation(){
