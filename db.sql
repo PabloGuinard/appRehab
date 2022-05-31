@@ -14,12 +14,10 @@
 
 
 -- Listage de la structure de la base pour id18263011_databaselarehab
-DROP DATABASE IF EXISTS `id18263011_databaselarehab`;
 CREATE DATABASE IF NOT EXISTS `id18263011_databaselarehab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `id18263011_databaselarehab`;
 
 -- Listage de la structure de la table id18263011_databaselarehab. categories
-DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -42,7 +40,6 @@ INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VAL
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. commentaires
-DROP TABLE IF EXISTS `commentaires`;
 CREATE TABLE IF NOT EXISTS `commentaires` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `note` int(11) DEFAULT NULL,
@@ -53,9 +50,9 @@ CREATE TABLE IF NOT EXISTS `commentaires` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `exerciceId` (`exerciceId`),
   CONSTRAINT `FK_commentaires_exercices` FOREIGN KEY (`exerciceId`) REFERENCES `exercices` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.commentaires : ~6 rows (environ)
+-- Listage des données de la table id18263011_databaselarehab.commentaires : ~7 rows (environ)
 DELETE FROM `commentaires`;
 /*!40000 ALTER TABLE `commentaires` DISABLE KEYS */;
 INSERT INTO `commentaires` (`id`, `note`, `commentaire`, `exerciceId`, `isDeleted`, `modifiedBy`) VALUES
@@ -64,11 +61,11 @@ INSERT INTO `commentaires` (`id`, `note`, `commentaire`, `exerciceId`, `isDelete
 	(33, 5, 'J\'ai beaucoup aimé', 11, 0, NULL),
 	(34, 4, 'commentaire', 11, 0, NULL),
 	(35, 5, 'nouveau commentaire', 43, 0, NULL),
-	(36, 5, 'nouveau commentaire', 57, 0, NULL);
+	(36, 5, 'nouveau commentaire', 57, 0, NULL),
+	(37, 3, 'commentaire de test', 43, 0, NULL);
 /*!40000 ALTER TABLE `commentaires` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. exercices
-DROP TABLE IF EXISTS `exercices`;
 CREATE TABLE IF NOT EXISTS `exercices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -81,9 +78,9 @@ CREATE TABLE IF NOT EXISTS `exercices` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `themeId` (`parentId`) USING BTREE,
   CONSTRAINT `FK_exercices_themes` FOREIGN KEY (`parentId`) REFERENCES `themes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.exercices : ~20 rows (environ)
+-- Listage des données de la table id18263011_databaselarehab.exercices : ~22 rows (environ)
 DELETE FROM `exercices`;
 /*!40000 ALTER TABLE `exercices` DISABLE KEYS */;
 INSERT INTO `exercices` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
@@ -105,12 +102,13 @@ INSERT INTO `exercices` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `crea
 	(53, '5', 8, 1, '2022-05-30 15:59:22', '2022-05-30 14:12:05', 1, 'pablo.guinard@orsac-cpa01.fr'),
 	(54, '6', 8, 1, '2022-05-30 15:59:22', '2022-05-30 14:12:05', 1, 'pablo.guinard@orsac-cpa01.fr'),
 	(55, '7', 8, 1, '2022-05-30 15:59:22', '2022-05-30 14:12:05', 1, 'pablo.guinard@orsac-cpa01.fr'),
-	(56, 'exercice', 44, 1, NULL, '2022-05-30 15:59:22', 0, 'pablo.guinard@orsac-cpa01.fr'),
-	(57, 'test', 44, 1, NULL, '2022-05-31 09:36:18', 0, 'pablo.guinard@orsac-cpa01.fr');
+	(56, 'exercice', 44, 1, '2022-05-31 11:30:58', '2022-05-30 15:59:22', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(57, 'test', 44, 1, '2022-05-31 11:30:58', '2022-05-31 09:36:18', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(58, 'test', 44, 0, NULL, '2022-05-31 11:30:58', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(59, 'test APK', 44, 1, NULL, '2022-05-31 13:12:49', 0, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `exercices` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. items
-DROP TABLE IF EXISTS `items`;
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(10000) CHARACTER SET utf8 NOT NULL,
@@ -162,7 +160,6 @@ INSERT INTO `items` (`id`, `nom`, `typeItem`, `parentId`, `isReady`, `modifiedAt
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. mots
-DROP TABLE IF EXISTS `mots`;
 CREATE TABLE IF NOT EXISTS `mots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -186,15 +183,14 @@ INSERT INTO `mots` (`id`, `nom`, `definition`, `isReady`, `modifiedAt`, `created
 	(8, 'Flexibilité cognitive', 'Capacité à réorienter son attention et son action pour s\'adapter à un changement ou à une situation différente. Cette capacité permet de passer d\'une activité à une autre (c\'est-à-dire d\'alterner entre plusieurs activités) spontanément ou à la demande de quelqu\'un d\'autre. La flexibilité fait partie des fonctions exécutives (cf. définition ci-après) qui sont des compétences cognitives permettant de réagir dans des situations imprévues, peu connues ou complexes et de nous y adapter. ', 1, '2022-04-25 16:32:46', '2022-04-22 09:16:57', 0, NULL),
 	(9, 'Fonctions exécutives', 'Terme qui regroupe plusieurs fonctions cognitives élaborées : la planification, le contrôle inhibiteur, la flexibilité, l’initiation et la planification (certains auteurs en rajoutent d\'autres). Les fonctions exécutives interviennent quand une situation nouvelle, imprévue et / ou complexe se déroule. Dans ce type de situation, nous ne pouvons plus nous laisser porter par nos automatismes et nous devons mettre en place une autre façon de procéder pour nous adapter à la situation. Les fonctions exécutives nous permettent donc de nous adapter aux situations pour lesquelles il n\'y a pas de solution toute faite. ', 1, NULL, '2022-04-22 09:16:57', 0, NULL),
 	(11, 'Mémoire à court terme', 'Capacité à retenir des informations pendant un très court laps de temps.', 1, '2022-04-26 11:02:47', '2022-04-22 09:16:57', 0, NULL),
-	(12, 'aa', 'azef', 1, NULL, '2022-05-20 13:31:57', 0, 'pablo.guinard@orsac-cpa01.fr'),
-	(13, 'gg', 'azef', 1, NULL, '2022-05-20 13:31:57', 0, 'pablo.guinard@orsac-cpa01.fr'),
-	(14, 'z', 'azef', 1, NULL, '2022-05-20 13:31:57', 0, 'pablo.guinard@orsac-cpa01.fr'),
-	(15, 'az', 'aze', 1, NULL, '2022-05-30 14:18:18', 0, 'pablo.guinard@orsac-cpa01.fr'),
-	(16, 'ef', 'zef', 1, NULL, '2022-05-30 14:18:18', 0, 'pablo.guinard@orsac-cpa01.fr');
+	(12, 'aa', 'azef', 1, '2022-05-31 11:30:58', '2022-05-20 13:31:57', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(13, 'gg', 'azef', 1, '2022-05-31 11:30:58', '2022-05-20 13:31:57', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(14, 'z', 'azef', 1, '2022-05-31 11:30:58', '2022-05-20 13:31:57', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(15, 'az', 'aze', 1, '2022-05-31 11:30:58', '2022-05-30 14:18:18', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(16, 'ef', 'zef', 1, '2022-05-31 11:30:58', '2022-05-30 14:18:18', 1, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `mots` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. presentation
-DROP TABLE IF EXISTS `presentation`;
 CREATE TABLE IF NOT EXISTS `presentation` (
   `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL,
   `isReady` tinyint(4) NOT NULL DEFAULT '0',
@@ -212,7 +208,6 @@ INSERT INTO `presentation` (`contenu`, `isReady`, `modifiedAt`, `createdAt`, `mo
 /*!40000 ALTER TABLE `presentation` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. themes
-DROP TABLE IF EXISTS `themes`;
 CREATE TABLE IF NOT EXISTS `themes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -245,7 +240,7 @@ INSERT INTO `themes` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `created
 	(45, 'test 2', 1, 1, '2022-05-24 10:23:48', '2022-05-19 15:07:41', 1, 'pablo.guinard@orsac-cpa01.fr'),
 	(46, '1', 1, 1, '2022-05-24 10:23:48', '2022-05-19 15:19:29', 1, 'pablo.guinard@orsac-cpa01.fr'),
 	(47, '2', 1, 1, '2022-05-24 10:23:48', '2022-05-19 15:20:19', 1, 'pablo.guinard@orsac-cpa01.fr'),
-	(48, '5', 5, 0, NULL, '2022-05-31 10:08:22', 1, 'pablo.guinard@orsac-cpa01.fr');
+	(48, '5', 5, 1, '2022-05-31 11:30:58', '2022-05-31 10:08:22', 1, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `themes` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
