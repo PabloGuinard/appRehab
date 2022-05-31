@@ -54,6 +54,7 @@ function logCurrentStorage() {
 }
 
 async function initGlobals(){
+    global.dns = 'http://10.39.20.77'
     global.amountExercicesStartedMonth = 0
     global.amountExercicesEndedMonth = 0
     let tmp
@@ -92,8 +93,7 @@ const getAllDataFromApi = async () => {
     try {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
-    // const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
-    const url = 'http://10.39.20.77/api/api.php?timestamp=' + timestamp
+    const url = global.dns + '/api/api.php?timestamp=' + timestamp
     //const url = 'https://apprehab.000webhostapp.com/api/api.php?timestamp=' + timestamp
     const response = await fetch(url)
     console.log(url)
@@ -185,7 +185,7 @@ async function initialisation(){
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
     
-    logCurrentStorage()
+    //logCurrentStorage()
 }
 
 const Stack = createStackNavigator()
@@ -193,7 +193,7 @@ global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
   render() {
-    AsyncStorage.clear()
+    //AsyncStorage.clear()
     initialisation()
     return (
       <NavigationContainer>

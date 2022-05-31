@@ -29,7 +29,17 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Les données exportées n'étaient pas sélectionnées.
+-- Listage des données de la table id18263011_databaselarehab.categories : ~6 rows (environ)
+DELETE FROM `categories`;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VALUES
+	(1, 'Créativité', 1, NULL, '2022-04-22 09:15:21'),
+	(3, 'Cognition', 1, NULL, '2022-04-22 09:15:21'),
+	(4, 'Sport', 1, NULL, '2022-04-22 09:15:21'),
+	(5, 'Psycho éducation', 1, NULL, '2022-04-22 09:15:21'),
+	(6, 'Relaxation', 1, NULL, '2022-04-22 09:15:21'),
+	(10, 'Culture & Infos', 1, NULL, '2022-04-22 09:15:21');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 -- Listage de la structure de la table id18263011_databaselarehab. commentaires
 DROP TABLE IF EXISTS `commentaires`;

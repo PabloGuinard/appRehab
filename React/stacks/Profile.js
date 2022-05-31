@@ -13,7 +13,7 @@ const Profile = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="ProfilePage" component={ProfilePage} options={{headerShown: false}}/>
-            <Stack.Screen name='PresentationPage' component={PresentationPage} options={{headerShown:false}}/>
+            <Stack.Screen name='PresentationPage' component={PresentationPage} options={{headerShown: false}}/>
             <Stack.Screen name="StatistiquesPage" component={StatistiquesPage} options={{headerShown: false}}/>
             <Stack.Screen name="HistoriquePage" component={HistoriquePage} options={{headerShown: false}}/>
             <Stack.Screen name="LexiquePage" component={LexiquePage} options={{headerShown: false}}/>
