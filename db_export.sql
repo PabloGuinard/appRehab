@@ -29,17 +29,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.categories : ~6 rows (environ)
-DELETE FROM `categories`;
-/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VALUES
-	(1, 'Créativité', 1, NULL, '2022-04-22 09:15:21'),
-	(3, 'Cognition', 1, NULL, '2022-04-22 09:15:21'),
-	(4, 'Sport', 1, NULL, '2022-04-22 09:15:21'),
-	(5, 'Psycho-éducation', 1, NULL, '2022-04-22 09:15:21'),
-	(6, 'Relaxation', 1, NULL, '2022-04-22 09:15:21'),
-	(10, 'Culture & Infos', 1, NULL, '2022-04-22 09:15:21');
-/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+-- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table id18263011_databaselarehab. commentaires
 DROP TABLE IF EXISTS `commentaires`;
@@ -53,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `commentaires` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `exerciceId` (`exerciceId`),
   CONSTRAINT `FK_commentaires_exercices` FOREIGN KEY (`exerciceId`) REFERENCES `exercices` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -71,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `exercices` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `themeId` (`parentId`) USING BTREE,
   CONSTRAINT `FK_exercices_themes` FOREIGN KEY (`parentId`) REFERENCES `themes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -137,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `themes` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `categorieId` (`parentId`) USING BTREE,
   CONSTRAINT `FK_themes_categories` FOREIGN KEY (`parentId`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -145,4 +135,3 @@ CREATE TABLE IF NOT EXISTS `themes` (
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
-exercices
