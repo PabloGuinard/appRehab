@@ -157,6 +157,7 @@ function checkColor(props, item) {
 
 const Item = (item) => (
     <View style={styles.fullItem}>
+        <View style={styles.chip} opacity={item.isNew}/>
         <View style={styles.item} backgroundColor={item.color} onMoveShouldSetResponder={() => true} onResponderRelease={() => {navigation(item)}}>
             <Text style={styles.title}>{item.title}</Text>
         </View>
@@ -199,6 +200,15 @@ const styles = StyleSheet.create({
     },
     fullItem: {
         alignItems: 'flex-end'
+    },
+    chip: {
+        backgroundColor: 'red',
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        position: 'absolute',
+        right: 10,
+        zIndex: 2
     }
 });
 
