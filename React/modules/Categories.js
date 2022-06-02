@@ -72,6 +72,18 @@ async function navigation(params){
   themesArray = themesArray.filter(theme => theme.parentId === matchingId)
   let DATA = []
   themesArray.reverse()
+
+  //check new exercices in each theme
+  let childrenArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
+  themesArray.forEach(theme => {
+    for(let child of childrenArray){
+      if(child.parentId === theme.id && child.isNew === 1){
+        theme.isNew = 1
+        break
+      }
+    }
+  })
+
   themesArray.forEach(theme => {
     DATA.push({
       id: theme.id,

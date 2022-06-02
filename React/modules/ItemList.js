@@ -66,18 +66,28 @@ class ItemList extends React.Component{
             let themesArray = JSON.parse(await AsyncStorage.getItem('themeAll'))
             let parentIndex = themesArray.findIndex(this.checkTitle, params.title)
             let parent = themesArray[parentIndex]
-            themesArray[parentIndex].isNew = 0
-            this.setState(props.DATA[this.state.props.DATA.findIndex(this.checkName, params.title)].isNew = 0)
-            await this.setStorage('themeAll', JSON.stringify(themesArray))
-    
             let exercicesArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
             exercicesArray = exercicesArray.filter(exercice => exercice.parentId === parent.id)
+            //remove chip
+            let isNewChildren = false
+            for(let exercice of exercicesArray)
+                if(exercice.isNew) isNewChildren = true
+            if(!isNewChildren){
+                themesArray[parentIndex].isNew = 0
+                await this.setStorage('themeAll', JSON.stringify(themesArray))
+                let tmp = this.state.props
+                tmp.DATA[tmp.DATA.findIndex(this.checkName, params.title)].isNew = 0
+                this.setState({
+                    props: tmp
+                })
+            }
             exercicesArray.reverse()
             exercicesArray.forEach(exercice => {
                 DATA[DATA.length] = {
                     id: exercice.id,
                     title: exercice.nom,
-                    link: 'LessonPage'
+                    link: 'LessonPage',
+                    isNew: exercice.isNew
                 }
             })
         } 
@@ -125,6 +135,14 @@ class ItemList extends React.Component{
                 let exercicesArray = JSON.parse(await AsyncStorage.getItem("exerciceAll"))
                 let parentIndex = exercicesArray.findIndex(this.checkTitle, params.title)
                 let parent = exercicesArray[parentIndex]
+                //remove chip
+                exercicesArray[parentIndex].isNew = 0
+                await this.setStorage('exerciceAll', JSON.stringify(exercicesArray))
+                let tmp = this.state.props
+                tmp.DATA[tmp.DATA.findIndex(this.checkName, params.title)].isNew = 0
+                this.setState({
+                    props: tmp
+                })
                 //find matching items
                 let itemsArray = JSON.parse(await AsyncStorage.getItem("itemAll"))
                 itemsArray = itemsArray.filter(item => item.parentId === parent.id)
