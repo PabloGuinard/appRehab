@@ -19,18 +19,14 @@ class ItemList extends React.Component{
                 let childrenArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
                 DATA.forEach(theme => {
                     if(theme.isNew){
-                        console.log(theme.title);
                         let hasNewChildren = 0
                         let tmp = childrenArray.filter(child => child.parentId === theme.id)
-                        console.log(tmp.length);
                         for(let child of tmp){
-                            console.log(child);
                             if(child.isNew === 1)
                                 hasNewChildren = 1
                         }
                         if(hasNewChildren === 0 && tmp.length > 0){
                             theme.isNew = 0
-                            console.log('not new anymore');
                         }
                     }
                 })
