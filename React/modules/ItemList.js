@@ -12,6 +12,37 @@ class ItemList extends React.Component{
         }
     }
 
+    componentDidMount(){
+        this.props.navigation.addListener('focus', async () => {
+            let DATA = this.state.props.DATA
+            if(DATA !== undefined && DATA.length > 0 && DATA[0].link === 'ExercisesPage'){
+                let childrenArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
+                DATA.forEach(theme => {
+                    if(theme.isNew){
+                        console.log(theme.title);
+                        let hasNewChildren = 0
+                        let tmp = childrenArray.filter(child => child.parentId === theme.id)
+                        console.log(tmp.length);
+                        for(let child of tmp){
+                            console.log(child);
+                            if(child.isNew === 1)
+                                hasNewChildren = 1
+                        }
+                        if(hasNewChildren === 0 && tmp.length > 0){
+                            theme.isNew = 0
+                            console.log('not new anymore');
+                        }
+                    }
+                })
+                let tmp = this.state.props
+                tmp.DATA = DATA
+                this.setState({
+                    props: tmp
+                })
+            }
+        })
+    }
+
     checkColor(props, item) {
         if (props.color === null) {
             this.color = item.color
