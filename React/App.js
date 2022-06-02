@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from './stacks/Home';
 import Profile from './stacks/Profile';
 import Challenge from './stacks/Challenge';
+import SplashScreen from './modules/SplashScreen';
 
 async function setStorage(key: string, value: string){
     if(typeof value === Object){
@@ -194,17 +195,30 @@ const Stack = createStackNavigator()
 global.mainColor = '#88bd28'
 
 export default class App extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            isLoading: true
+        }
+    }
+
+    async componentDidMount(){
+        await AsyncStorage.clear()
+        await initialisation()
+        this.setState({isLoading: false})
+    }
+
   render() {
-    AsyncStorage.clear()
-    initialisation()
+    if(this.state.isLoading)
+        return <SplashScreen/>
     return (
-      <NavigationContainer>
+    <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
-          <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
-          <Stack.Screen name="Challenge" component={Challenge} options={{headerShown: false}}/>
+        <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
+        <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
+        <Stack.Screen name="Challenge" component={Challenge} options={{headerShown: false}}/>
         </Stack.Navigator>
-      </NavigationContainer>
+    </NavigationContainer>
     );
   };
 };

@@ -27,6 +27,7 @@ class ItemList extends React.Component{
                         }
                         if(hasNewChildren === 0 && tmp.length > 0){
                             theme.isNew = 0
+                            this.setThemeIsNotNew(theme)                            
                         }
                     }
                 })
@@ -37,6 +38,12 @@ class ItemList extends React.Component{
                 })
             }
         })
+    }
+
+    async setThemeIsNotNew(theme){
+        let themesArray = JSON.parse(await AsyncStorage.getItem('themeAll'))
+        themesArray[themesArray.findIndex(this.checkTitle, theme.title)].isNew = 0
+        await this.setStorage('themeAll', JSON.stringify(themesArray))
     }
 
     checkColor(props, item) {
