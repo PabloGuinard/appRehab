@@ -13,12 +13,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Listage de la structure de la base pour id18263011_databaselarehab
-DROP DATABASE IF EXISTS `id18263011_databaselarehab`;
-CREATE DATABASE IF NOT EXISTS `id18263011_databaselarehab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `id18263011_databaselarehab`;
+-- Listage de la structure de la base pour dashboard_rehab
+DROP DATABASE IF EXISTS `dashboard_rehab`;
+CREATE DATABASE IF NOT EXISTS `dashboard_rehab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `dashboard_rehab`;
 
--- Listage de la structure de la table id18263011_databaselarehab. categories
+-- Listage de la structure de la table dashboard_rehab. categories
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.categories : ~6 rows (environ)
+-- Listage des données de la table dashboard_rehab.categories : ~6 rows (environ)
 DELETE FROM `categories`;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VALUES
@@ -41,7 +41,7 @@ INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VAL
 	(10, 'Culture & Infos', 1, NULL, '2022-04-22 09:15:21');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
--- Listage de la structure de la table id18263011_databaselarehab. commentaires
+-- Listage de la structure de la table dashboard_rehab. commentaires
 DROP TABLE IF EXISTS `commentaires`;
 CREATE TABLE IF NOT EXISTS `commentaires` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `commentaires` (
 
 -- Les données exportées n'étaient pas sélectionnées.
 
--- Listage de la structure de la table id18263011_databaselarehab. exercices
+-- Listage de la structure de la table dashboard_rehab. exercices
 DROP TABLE IF EXISTS `exercices`;
 CREATE TABLE IF NOT EXISTS `exercices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `exercices` (
 
 -- Les données exportées n'étaient pas sélectionnées.
 
--- Listage de la structure de la table id18263011_databaselarehab. items
+-- Listage de la structure de la table dashboard_rehab. items
 DROP TABLE IF EXISTS `items`;
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `items` (
 
 -- Les données exportées n'étaient pas sélectionnées.
 
--- Listage de la structure de la table id18263011_databaselarehab. mots
+-- Listage de la structure de la table dashboard_rehab. mots
 DROP TABLE IF EXISTS `mots`;
 CREATE TABLE IF NOT EXISTS `mots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `mots` (
 
 -- Les données exportées n'étaient pas sélectionnées.
 
--- Listage de la structure de la table id18263011_databaselarehab. presentation
+-- Listage de la structure de la table dashboard_rehab. presentation
 DROP TABLE IF EXISTS `presentation`;
 CREATE TABLE IF NOT EXISTS `presentation` (
   `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `presentation` (
 
 -- Les données exportées n'étaient pas sélectionnées.
 
--- Listage de la structure de la table id18263011_databaselarehab. themes
+-- Listage de la structure de la table dashboard_rehab. themes
 DROP TABLE IF EXISTS `themes`;
 CREATE TABLE IF NOT EXISTS `themes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -1,17 +1,6 @@
 import React from 'react';
-import { SafeAreaView, View, StyleSheet, Dimensions, FlatList, Text, Image } from 'react-native';
+import { SafeAreaView, View, StyleSheet, FlatList, Text, Image } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const Item = (item) => (
-  <SafeAreaView style={styles.item} backgroundColor={item.color} onStartShouldSetResponder={() => {navigation(item)}}>
-    <View style={styles.chip} opacity={item.isNew}/>
-    <Image
-      style={styles.icon}
-      source={item.icon}  
-    />
-    <Text style={styles.title}>{item.title}</Text>
-  </SafeAreaView>
-);
 
 class Categories extends React.Component{
   constructor(props){
@@ -114,8 +103,7 @@ class Categories extends React.Component{
     params.nav.navigate('ThemesPage', {DATA:{DATA}, color:params.color});
   };
 
-  async checkChips(item){
-    let children = JSON.parse(await AsyncStorage.getItem('themeAll'))
+  checkChips(item, children){
     children = children.filter(child => child.parentId == item.id)
     if(children.length > 0){
       let isNewChildren = 0
@@ -128,19 +116,31 @@ class Categories extends React.Component{
     }
     let tmp = this.state.categories
     tmp[item.id - 1] = item
-    this.setState({
-      categories: tmp
-    })
+    
+    return tmp
   }
 
   checkId(element){
     return this == element.parentId
   }
 
+  async initialisation(categories){
+    let children = await JSON.parse(await AsyncStorage.getItem('themeAll'))
+    let newCategories
+    categories.forEach(categorie => {
+      newCategories = this.checkChips(categorie, children)
+    })
+    if(newCategories !== this.state.categories){
+      console.log('different');
+      this.setState({
+        categories: newCategories
+      })
+    }
+  }
+  
+
   renderItem = ({item}) => (
-    // <Item title={item.title} icon={item.icon} color={item.color} nav={navigation} isNew={item.isNew}/>
     item.nav = this.nav,
-    this.checkChips(item),
     <SafeAreaView style={styles.item} backgroundColor={item.color} onStartShouldSetResponder={() => {this.navigation(item)}}>
     <View style={styles.chip} opacity={item.isNew}/>
     <Image
@@ -150,33 +150,34 @@ class Categories extends React.Component{
     <Text style={styles.title}>{item.title}</Text>
   </SafeAreaView>
   )
-    render(){
-      return (
-        <SafeAreaView style={styles.container}>
-          <FlatList
-            data={this.state.categories.slice(0, 2)}
-            contentContainerStyle={styles.flatlistContent}
-            horizontal={true}
-            renderItem={this.renderItem}
-            keyExtractor={item => item.id}
-          />
-          <FlatList
-            data={this.state.categories.slice(2, 4)}
-            contentContainerStyle={styles.flatlistContent}
-            horizontal={true}
-            renderItem={this.renderItem}
-            keyExtractor={item => item.id}
-          />
-          <FlatList
-            data={this.state.categories.slice(4, 6)}
-            contentContainerStyle={styles.flatlistContent}
-            horizontal={true}
-            renderItem={this.renderItem}
-            keyExtractor={item => item.id}
-          />
-        </SafeAreaView>
-      );
-    }
+  render() {
+    this.initialisation(this.state.categories)
+    return (
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={this.state.categories.slice(0, 2)}
+          contentContainerStyle={styles.flatlistContent}
+          horizontal={true}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+        />
+        <FlatList
+          data={this.state.categories.slice(2, 4)}
+          contentContainerStyle={styles.flatlistContent}
+          horizontal={true}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+        />
+        <FlatList
+          data={this.state.categories.slice(4, 6)}
+          contentContainerStyle={styles.flatlistContent}
+          horizontal={true}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+        />
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
