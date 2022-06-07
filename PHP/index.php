@@ -54,7 +54,7 @@ $popup = new Popup();
                         </div>
                     </div>';
         $idCategory = $db->getCategorieId($category);
-        $themes = $db->getTableFromParent($idCategory, "Themes");
+        $themes = $db->getTableFromParent($idCategory, "themes");
         if(sizeof($themes) > 0) {
             foreach ($themes as $theme):
                 echo '
@@ -68,7 +68,7 @@ $popup = new Popup();
                 ' .$popup->modalSuppr('brown', 'Supprimer le thème '.$theme["nom"].' ?', 'Theme', $theme["id"]).'
                                     </div>
                             </div>';
-                $exercices = $db->getTableFromParent($theme["id"], "Exercices");
+                $exercices = $db->getTableFromParent($theme["id"], "exercices");
                 if(sizeof($exercices) > 0){
                     foreach ($exercices as $exercice):
                         echo '
@@ -82,7 +82,7 @@ $popup = new Popup();
                         ' .$popup->modalSuppr('blue', 'Supprimer l\'exercice '.$exercice["nom"].' ?', 'Exercice', $exercice["id"]).'
                                         </div>
                                     </div>';
-                        $items = $db->getTableFromParent($exercice["id"], "Items");
+                        $items = $db->getTableFromParent($exercice["id"], "items");
                         if(sizeof($items) > 0){
                             foreach ($items as $item):
                                 echo '

@@ -10,67 +10,67 @@ $modifiedArray = Array();
 $deletedArray = Array();
 
 //add new fields in result
-$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "Categories");
+$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "categories");
 if($result){
     $newsArray["categories"] = $db->setDataInArray($result, ["id", "nom"]);
 } 
-$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "Themes");
+$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "themes");
 if($result){
     $newsArray["themes"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
-$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "Exercices");
+$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "exercices");
 if($result){
     $newsArray["exercices"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
-$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "Items");
+$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "items");
 if($result){$arrayItems = Array();
     $newsArray["items"] = $db->setDataInArray($result, ["id", "nom", "typeItem", "parentId"]);
 }
-$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "Mots");
+$result = $db->getAllNewLinesInTable(date('Y-m-d H-i-s', $timestamp), "mots");
 if($result){
     $newsArray["mots"] = $db->setDataInArray($result, ["id", "nom", "definition"]);
 }
 
 //add modified fields in result
-$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Categories");
+$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "categories");
 if($result){
     $modifiedArray["categories"] = $db->setDataInArray($result, ["id", "nom"]);
 } 
-$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Themes");
+$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "themes");
 if($result){
     $modifiedArray["themes"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
-$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), 'Exercices');
+$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), 'exercices');
 if($result){
     $modifiedArray["exercices"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
-$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Items");
+$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "items");
 if($result){$arrayItems = Array();
     $modifiedArray["items"] = $db->setDataInArray($result, ["id", "nom", "typeItem", "parentId"]);
 }
-$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Mots");
+$result = $db->getAllModifiedLinesInTable(date('Y-m-d H-i-s', $timestamp), "mots");
 if($result){
     $modifiedArray["mots"] = $db->setDataInArray($result, ["id", "nom", "definition"]);
 }
 
 //add deleted fields in result
-$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Categories");
+$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "categories");
 if($result){
     $deletedArray["categories"] = $db->setDataInArray($result, ["id", "nom"]);
 } 
-$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Themes");
+$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "themes");
 if($result){
     $deletedArray["themes"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
-$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Exercices");
+$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "exercices");
 if($result){
     $deletedArray["exercices"] = $db->setDataInArray($result, ["id", "nom", "parentId"]);
 }
-$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Items");
+$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "items");
 if($result){$arrayItems = Array();
     $deletedArray["items"] = $db->setDataInArray($result, ["id", "nom", "typeItem", "parentId"]);
 }
-$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "Mots");
+$result = $db->getAllDeletedLinesInTable(date('Y-m-d H-i-s', $timestamp), "mots");
 if($result){
     $deletedArray["mots"] = $db->setDataInArray($result, ["id", "nom", "definition"]);
 }

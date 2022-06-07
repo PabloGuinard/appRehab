@@ -9,7 +9,6 @@ function printObject(item, params) {
     case 'Texte':
       return <ItemTexte data={item.data}/>
     case 'Image':
-      // const source = ({uri:'https://apprehab.000webhostapp.com/'+ item.data + '?' + new Date()});
       const source = ({uri:global.dns + '/'+ item.data + '?' + new Date()});
       return <ItemImage data={source}/>
     case 'Video':

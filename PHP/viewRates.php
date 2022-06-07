@@ -28,9 +28,9 @@ $db->authenticate();
     $allCommentaires = $db->getAllCommentaires();
     $allCommentaires = array_reverse($allCommentaires);
     foreach ($allCommentaires as $commentaire){
-        $exercice = $db->getLineFromId($commentaire["exerciceId"], "Exercices");
-        $theme = $db->getLineFromId($exercice["parentId"], "Themes");
-        $categorie = $db->getLineFromId($theme["parentId"], "Categories");
+        $exercice = $db->getLineFromId($commentaire["exerciceId"], "exercices");
+        $theme = $db->getLineFromId($exercice["parentId"], "themes");
+        $categorie = $db->getLineFromId($theme["parentId"], "categories");
         echo "
             <div class='divCommentaire'>
                 <div class='categorieThemeExercice'>

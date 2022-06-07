@@ -5,20 +5,20 @@ $db = new Db();
 $db->authenticate();
 switch ($_POST["typeSuppr"]){
     case "Exercice":
-        $_SESSION["message"] = $db->deleteLine($_POST["id"], "Exercices");
+        $_SESSION["message"] = $db->deleteLine($_POST["id"], "exercices");
         break;
     case "Theme":
-        $_SESSION["message"] = $db->deleteLine($_POST["id"], "Themes");
+        $_SESSION["message"] = $db->deleteLine($_POST["id"], "themes");
         break;
     case  "Mot":
-        $_SESSION["message"] = $db->deleteLine($_POST["id"], "Mots");
+        $_SESSION["message"] = $db->deleteLine($_POST["id"], "mots");
         break;
     case "Item":
         $path = $db->getNomItemFromId($_POST["id"]);
         if (file_exists('..'.$path["nom"])) {
             unlink('..'.$path["nom"]);
         }
-        $_SESSION["message"] = $db->deleteLine($_POST["id"], "Items");
+        $_SESSION["message"] = $db->deleteLine($_POST["id"], "items");
         break;
     case "Commentaire":
         $_SESSION["message"] = $db->supprComm($_POST["id"]);
