@@ -8,7 +8,7 @@ class Db {
     function __construct(){
         try{
             try{
-                $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=id18263011_databaselarehab; charset=utf8', 'root');
+                $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=dashboard_rehab; charset=utf8', 'root');
                 //$this->pdo = new PDO('mysql:host=localhost;dbname=id18263011_databaselarehab', 'id18263011_admin', 'M(#hqygJ2DXj^bN4');
             } catch(PDOException $e){
                 echo "Connexion échouée : " . $e->getMessage();
@@ -317,7 +317,7 @@ class Db {
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_3_0, $this->cas_host, $this->cas_port, $this->cas_context);
         phpCAS::setNoCasServerValidation();
-        phpCAS::forceAuthentication();
+        //phpCAS::forceAuthentication();
     }
 
     public function logout(){
@@ -326,6 +326,6 @@ class Db {
     }
 
     public function getUserMail(){
-        return phpCAS::getAttributes()["mail"];
+        //return phpCAS::getAttributes()["mail"];
     }
 }

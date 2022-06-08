@@ -83,14 +83,16 @@ class Categories extends React.Component{
 
     //check new exercices in each theme
     let childrenArray = JSON.parse(await AsyncStorage.getItem('exerciceAll'))
-    themesArray.forEach(theme => {
-      for(let child of childrenArray){
-        if(child.parentId === theme.id && child.isNew === 1){
-          theme.isNew = 1
-          break
+    if(childrenArray.length > 0){
+      themesArray.forEach(theme => {
+        for(let child of childrenArray){
+          if(child.parentId === theme.id && child.isNew === 1){
+            theme.isNew = 1
+            break
+          }
         }
-      }
-    })
+      })
+    }
 
     themesArray.forEach(theme => {
       DATA.push({
@@ -103,21 +105,26 @@ class Categories extends React.Component{
     params.nav.navigate('ThemesPage', {DATA:{DATA}, color:params.color});
   };
 
-  checkChips(item, children){
-    children = children.filter(child => child.parentId == item.id)
-    if(children.length > 0){
-      let isNewChildren = 0
-      children.forEach(child => {
+  isNewChildren(categorie, themes, exercices){
+    themes = themes.filter(child => child.parentId == categorie.id)
+    if(themes.length > 0){
+      for(let child of themes){
         if(child.isNew === 1){
-          isNewChildren = 1
+          return 1
         }
-      })
-      item.isNew = 1
+      }
     }
-    let tmp = this.state.categories
-    tmp[item.id - 1] = item
-    
-    return tmp
+    for(let cpt = 0; cpt < themes.length; cpt++){
+      exercices = exercices.filter(child => child.parentId === themes[cpt].id)
+      if(exercices.length > 0){
+        for(let child of exercices){
+          if(child.isNew === 1){
+            return 1
+          }
+        }
+      }
+    }
+    return 0
   }
 
   checkId(element){
@@ -125,19 +132,22 @@ class Categories extends React.Component{
   }
 
   async initialisation(categories){
-    let children = await JSON.parse(await AsyncStorage.getItem('themeAll'))
-    let newCategories
-    categories.forEach(categorie => {
-      newCategories = this.checkChips(categorie, children)
-    })
-    if(newCategories !== this.state.categories){
-      console.log('different');
-      this.setState({
-        categories: newCategories
-      })
+    let themes = await JSON.parse(await AsyncStorage.getItem('themeAll'))
+    let exercices = await JSON.parse(await AsyncStorage.getItem('exerciceAll'))
+    for(let cpt = 0; cpt < categories.length; cpt++){
+      categories[cpt].isNew = this.isNewChildren(categories[cpt], themes, exercices)
     }
+    return categories
   }
   
+  async componentDidMount(){
+    this.props.navigation.addListener('focus', async () => {
+      let categories = await this.initialisation(this.state.categories)
+      this.setState({
+        categories: categories
+      })
+    })
+  }
 
   renderItem = ({item}) => (
     item.nav = this.nav,
@@ -151,7 +161,6 @@ class Categories extends React.Component{
   </SafeAreaView>
   )
   render() {
-    this.initialisation(this.state.categories)
     return (
       <SafeAreaView style={styles.container}>
         <FlatList

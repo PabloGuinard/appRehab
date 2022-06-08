@@ -55,8 +55,8 @@ function logCurrentStorage() {
 }
 
 async function initGlobals(){
-    global.dns = 'http://srvrehab'
-    // global.dns = 'http://10.39.20.77'
+    // global.dns = 'http://srvrehab'
+    global.dns = 'http://10.39.20.77'
     global.amountExercicesStartedMonth = 0
     global.amountExercicesEndedMonth = 0
     let tmp
@@ -79,6 +79,8 @@ async function concatOldNewData(json, typeData){
     else {
         allData = allData.concat(json)
     }
+    console.log(typeData);
+    console.log(json);
     await setStorage(typeData + "All", JSON.stringify(allData))
 }
 
@@ -96,6 +98,7 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     const url = global.dns + '/api/api.php?timestamp=' + timestamp
+    console.log(url)
     const response = await fetch(url)
     console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
@@ -106,12 +109,14 @@ const getAllDataFromApi = async () => {
         if(news != undefined){
             if(news.categories != undefined)
                 await concatOldNewData(news.categories, "categorie")
-            if(news.themes != undefined)
+            if(news.themes != undefined){
                 news.themes.forEach(theme => { theme.isNew = 1})
                 await concatOldNewData(news.themes, "theme")
-            if(news.exercices != undefined)
+            }
+            if(news.exercices != undefined){
                 news.exercices.forEach(exercice => { exercice.isNew = 1})
                 await concatOldNewData(news.exercices, "exercice")
+            }
             if(news.items != undefined)
                 await concatOldNewData(news.items, "item")
             if(news.mots != undefined){
@@ -203,7 +208,7 @@ export default class App extends React.Component {
     }
 
     async componentDidMount(){
-        await AsyncStorage.clear()
+        //await AsyncStorage.clear()
         await initialisation()
         this.setState({isLoading: false})
     }
