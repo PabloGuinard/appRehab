@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `presentation` (
   PRIMARY KEY (`contenu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO 'presentation'('contenu', 'isReady') VALUES(' ', 0);
+INSERT INTO `presentation`(`contenu`, `isReady`) VALUES('Description vide', 0);
 
 -- Listage de la structure de la table dashboard_rehab. themes
 DROP TABLE IF EXISTS `themes`;

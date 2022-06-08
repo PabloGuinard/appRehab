@@ -15,7 +15,7 @@
 
 -- Listage de la structure de la base pour id18263011_databaselarehab
 CREATE DATABASE IF NOT EXISTS `id18263011_databaselarehab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `id18263011_databaselarehab`;
+USE `dashboard_rehab`;
 
 -- Listage de la structure de la table id18263011_databaselarehab. categories
 CREATE TABLE IF NOT EXISTS `categories` (
