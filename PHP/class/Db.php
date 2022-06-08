@@ -153,6 +153,13 @@ class Db {
         return $result["contenu"];
     }
 
+    public function getChallengeText(){
+        $sth = $this->pdo->prepare("SELECT * FROM challenge");
+        $sth->execute();
+        $result = $sth->fetch();
+        return $result["contenu"];
+    }
+
     public function getTableFromParent(string $parentId, string $tableName){
         $request = "SELECT * FROM " . $tableName . " WHERE parentId = " . $parentId ." AND isDeleted != 1";
         $sth = $this->pdo->prepare($request);
@@ -234,6 +241,12 @@ class Db {
         return "Présentation mise à jour";
     }
 
+    public function updateChallenge(string $contenu){
+        $user = $this->getUserMail();
+        $sth = $this->pdo->prepare("UPDATE challenge SET contenu= :contenu, isReady=0, modifiedBy= :user");
+        $sth->execute(["contenu" => $contenu, "user" => $user]);
+    }
+
     public function updateMot(string $mot, string $definition, string $id){
         $user = $this->getUserMail();
         $sth = $this->pdo->prepare("UPDATE mots SET nom= :mot, definition= :definition, isReady=0, modifiedBy= :user WHERE id= :id");
@@ -265,7 +278,9 @@ class Db {
         $sth->execute(["timestamp" => $timestamp]);
         $sth = $this->pdo->prepare("UPDATE mots SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
         $sth->execute(["timestamp" => $timestamp]);
-        $sth = $this->pdo->prepare("UPDATE resentation SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth = $this->pdo->prepare("UPDATE presentation SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
+        $sth->execute(["timestamp" => $timestamp]);
+        $sth = $this->pdo->prepare("UPDATE challenge SET isReady= 1, modifiedAt= :timestamp WHERE isReady = 0");
         $sth->execute(["timestamp" => $timestamp]);
         //set createdAt fields
         $sth = $this->pdo->prepare("UPDATE themes SET isReady= 1, createdAt= :timestamp WHERE isReady = -1");

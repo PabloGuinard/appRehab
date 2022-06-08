@@ -454,6 +454,10 @@ select option{
 .divInputTexte{
     flex-direction: column;
 }
+#divChallenge{
+    display: flex;
+    justify-content: space-between;
+}
 @media (max-width: 1000px) {
     .divThemeExercice{
         flex-direction: column;
