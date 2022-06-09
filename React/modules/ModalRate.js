@@ -1,4 +1,4 @@
-import { View, StyleSheet, Dimensions, Pressable, Image, Text, Modal, TouchableOpacity  } from 'react-native';
+import { View, StyleSheet, Pressable, Image, Text, Modal } from 'react-native';
 import StarRating from '../modules/StarRating';
 import React, { useState } from 'react';
 import CommentTextInput from '../modules/CommentSection';
@@ -66,7 +66,6 @@ const ModalRate = (params) => {
           animationType="slide"
           transparent={true}
           visible={modalVisible}
-          backgroundColor={'blue'}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -103,15 +102,15 @@ const ModalRate = (params) => {
           colors={['transparent', 'black']}
           start={{x: 0, y: 0}}
           end={{x: 0, y: 1}}/>
-          <View style={styles.modalView}>
+          <View style={styles.modalView} backgroundColor={global.mainColor}>
             <Pressable flexDirection={'row-reverse'} onPress={()=>closeModalBis()}>
-              <Image source={require('../assets/icones/cross.png')}
+              <Image source={require('../assets/icones/cross_white.png')}
                      style={styles.cross}
               />
 
             </Pressable>
             <View backgroundColor={global.mainColor} style={styles.textContainer}>
-              <Text style={styles.modalText}>Activité déjà terminée !</Text>
+              <Text style={styles.modalTextBis}>Activité déjà terminée !</Text>
             </View>
           </View>
         </View>
@@ -180,6 +179,12 @@ const styles = StyleSheet.create({
   modalText: {
     textAlign: "center",
     color: 'white',
+    fontWeight: 'bold'
+  },
+  modalTextBis: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 18,
     fontWeight: 'bold'
   },
   textContainer: {

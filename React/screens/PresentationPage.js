@@ -4,12 +4,6 @@ import { View, Text, Dimensions, StyleSheet, Image, StatusBar, useWindowDimensio
 import { ScrollView } from 'react-native-gesture-handler';
 import RenderHTML from 'react-native-render-html';
 
-function getIdFromUrl(url){
-  let regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
-  let match = url.match(regex)
-  return (match&&match[7].length == 11) ? match[7] : false
-}
-
 function getComponents(text){
   text = translateToHTML5(text)
   const {width} = useWindowDimensions()

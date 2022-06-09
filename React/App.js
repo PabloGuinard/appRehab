@@ -104,6 +104,7 @@ const getAllDataFromApi = async () => {
         //add new content
         const news = json.news
         if(news != undefined){
+            global.isNewContent = true
             if(news.categories != undefined)
                 await concatOldNewData(news.categories, "categorie")
             if(news.themes != undefined){
@@ -163,6 +164,7 @@ const getAllDataFromApi = async () => {
             global.challengeText = json.challenge
         }
     } else {
+        global.isNewContent = false
         console.log("nothing new");
     }
 };

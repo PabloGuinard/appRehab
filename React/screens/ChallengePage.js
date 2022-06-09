@@ -15,12 +15,6 @@ async function setStorage(key: string, value: string){
     }catch (error){}
 }
 
-function getIdFromUrl(url){
-  let regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
-  let match = url.match(regex)
-  return (match&&match[7].length == 11) ? match[7] : false
-}
-
 function getComponents(text){
   if(text !== undefined)
     text = translateToHTML5(text)
@@ -118,26 +112,24 @@ const ItemTexte = (item) => (
 
 
 const ChallengePage = ({navigation}) => {
-  console.log(global.challengeText);
   const challengeText = global.challengeText
-  console.log(challengeText);
-    return (
-        <View style={{flex: 1}}>
-            <View style={styles.statusbar}/>
-            <View style={{flex: 1}}>
-                <Header/>
-            </View>
-            <View style={{flex: 7}}>
-              <ScrollView>
-                <ChallengePicture navigation={navigation}/>
-                <ItemTexte data={challengeText}/>
-              </ScrollView>
-            </View>
-            <View style={{flex: 1}}>
-                <NavigBar navigation={navigation}/>
-            </View>
-        </View>
-    );
+  return (
+      <View style={{flex: 1}}>
+          <View style={styles.statusbar}/>
+          <View style={{flex: 1}}>
+              <Header/>
+          </View>
+          <View style={{flex: 7}}>
+            <ScrollView>
+              <ChallengePicture navigation={navigation}/>
+              <ItemTexte data={challengeText}/>
+            </ScrollView>
+          </View>
+          <View style={{flex: 1}}>
+              <NavigBar navigation={navigation}/>
+          </View>
+      </View>
+  );
 };
 
 const styles = StyleSheet.create({

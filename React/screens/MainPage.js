@@ -3,6 +3,7 @@ import { View, StyleSheet, StatusBar } from 'react-native';
 import Header from '../modules/Header';
 import Categories from '../modules/Categories'
 import NavigBar from '../modules/NavigBar';
+import PopupNewContent from '../modules/PopupNewContent';
 
 
 const MainPage = ({navigation}) => {
@@ -13,6 +14,7 @@ const MainPage = ({navigation}) => {
                 <Header/>
             </View>
             <View style={{flex: 7}}>
+                <PopupNewContent/>
                 <Categories navigation={navigation}/>
             </View>
             <View style={{flex: 1}}>
