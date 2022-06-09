@@ -79,8 +79,6 @@ async function concatOldNewData(json, typeData){
     else {
         allData = allData.concat(json)
     }
-    console.log(typeData);
-    console.log(json);
     await setStorage(typeData + "All", JSON.stringify(allData))
 }
 
@@ -98,7 +96,6 @@ const getAllDataFromApi = async () => {
         timestamp = await AsyncStorage.getItem('timestampLastConnection')
     }catch (error){}
     const url = global.dns + '/api/api.php?timestamp=' + timestamp
-    console.log(url)
     const response = await fetch(url)
     console.log(url)
     await setStorage('timestampLastConnection', Math.floor(new Date().getTime() / 1000).toString())
@@ -154,11 +151,16 @@ const getAllDataFromApi = async () => {
         }
     
         //update presentation
-        if(json.presentation != undefined){
+        if(json.presentation !== undefined){
             try {
-                toString = JSON.stringify((json.presentation))
+                toString = JSON.stringify(json.presentation)
                 await setStorage('presentation', toString)
             } catch(error){}
+        }
+    
+        //update text in challenge
+        if(json.challenge !== undefined){
+            global.challengeText = json.challenge
         }
     } else {
         console.log("nothing new");
@@ -208,7 +210,7 @@ export default class App extends React.Component {
     }
 
     async componentDidMount(){
-        //await AsyncStorage.clear()
+        // await AsyncStorage.clear()
         await initialisation()
         this.setState({isLoading: false})
     }

@@ -63,9 +63,7 @@ $popup = new Popup();
                         </select>
                     </div>
                     <input type="hidden" name="textItem" class="inputTextItem">
-                    <div id="textItem" class="editor" contenteditable="true">
-                        <?= $db->getChallengeText()?>
-                    </div>
+                    <div id="textItem" class="editor" contenteditable="true"><?= $db->getChallengeText()?></div>
                 </div>
                 <button type="submit" class="submitEditText">Changer Challenge</button>
             </form>
@@ -103,9 +101,7 @@ $popup = new Popup();
                         </select>
                     </div>
                     <input type="hidden" name="textItem" class="inputTextItem">
-                    <div id="textItem" class="editor" contenteditable="true">
-                    <?= $db->getPresentation() ?>
-                    </div>
+                    <div id="textItem" class="editor" contenteditable="true"><?= $db->getPresentation() ?></div>
                 </div>
                 <button type="submit" class="submitEditText">Mettre à jour</button>
             </form>

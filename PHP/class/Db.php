@@ -213,6 +213,12 @@ class Db {
         return $sth->fetch();
     }
 
+    public function getChallengeTextReadyRecent($timestamp){
+        $sth = $this->pdo->prepare("SELECT * FROM challenge WHERE isReady = 1 AND TIMESTAMP(:myTime) < modifiedAt");
+        $sth->execute(["myTime" => $timestamp]);
+        return $sth->fetch();
+    }
+
     public function addComment(string $rate, string $comment, string $exerciceId){
           $sth = $this->pdo->prepare("INSERT INTO commentaires (note, commentaire, exerciceId) VALUES (:note, :comment, :exerciceId)");
           $sth->execute(["note" => $rate, "comment" => $comment, "exerciceId" => $exerciceId]);

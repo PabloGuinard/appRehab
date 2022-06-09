@@ -1,7 +1,107 @@
 import React from 'react';
 import NavigBar from '../modules/NavigBar';
-import { View, Text, Dimensions, StyleSheet, Image, StatusBar} from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, StatusBar, useWindowDimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import RenderHTML from 'react-native-render-html';
+
+function getIdFromUrl(url){
+  let regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+  let match = url.match(regex)
+  return (match&&match[7].length == 11) ? match[7] : false
+}
+
+function getComponents(text){
+  text = translateToHTML5(text)
+  const {width} = useWindowDimensions()
+  const source = {
+    html: text
+  }
+  return (
+    <RenderHTML
+      contentWidth={width}
+      source={source}
+    />
+  )
+}
+
+function translateToHTML5(text){
+  text = text.replace(/<\/font>/gi, '</span>')
+
+  for (let char = 0; char < text.length; char++) {
+    if(text[char] === '<'){
+      let tag = findTag(text, char)
+
+      if(tag.text.substr(0, 11) === "<font size="){
+        let fontSize = 15
+        switch (tag.text[12]){
+          case '2':
+            fontSize = 12
+            break
+          case '5':
+            fontSize = 20
+            break
+          case '6':
+            fontSize = 25
+            break
+        }
+        text = text.substr(0, tag.open) + '<span style="font-size: ' + fontSize + 'px' + findSecondStyleInTag(tag, true) + '">' + text.substr(tag.close)
+      }
+      else if(tag.text.substr(0, 12) === "<font color="){
+        text = text.substr(0, tag.open) + '<span style="color: ' + tag.text.substr(13, 7) + findSecondStyleInTag(tag, false) + '">' + text.substr(tag.close)
+      }
+    }
+  }
+  return '<span style="font-size: 15px; margin: 10px">' + text + '</span>'
+}
+
+function findSecondStyleInTag(tag, isColor){
+  if(isColor){
+    if(tag.text.length !== 22){
+        return "; color: " + tag.text.substr(22, 7)
+    }
+    return ""
+  }
+  else {
+    if(tag.text.length !== 15){
+      let fontSize = 15
+        switch (tag.text[28]){
+          case '2':
+            fontSize = 12
+            break
+          case '5':
+            fontSize = 20
+            break
+          case '6':
+            fontSize = 25
+            break
+        }
+      return "; font-size: " + fontSize + "px"
+    }
+    return ""
+  }
+}
+
+function findTag(text, pos){
+  let tmp = pos
+  while(text[tmp] !== '>')
+    tmp++
+  tmp++
+  let tag = {
+    close: tmp,
+    open: pos,
+    length: tmp - pos,
+    text: text.substr(pos, tmp - pos),
+    isClosing: false
+  }
+
+  if(tag.text[1] === '/')
+    tag.isClosing = true
+  return tag
+}
+
+const ItemTexte = (item) => (
+  getComponents(item.data)
+);
 
 const PresentationPage=({navigation})=>{
     const TextPresentation = global.presentation;
@@ -14,7 +114,7 @@ const PresentationPage=({navigation})=>{
                         <Image style={styles.im1} source={require("../assets/pictures/logo-dispositifs.png")} />
                         <Image style={styles.im2} source={require("../assets/pictures/logo-lyon-1.png")} />
                     </View>
-                    <Text style={styles.data}>{TextPresentation}</Text>
+                    <ItemTexte data={TextPresentation}/>
                 </ScrollView>
             </View>
             <View style={{flex:1}}>

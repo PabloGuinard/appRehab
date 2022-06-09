@@ -145,6 +145,12 @@ if($result){
     $finalArray["presentation"] = $result["contenu"];
 }
 
+//add challenge text in result
+$result = $db->getChallengeTextReadyRecent(date('Y-m-d H-i-s', $timestamp));
+if($result){
+    $finalArray["challenge"] = $result["contenu"];
+}
+
 if(sizeof($finalArray) < 1){
     $finalArray["nothing"] = "nothing";
 }
