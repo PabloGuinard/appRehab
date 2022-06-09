@@ -41,6 +41,18 @@ INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VAL
 	(10, 'Culture & Infos', 1, NULL, '2022-04-22 09:15:21');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
+-- Listage de la structure de la table dashboard_rehab. challenge
+DROP TABLE IF EXISTS `challenge`;
+CREATE TABLE IF NOT EXISTS `challenge` (
+  `contenu` varchar(10000) COLLATE utf8_unicode_ci DEFAULT ' ',
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `modifiedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `isReady` int(11) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `challenge`(`contenu`, `isReady`) VALUES('Description vide', 0);
+
 -- Listage de la structure de la table dashboard_rehab. commentaires
 DROP TABLE IF EXISTS `commentaires`;
 CREATE TABLE IF NOT EXISTS `commentaires` (
@@ -53,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `commentaires` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `exerciceId` (`exerciceId`),
   CONSTRAINT `FK_commentaires_exercices` FOREIGN KEY (`exerciceId`) REFERENCES `exercices` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -71,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `exercices` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `themeId` (`parentId`) USING BTREE,
   CONSTRAINT `FK_exercices_themes` FOREIGN KEY (`parentId`) REFERENCES `themes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -113,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `mots` (
 -- Listage de la structure de la table dashboard_rehab. presentation
 DROP TABLE IF EXISTS `presentation`;
 CREATE TABLE IF NOT EXISTS `presentation` (
-  `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL,
+  `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL DEFAULT ' ',
   `isReady` tinyint(4) NOT NULL DEFAULT '0',
   `modifiedAt` timestamp NULL DEFAULT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -13,11 +13,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Listage de la structure de la base pour id18263011_databaselarehab
-CREATE DATABASE IF NOT EXISTS `id18263011_databaselarehab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+-- Listage de la structure de la base pour dashboard_rehab
+DROP DATABASE IF EXISTS `dashboard_rehab`;
+CREATE DATABASE IF NOT EXISTS `dashboard_rehab` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `dashboard_rehab`;
 
--- Listage de la structure de la table id18263011_databaselarehab. categories
+-- Listage de la structure de la table dashboard_rehab. categories
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -27,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.categories : ~6 rows (environ)
+-- Listage des données de la table dashboard_rehab.categories : ~6 rows (environ)
 DELETE FROM `categories`;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VALUES
@@ -39,7 +41,25 @@ INSERT INTO `categories` (`id`, `nom`, `isReady`, `modifiedAt`, `createdAt`) VAL
 	(10, 'Culture & Infos', 1, NULL, '2022-04-22 09:15:21');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
--- Listage de la structure de la table id18263011_databaselarehab. commentaires
+-- Listage de la structure de la table dashboard_rehab. challenge
+DROP TABLE IF EXISTS `challenge`;
+CREATE TABLE IF NOT EXISTS `challenge` (
+  `contenu` varchar(10000) COLLATE utf8_unicode_ci DEFAULT ' ',
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `modifiedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `isReady` int(11) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Listage des données de la table dashboard_rehab.challenge : ~0 rows (environ)
+DELETE FROM `challenge`;
+/*!40000 ALTER TABLE `challenge` DISABLE KEYS */;
+INSERT INTO `challenge` (`contenu`, `createdAt`, `modifiedAt`, `modifiedBy`, `isReady`) VALUES
+	('<div style="text-align: center;"><u><font size="5" color="#ff0000">Challenge du mois :&nbsp;</font></u></div><div style="text-align: left;">Ce mois-ci, Halloween est à l\'honneur ! On vous laisse donc nous envoyer votre meilleur déguisement de Halloween à l\'adresse <font color="#0000ff">rehabadomicile@orsac-cpa01.fr </font>!</div>', '2022-06-08 15:25:39', '2022-06-09 09:47:32', NULL, 1);
+/*!40000 ALTER TABLE `challenge` ENABLE KEYS */;
+
+-- Listage de la structure de la table dashboard_rehab. commentaires
+DROP TABLE IF EXISTS `commentaires`;
 CREATE TABLE IF NOT EXISTS `commentaires` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `note` int(11) DEFAULT NULL,
@@ -52,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `commentaires` (
   CONSTRAINT `FK_commentaires_exercices` FOREIGN KEY (`exerciceId`) REFERENCES `exercices` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.commentaires : ~7 rows (environ)
+-- Listage des données de la table dashboard_rehab.commentaires : ~7 rows (environ)
 DELETE FROM `commentaires`;
 /*!40000 ALTER TABLE `commentaires` DISABLE KEYS */;
 INSERT INTO `commentaires` (`id`, `note`, `commentaire`, `exerciceId`, `isDeleted`, `modifiedBy`) VALUES
@@ -65,7 +85,8 @@ INSERT INTO `commentaires` (`id`, `note`, `commentaire`, `exerciceId`, `isDelete
 	(37, 3, 'commentaire de test', 43, 0, NULL);
 /*!40000 ALTER TABLE `commentaires` ENABLE KEYS */;
 
--- Listage de la structure de la table id18263011_databaselarehab. exercices
+-- Listage de la structure de la table dashboard_rehab. exercices
+DROP TABLE IF EXISTS `exercices`;
 CREATE TABLE IF NOT EXISTS `exercices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -80,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `exercices` (
   CONSTRAINT `FK_exercices_themes` FOREIGN KEY (`parentId`) REFERENCES `themes` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.exercices : ~22 rows (environ)
+-- Listage des données de la table dashboard_rehab.exercices : ~22 rows (environ)
 DELETE FROM `exercices`;
 /*!40000 ALTER TABLE `exercices` DISABLE KEYS */;
 INSERT INTO `exercices` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
@@ -104,11 +125,12 @@ INSERT INTO `exercices` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `crea
 	(55, '7', 8, 1, '2022-05-30 15:59:22', '2022-05-30 14:12:05', 1, 'pablo.guinard@orsac-cpa01.fr'),
 	(56, 'exercice', 44, 1, '2022-05-31 11:30:58', '2022-05-30 15:59:22', 1, 'pablo.guinard@orsac-cpa01.fr'),
 	(57, 'test', 44, 1, '2022-05-31 11:30:58', '2022-05-31 09:36:18', 1, 'pablo.guinard@orsac-cpa01.fr'),
-	(58, 'test', 44, 0, NULL, '2022-05-31 11:30:58', 1, 'pablo.guinard@orsac-cpa01.fr'),
+	(58, 'test', 44, 1, '2022-06-08 15:28:08', '2022-05-31 11:30:58', 1, 'pablo.guinard@orsac-cpa01.fr'),
 	(59, 'test APK', 44, 1, NULL, '2022-05-31 13:12:49', 0, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `exercices` ENABLE KEYS */;
 
--- Listage de la structure de la table id18263011_databaselarehab. items
+-- Listage de la structure de la table dashboard_rehab. items
+DROP TABLE IF EXISTS `items`;
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(10000) CHARACTER SET utf8 NOT NULL,
@@ -124,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   CONSTRAINT `FK_items_exercices` FOREIGN KEY (`parentId`) REFERENCES `exercices` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.items : ~29 rows (environ)
+-- Listage des données de la table dashboard_rehab.items : ~29 rows (environ)
 DELETE FROM `items`;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
 INSERT INTO `items` (`id`, `nom`, `typeItem`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
@@ -159,7 +181,8 @@ INSERT INTO `items` (`id`, `nom`, `typeItem`, `parentId`, `isReady`, `modifiedAt
 	(94, '<b>gras </b><u>souligné </u><i>italique&nbsp;</i><div style="text-align: center;">centré</div><div style="text-align: right;">à droite</div><div style="text-align: left;"><a href="http://http://localhost/index.php">lien</a></div><div style="text-align: left;"><font color="#0000ff">rouge</font></div><div style="text-align: left;"><font color="#0000ff" size="2">petit texte</font></div>', 'Texte', 44, 1, '2022-05-24 10:23:48', '2022-05-20 13:27:57', 1, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
--- Listage de la structure de la table id18263011_databaselarehab. mots
+-- Listage de la structure de la table dashboard_rehab. mots
+DROP TABLE IF EXISTS `mots`;
 CREATE TABLE IF NOT EXISTS `mots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -172,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `mots` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.mots : ~12 rows (environ)
+-- Listage des données de la table dashboard_rehab.mots : ~12 rows (environ)
 DELETE FROM `mots`;
 /*!40000 ALTER TABLE `mots` DISABLE KEYS */;
 INSERT INTO `mots` (`id`, `nom`, `definition`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
@@ -190,9 +213,10 @@ INSERT INTO `mots` (`id`, `nom`, `definition`, `isReady`, `modifiedAt`, `created
 	(16, 'ef', 'zef', 1, '2022-05-31 11:30:58', '2022-05-30 14:18:18', 1, 'pablo.guinard@orsac-cpa01.fr');
 /*!40000 ALTER TABLE `mots` ENABLE KEYS */;
 
--- Listage de la structure de la table id18263011_databaselarehab. presentation
+-- Listage de la structure de la table dashboard_rehab. presentation
+DROP TABLE IF EXISTS `presentation`;
 CREATE TABLE IF NOT EXISTS `presentation` (
-  `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL,
+  `contenu` varchar(1000) CHARACTER SET utf8 NOT NULL DEFAULT ' ',
   `isReady` tinyint(4) NOT NULL DEFAULT '0',
   `modifiedAt` timestamp NULL DEFAULT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -200,14 +224,15 @@ CREATE TABLE IF NOT EXISTS `presentation` (
   PRIMARY KEY (`contenu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.presentation : ~1 rows (environ)
+-- Listage des données de la table dashboard_rehab.presentation : ~1 rows (environ)
 DELETE FROM `presentation`;
 /*!40000 ALTER TABLE `presentation` DISABLE KEYS */;
 INSERT INTO `presentation` (`contenu`, `isReady`, `modifiedAt`, `createdAt`, `modifiedBy`) VALUES
-	('L\'App\'Rehab a été créée en mars 2022 et a pour objectif de base de vous soutenir, toutes et tous. A l\'époque, nous avions décidé de vous accompagner quotidiennement en vous proposant de nombreuses activités à réaliser chez vous. Nous vous avons donc proposé différents outils de créativité et bien d\'autres thématiques encore. \r\nIl nous semblait fondamental de faire en sorte que le programme de Réhab que vous aviez engagé en début d\'année au sein du DSRPS puisse continuer.', 1, '2022-05-19 14:12:45', '2022-04-22 09:17:14', 'pablo.guinard@orsac-cpa01.fr');
+	('<b>L\'App\'Rehab</b> a été créée en mars 2022 et a pour objectif de base de vous soutenir, toutes et tous. A l\'époque, nous avions décidé de vous accompagner quotidiennement en vous proposant de nombreuses activités à réaliser chez vous. Nous vous avons donc proposé différents outils de créativité et bien d\'autres thématiques encore. \r\nIl nous semblait<a href="http://localhost"> fondamental </a>de faire en sorte que le programme de <u>Réhab</u> que vous aviez engagé en début d\'année au sein du <i>DSRPS </i>puisse continuer.                                        ', 1, '2022-06-09 09:50:42', '2022-04-22 09:17:14', NULL);
 /*!40000 ALTER TABLE `presentation` ENABLE KEYS */;
 
--- Listage de la structure de la table id18263011_databaselarehab. themes
+-- Listage de la structure de la table dashboard_rehab. themes
+DROP TABLE IF EXISTS `themes`;
 CREATE TABLE IF NOT EXISTS `themes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -222,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `themes` (
   CONSTRAINT `FK_themes_categories` FOREIGN KEY (`parentId`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table id18263011_databaselarehab.themes : ~15 rows (environ)
+-- Listage des données de la table dashboard_rehab.themes : ~15 rows (environ)
 DELETE FROM `themes`;
 /*!40000 ALTER TABLE `themes` DISABLE KEYS */;
 INSERT INTO `themes` (`id`, `nom`, `parentId`, `isReady`, `modifiedAt`, `createdAt`, `isDeleted`, `modifiedBy`) VALUES
