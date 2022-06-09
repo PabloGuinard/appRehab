@@ -55,8 +55,7 @@ function logCurrentStorage() {
 }
 
 async function initGlobals(){
-    // global.dns = 'http://srvrehab'
-    global.dns = 'http://10.39.20.77'
+    global.dns = 'https://rehabadom.cpa01.fr'
     global.amountExercicesStartedMonth = 0
     global.amountExercicesEndedMonth = 0
     let tmp

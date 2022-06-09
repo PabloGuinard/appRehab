@@ -108,8 +108,98 @@ $popup = new Popup();
         </fieldset>
     </div>
     <div class="dataBase">
+        <div class="maxWidth">
         <?php $categories = $db->getCategories();
-        foreach ($categories as $category) :
+        $categories1 = [$categories[0], $categories[1], $categories[2]];
+        foreach ($categories1 as $category) :
+            echo '
+                <div class="divDataBase">
+                    <div class="divDataBaseButton">
+                        <div class="categoryNode">
+                            <div class="categorieDataBase">
+                                Catégorie ' . $category . '
+                            </div>
+                        </div>
+                    </div>';
+            $idCategory = $db->getCategorieId($category);
+            $themes = $db->getTableFromParent($idCategory, "themes");
+            if (sizeof($themes) > 0) {
+                foreach ($themes as $theme) :
+                    echo '
+                            <div class="hidden themeNode">
+                                <div class="themeDataBase brown">
+                                    <div class="titleTheme">Thème ' . $theme["nom"] . '</div>
+                                    <div class="buttonsForm">
+                                        <div class="button btModal"><img src="img/edit_theme.png" alt="Suppr"></div>
+                ' . $popup->modalUpdate('brown', $theme["nom"], $theme["id"], 'modifTheme.php', 'Modifier le thème ' . $theme["nom"] . ' ?') . '
+                                        <div class="button btModal"><img src="img/delete_theme.png" alt="Modifier"></div>
+                ' . $popup->modalSuppr('brown', 'Supprimer le thème ' . $theme["nom"] . ' ?', 'Theme', $theme["id"]) . '
+                                    </div>
+                            </div>';
+                    $exercices = $db->getTableFromParent($theme["id"], "exercices");
+                    if (sizeof($exercices) > 0) {
+                        foreach ($exercices as $exercice) :
+                            echo '
+                                <div class="hidden exerciceNode">
+                                    <div class="exerciceDataBase blue">
+                                        <div class="titleExercice">Exercice ' . $exercice["nom"] . '</div>
+                                        <div class="buttonsForm">
+                                        <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
+                        ' . $popup->modalUpdate('blue', $exercice["nom"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice ' . $exercice["nom"] . ' ?') . '
+                                        <div class="button btModal"><img src="img/delete_exercice.png" alt="Suppr"></div>
+                        ' . $popup->modalSuppr('blue', 'Supprimer l\'exercice ' . $exercice["nom"] . ' ?', 'Exercice', $exercice["id"]) . '
+                                        </div>
+                                    </div>';
+                            $items = $db->getTableFromParent($exercice["id"], "items");
+                            if (sizeof($items) > 0) {
+                                foreach ($items as $item) :
+                                    echo '
+                                    <div class="hidden itemNode red">
+                                        <div class="titleItem">Item ' . $item['typeItem'] . '</div>
+                                        <div class="buttonsForm">
+                                            <div class="button btModal"><img src="img/edit_item.png" alt="Modifier"></div> 
+                                            ' . $popup->modalUpdateItem($item) . '
+                                            <div class="button btModal"><img src="img/delete_item.png" alt="Suppr"></div> 
+                                            ' . $popup->modalSuppr('red', 'Supprimer l\'item ' . $item["typeItem"] . ' ?', 'Item', $item["id"]) . '
+                                            
+                                        </div>
+                                    </div>';
+                                endforeach;
+                            }
+                            echo '<div class="hidden itemNode noBorder"><div class="buttonsForm">
+                                        <div class="button btModal"><img src="img/add_item.png" alt="Ajouter"></div>
+                                        ' . $popup->modalAddItem($exercice["nom"]) . '
+                                        </div>
+                                    </div>
+                                </div>';
+                        endforeach;
+                    }
+                    echo '
+                    <div class="hidden exerciceNode">
+                        <div class="exerciceDataBase noBorder">
+                            <div class="buttonsForm">
+                                <div class="button btModal"><img src="img/add_exercice.png" alt="Ajouter"></div>
+                                ' . $popup->modalAdd('blue', 'Ajouter un exercice dans le thème ' . $theme["nom"], 'Exercice', 'Theme', $theme["id"]) . '
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+                endforeach;
+            }
+            echo '<div class="hidden themeNode">
+                <div class="themeDataBase noBorder">
+                    <div class="buttonsForm">
+                        <div class="button btModal"><img src="img/add_theme.png" alt="Ajouter"></div>
+                            ' . $popup->modalAdd('brown', 'Ajouter un theme dans la catégorie ' . $category, 'Theme', 'Categorie', $category) . '
+                        </div>
+                    </div>
+                </div>
+            </div>';
+        endforeach;?>
+        </div>
+        <div class="maxWidth">
+        <?php $categories2 = [$categories[3], $categories[4], $categories[5]];
+        foreach ($categories2 as $category) :
             echo '
                 <div class="divDataBase">
                     <div class="divDataBaseButton">
@@ -194,7 +284,7 @@ $popup = new Popup();
                 </div>
             </div>';
         endforeach; ?>
-
+        </div>
     </div>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="js/popups.js"></script>

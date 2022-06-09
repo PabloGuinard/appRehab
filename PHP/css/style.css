@@ -90,6 +90,13 @@ input, select, textarea{
 .classThemeExercice{
     width: 48%;
 }
+.maxWidth{
+    width: 100%;
+}
+.dataBase{
+    display: flex;
+    flex-direction: row;
+}
 #divRadioAjout, #divRadioSuppr{
     display: flex;
     justify-content: space-evenly;
@@ -458,7 +465,7 @@ select option{
     display: flex;
     justify-content: space-between;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1450px) {
     .divThemeExercice{
         flex-direction: column;
     }
