@@ -8,7 +8,7 @@ class Db {
     function __construct(){
         try{
             try{
-                $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=dashboard_rehab; charset=utf8', 'root');
+                $this->pdo = new PDO('mysql:host=127.0.0.1;dbname=dashboard_rehab; charset=utf8mb4', 'root');
                 //$this->pdo = new PDO('mysql:host=localhost;dbname=id18263011_databaselarehab', 'id18263011_admin', 'M(#hqygJ2DXj^bN4');
             } catch(PDOException $e){
                 echo "Connexion échouée : " . $e->getMessage();
@@ -236,7 +236,7 @@ class Db {
     public function updateItem(string  $pathItem, string $id, string $typeItem){
         $user = $this->getUserMail();
         $sth = $this->pdo->prepare("UPDATE items SET typeItem= :typeItem, nom= :pathItem, isReady=0, modifiedBy= :user WHERE id= :id");
-        $sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id, "user" => $user]);
+        var_dump($sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id, "user" => $user]));
         return "Item mis à jour";
     }
 

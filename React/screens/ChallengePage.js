@@ -31,7 +31,6 @@ function getComponents(text){
 }
 
 function translateToHTML5(text){
-  console.log(text);
   text = text.replace(/<\/font>/gi, '</span>')
 
   for (let char = 0; char < text.length; char++) {
