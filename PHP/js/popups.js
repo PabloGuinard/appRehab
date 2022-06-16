@@ -10,9 +10,6 @@ let inputTextes = []
 for(let cpt = 2; cpt < tmp.length; cpt++){
     inputTextes.push(tmp[cpt])
 }
-console.log(inputTextes.length);
-console.log(inputImages.length);
-console.log(inputVideos.length);
 
 const radioImage = document.querySelectorAll('#imageRadio')
 const radioTexte = document.querySelectorAll('#texteRadio')
