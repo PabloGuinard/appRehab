@@ -55,8 +55,8 @@ function logCurrentStorage() {
 }
 
 async function initGlobals(){
-    global.dns = 'http://10.39.20.77'
-    // global.dns = 'https://rehabadom.cpa01.fr'
+    // global.dns = 'http://10.39.20.77'
+    global.dns = 'https://rehabadom.cpa01.fr'
     global.amountExercicesStartedMonth = 0
     global.amountExercicesEndedMonth = 0
     let tmp
@@ -212,7 +212,7 @@ export default class App extends React.Component {
     }
 
     async componentDidMount(){
-        // await AsyncStorage.clear()
+        await AsyncStorage.clear()
         await initialisation()
         this.setState({isLoading: false})
     }

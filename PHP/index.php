@@ -144,11 +144,12 @@ $popup = new Popup();
                             echo '
                                 <div class="hidden exerciceNode">
                                     <div class="exerciceDataBase blue">
-                                        <div class="titleExercice">Exercice ' . $exercice["nom"] . '</div>
+                                        <div class="titleExercice">Article ' . $exercice["nom"] . '</div>
                                         <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
                         ' . $popup->modalUpdate('blue', $exercice["nom"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice ' . $exercice["nom"] . ' ?') . '
                                         <div class="button btModal"><img src="img/delete_exercice.png" alt="Suppr"></div>
+                        ' . $popup->modalSuppr('blue', 'Supprimer l\'exercice ' . $exercice["nom"] . ' ?', 'Exercice', $exercice["id"]) . '
                         ' . $popup->modalSuppr('blue', 'Supprimer l\'exercice ' . $exercice["nom"] . ' ?', 'Exercice', $exercice["id"]) . '
                                         </div>
                                     </div>';
@@ -232,7 +233,7 @@ $popup = new Popup();
                             echo '
                                 <div class="hidden exerciceNode">
                                     <div class="exerciceDataBase blue">
-                                        <div class="titleExercice">Exercice ' . $exercice["nom"] . '</div>
+                                        <div class="titleExercice">Article ' . $exercice["nom"] . '</div>
                                         <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
                         ' . $popup->modalUpdate('blue', $exercice["nom"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice ' . $exercice["nom"] . ' ?') . '
