@@ -212,7 +212,7 @@ export default class App extends React.Component {
     }
 
     async componentDidMount(){
-        await AsyncStorage.clear()
+        // await AsyncStorage.clear()
         await initialisation()
         this.setState({isLoading: false})
     }

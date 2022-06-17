@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from '../modules/Header';
 import ItemList from '../modules/ItemList';
 import NavigBar from '../modules/NavigBar';
-import AsyncStorageLib from '@react-native-async-storage/async-storage';
+import ResetButton from '../modules/ResetButton'
 
 const DATA = [
   {
@@ -30,7 +30,7 @@ const DATA = [
     title:'Qui sommes-nous ?',
     link: 'PresentationPage',
     isNew: 0
-  }
+  },
 ];
 
 async function setCatPref(){
@@ -99,8 +99,11 @@ const ProfilePage = ({navigation}) => {
       <View style={{flex: 1}}>
         <Header/>
       </View>
-      <View style={{flex: 7}}>
+      <View style={{flex: 6}}>
         <ItemList navigation={navigation} DATA={DATA} color= {mainColor}/>
+      </View>
+      <View style={styles.resetBox}>
+        <ResetButton/>
       </View>
       <View style={{flex: 1}}>
         <NavigBar navigation={navigation} root={'ProfilePage'}/>
@@ -113,6 +116,10 @@ const styles = StyleSheet.create({
     statusbar: {
         flex: 1,
         maxHeight: StatusBar.currentHeight,
+    },
+    resetBox: {
+      flexDirection: 'column-reverse',
+      flex: 1
     }
 })
 
