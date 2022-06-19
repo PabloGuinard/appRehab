@@ -43,6 +43,7 @@ $popup = new Popup();
                         <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
                         <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
                         <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
+                        <div class="buttonFont buttonEdit"><img title="Réinitialiser la police" src="img/font.png"></div>
                         <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
                         <select class="buttonFont buttonEdit">
                             <option value="2">13</option>
@@ -81,6 +82,7 @@ $popup = new Popup();
                         <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
                         <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
                         <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
+                        <div class="buttonFont buttonEdit"><img title="Réinitialiser la police" src="img/font.png"></div>
                         <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
                         <select class="buttonFont buttonEdit">
                             <option value="2">13</option>
@@ -142,11 +144,12 @@ $popup = new Popup();
                             echo '
                                 <div class="hidden exerciceNode">
                                     <div class="exerciceDataBase blue">
-                                        <div class="titleExercice">Exercice ' . $exercice["nom"] . '</div>
+                                        <div class="titleExercice">Article ' . $exercice["nom"] . '</div>
                                         <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
                         ' . $popup->modalUpdate('blue', $exercice["nom"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice ' . $exercice["nom"] . ' ?') . '
                                         <div class="button btModal"><img src="img/delete_exercice.png" alt="Suppr"></div>
+                        ' . $popup->modalSuppr('blue', 'Supprimer l\'exercice ' . $exercice["nom"] . ' ?', 'Exercice', $exercice["id"]) . '
                         ' . $popup->modalSuppr('blue', 'Supprimer l\'exercice ' . $exercice["nom"] . ' ?', 'Exercice', $exercice["id"]) . '
                                         </div>
                                     </div>';
@@ -230,7 +233,7 @@ $popup = new Popup();
                             echo '
                                 <div class="hidden exerciceNode">
                                     <div class="exerciceDataBase blue">
-                                        <div class="titleExercice">Exercice ' . $exercice["nom"] . '</div>
+                                        <div class="titleExercice">Article ' . $exercice["nom"] . '</div>
                                         <div class="buttonsForm">
                                         <div class="button btModal"><img src="img/edit_exercice.png" alt="Modifier"></div>
                         ' . $popup->modalUpdate('blue', $exercice["nom"], $exercice["id"], 'modifExercice.php', 'Modifier l\'exercice ' . $exercice["nom"] . ' ?') . '
