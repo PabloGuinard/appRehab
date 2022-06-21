@@ -465,6 +465,16 @@ select option{
     display: flex;
     justify-content: space-between;
 }
+#buttonResetTreeStructure{
+    text-align: center;
+    color: white;
+    background-color: var(--couleurPrincipale);
+    width: 50%;
+    margin: auto;
+    padding: 7px;
+    border-radius: 15px;
+    cursor: pointer;
+}
 @media (max-width: 1450px) {
     .divThemeExercice{
         flex-direction: column;

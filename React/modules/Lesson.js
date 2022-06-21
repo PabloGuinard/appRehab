@@ -166,8 +166,10 @@ const styles = StyleSheet.create({
   },
   im: {
     maxWidth: Dimensions.get('window').width,
-    height: Dimensions.get('window').height/3,
-    margin: 10
+    minHeight: Dimensions.get('window').height/3,
+    maxHeight: Dimensions.get('window').width * 3,
+    margin: 10,
+    resizeMode: 'contain'
   },
   
   textStyle: {
