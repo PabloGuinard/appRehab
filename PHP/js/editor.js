@@ -8,6 +8,7 @@ const arrayColors = document.getElementsByClassName('buttonColor')
 const arrayJustifyLeft = document.getElementsByClassName('buttonJustifyLeft')
 const arrayJustifyCenter = document.getElementsByClassName('buttonJustifyCenter')
 const arrayJustifyRight = document.getElementsByClassName('buttonJustifyRight')
+const arrayJustify = document.getElementsByClassName('buttonJustify')
 const arrayLinks = document.getElementsByClassName('buttonLink')
 const arrayCleans = document.getElementsByClassName('buttonClean')
 
@@ -48,6 +49,9 @@ for (let cpt = 0; cpt < arrayBolds.length; cpt++) {
     }) 
     arrayJustifyRight[cpt].addEventListener("click", event => {
         insertTag('justifyright', cpt)
+    })
+    arrayJustify[cpt].addEventListener("click", event => {
+        insertTag('justifyFull', cpt)
     }) 
     arrayLinks[cpt].addEventListener("click", event => {
         let link = prompt('URL','http:\/\/')
