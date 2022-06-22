@@ -115,9 +115,9 @@ class Categories extends React.Component{
       }
     }
     for(let cpt = 0; cpt < themes.length; cpt++){
-      exercices = exercices.filter(child => child.parentId === themes[cpt].id)
-      if(exercices.length > 0){
-        for(let child of exercices){
+      let tmp = exercices.filter(child => child.parentId === themes[cpt].id)
+      if(tmp.length > 0){
+        for(let child of tmp){
           if(child.isNew === 1){
             return 1
           }

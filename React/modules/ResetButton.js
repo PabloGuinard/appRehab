@@ -8,12 +8,18 @@ class ResetButton extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            isModalVisible: false
+            isModalVisible: false,
+            isButtonVisible: true,
+            text: 'Si vous avez un problème, vous pouvez réinitialiser l\'app. Vous devrez ensuite la fermer puis la relancer.'
         }
     }
 
     async resetAppData(){
         await AsyncStorage.clear()
+        this.setState({
+            isButtonVisible: false,
+            text: 'L\'app a été réinitialisée. Veuillez la fermer puis la relancer pour continuer à l\'utiliser'
+        })
     }
 
     render(){
@@ -28,18 +34,21 @@ class ResetButton extends React.Component{
                     >
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Pressable flexDirection={'row-reverse'} onPress={() => {this.setState({isModalVisible: false})}}>
+                                <Pressable flexDirection={'row-reverse'}
+                                style={[!this.state.isButtonVisible && {display: 'none'}]}
+                                onPress={() => {this.setState({isModalVisible: false})}}>
                                     <Image source={require('../assets/icones/cross.png')}
                                         style={styles.cross}
                                     />
                                 </Pressable>
                                 <Text style={styles.text}>
-                                    Si vous avez un problème, vous pouvez réinitialiser l'app. Vous devrez ensuite la relancer.
+                                    {this.state.text}
                                 </Text>
                                 <Pressable
-                                    style={styles.button}
                                     backgroundColor={global.mainColor}
-                                    onPress={() => this.resetAppData()}>
+                                    onPress={() => this.resetAppData()}
+                                    style={[!this.state.isButtonVisible && {display: 'none'}, styles.button]}
+                                    >
                                     <Text style={styles.textStyle}>Réinitialiser</Text>
                                 </Pressable>
                             </View>

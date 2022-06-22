@@ -161,7 +161,7 @@ const getAllDataFromApi = async () => {
     
         //update text in challenge
         if(json.challenge !== undefined){
-            global.challengeText = json.challenge
+            await setStorage('challenge', JSON.stringify(json.challenge))
         }
     } else {
         global.isNewContent = false
@@ -191,12 +191,13 @@ async function setMonth(){
     }
 }
 
+
 async function initialisation(){
     await setMonth()
     await initGlobals()
     await initHistoriqueAndLastConnexion()
     await getAllDataFromApi()
-    
+    global.challengeText = JSON.parse(await AsyncStorage.getItem('challenge'))
     //logCurrentStorage()
 }
 

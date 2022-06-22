@@ -12,6 +12,12 @@ class ItemList extends React.Component{
         }
     }
 
+    UNSAFE_componentWillReceiveProps(props){
+        this.setState({
+            props: props
+        })
+    }
+
     componentDidMount(){
         this.props.navigation.addListener('focus', async () => {
             let DATA = this.state.props.DATA

@@ -45,8 +45,8 @@ class Popup
                         <div class="buttonJustifyLeft buttonEdit"><img title="Aligné à gauche" src="img/justify_left.png"></div>
                         <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
                         <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
+                        <div class="buttonJustify buttonEdit"><img title="Justifié" src="img/justify.png"></div>
                         <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
-                        <div class="buttonFont buttonEdit"><img title="Réinitialiser la police" src="img/font.png"></div>
                         <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
                         <select class="buttonFont buttonEdit">
                             <option value="2">13</option>
@@ -156,8 +156,8 @@ class Popup
                         <div class="buttonJustifyLeft buttonEdit"><img title="Aligné à gauche" src="img/justify_left.png"></div>
                         <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
                         <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
+                        <div class="buttonJustify buttonEdit"><img title="Justifié" src="img/justify.png"></div>
                         <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
-                        <div class="buttonFont buttonEdit"><img title="Réinitialiser la police" src="img/font.png"></div>
                         <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
                         <select class="buttonFont buttonEdit">
                             <option value="2">13</option>

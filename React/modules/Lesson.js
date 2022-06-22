@@ -3,6 +3,8 @@ import {SafeAreaView, View, StyleSheet, Dimensions, FlatList, Image, useWindowDi
 import ModalRate from './ModalRate';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import RenderHTML from 'react-native-render-html';
+import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
+
 
 function printObject(item, params) {
   switch (item.type){
@@ -119,12 +121,20 @@ function findTag(text, pos){
 
 const ItemTexte = (item) => (
   getComponents(item.data)
-);
+)
 
 const ItemImage = (item) => (
-  <View style={styles.itemContentExercise}>
-    <Image source={item.data} style={styles.im}/>
+  <ReactNativeZoomableView
+  maxZoom={1.4}
+  minZoom={1}
+  zoomStep={0.5}
+  initialZoom={1}
+  bindToBorders={true}
+>
+ <View style={styles.itemContentExercise}>
+     <Image source={item.data} style={styles.im}/>
   </View>
+</ReactNativeZoomableView>
 );
 
 const ItemVideo = (item) => (
@@ -166,8 +176,10 @@ const styles = StyleSheet.create({
   },
   im: {
     maxWidth: Dimensions.get('window').width,
-    height: Dimensions.get('window').height/3,
-    margin: 10
+    minHeight: Dimensions.get('window').height/3,
+    maxHeight: Dimensions.get('window').width * 3,
+    margin: 10,
+    resizeMode: 'contain'
   },
   
   textStyle: {

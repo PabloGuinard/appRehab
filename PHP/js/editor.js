@@ -8,8 +8,8 @@ const arrayColors = document.getElementsByClassName('buttonColor')
 const arrayJustifyLeft = document.getElementsByClassName('buttonJustifyLeft')
 const arrayJustifyCenter = document.getElementsByClassName('buttonJustifyCenter')
 const arrayJustifyRight = document.getElementsByClassName('buttonJustifyRight')
+const arrayJustify = document.getElementsByClassName('buttonJustify')
 const arrayLinks = document.getElementsByClassName('buttonLink')
-const arrayFont = document.getElementsByClassName('buttonFont')
 const arrayCleans = document.getElementsByClassName('buttonClean')
 
 const selectFont = document.getElementsByClassName('fontSize')
@@ -49,15 +49,15 @@ for (let cpt = 0; cpt < arrayBolds.length; cpt++) {
     }) 
     arrayJustifyRight[cpt].addEventListener("click", event => {
         insertTag('justifyright', cpt)
+    })
+    arrayJustify[cpt].addEventListener("click", event => {
+        insertTag('justifyFull', cpt)
     }) 
     arrayLinks[cpt].addEventListener("click", event => {
         let link = prompt('URL','http:\/\/')
         if(link && link !== '' && link !== 'http://')
             insertTag('createlink', cpt, link)
     })  
-    arrayFont[cpt].addEventListener("click", event => {
-        insertTag('fontName', cpt, 'Arial')
-    }) 
     arrayCleans[cpt].addEventListener("click", event => {
         if(confirm("Supprimer tout le style du texte ?")){
             text = editors[cpt].innerHTML

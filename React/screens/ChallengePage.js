@@ -6,15 +6,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import RenderHTML from 'react-native-render-html';
 import Header from '../modules/Header';
 
-async function setStorage(key: string, value: string){
-    if(typeof value === Object){
-        value = JSON.stringify(value)
-    }
-    try {
-        await AsyncStorage.setItem(key, value)
-    }catch (error){}
-}
-
 function getComponents(text){
   if(text !== undefined)
     text = translateToHTML5(text)
@@ -22,6 +13,7 @@ function getComponents(text){
   const source = {
     html: text
   }
+  console.log(source.html);
   return (
     <RenderHTML
       contentWidth={width}
