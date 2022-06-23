@@ -198,16 +198,47 @@ class Popup
             <div class="modal-content mainColor">
                 <div class="btClose">x</div>
                 <p class="titleModal">Ajouter un mot</p>
-                <form action="traitement/ajoutMot.php" method="post" enctype="multipart/form-data">
+                <form action="traitement/ajoutMot.php" method="post" enctype="multipart/form-data" class="formEditText">
                     <div class="divInputLabel">
                         <label for="titreMot">Mot</label>
                         <input class="inputModal" type="text" name="titreMot" id="titreMot" required="required">
                     </div>
                     <div class="divInputLabel">
                         <label for="dropExercice">Définition</label>
-                        <textarea id="textItem" name="textDef"></textarea>
+                        <div class="divInputLabel divInputTexte editLexique">
+                            <div class="buttonsEditGroup">
+                                <div class="buttonBold buttonEdit"><img title="Gras" src="img/bold.png"></div>
+                                <div class="buttonUnderline buttonEdit"><img title="Souligné" src="img/underline.png"></div>
+                                <div class="buttonItalic buttonEdit"><img title="Italique" src="img/italic.png"></div>
+                                <div class="buttonJustifyLeft buttonEdit"><img title="Aligné à gauche" src="img/justify_left.png"></div>
+                                <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
+                                <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
+                                <div class="buttonJustify buttonEdit"><img title="Justifié" src="img/justify.png"></div>
+                                <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
+                                <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
+                                <select class="buttonFont buttonEdit">
+                                    <option value="2">13</option>
+                                    <option value="4" selected="selected">16</option>
+                                    <option value="5">24</option>
+                                    <option value="6">32</option>
+                                </select>
+                                <select class="buttonColor buttonEdit">
+                                    <option value="black" class="black">Noir</option>
+                                    <option value="grey" class="grey">Gris</option>
+                                    <option value="purple" class="purple">Violet</option>
+                                    <option value="blue" class="bleu">Bleu</option>
+                                    <option value="green" class="green">Vert</option>
+                                    <option value="yellow" class="yellow">Jaune</option>
+                                    <option value="orange" class="orange">Orange</option>
+                                    <option value="red" class="rouge">Rouge</option>
+                                    <option value="pink" class="pink">Rose</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="textDef" class="inputTextItem">
+                            <div id="textItem" class="editor" contenteditable="true"></div>
+                        </div>
                     </div>
-                    <button type="submit">Ajouter Mot</button>
+                    <button type="submit" class="submitEditText">Ajouter Mot</button>
                 </form>
             </div>
         </div>';
@@ -219,17 +250,48 @@ class Popup
             <div class="modal-content mainColor">
                 <div class="btClose">x</div>
                 <p class="titleModal">Modifier un mot</p>
-                <form action="traitement/modifMot.php" method="post" enctype="multipart/form-data">
+                <form action="traitement/modifMot.php" method="post" enctype="multipart/form-data"class="formEditText">
                     <div class="divInputLabel">
                         <label for="titreMot">Mot</label>
                         <input class="inputModal" type="text" name="titreMot" id="titreMot" required="required" value="'.$mot["nom"].'">
                     </div>
                     <div class="divInputLabel">
                         <label for="dropExercice">Définition</label>
-                        <textarea id="textItem" name="textDef">'.$mot["definition"].'</textarea>
+                        <div class="divInputLabel divInputTexte editLexique">
+                            <div class="buttonsEditGroup">
+                                <div class="buttonBold buttonEdit"><img title="Gras" src="img/bold.png"></div>
+                                <div class="buttonUnderline buttonEdit"><img title="Souligné" src="img/underline.png"></div>
+                                <div class="buttonItalic buttonEdit"><img title="Italique" src="img/italic.png"></div>
+                                <div class="buttonJustifyLeft buttonEdit"><img title="Aligné à gauche" src="img/justify_left.png"></div>
+                                <div class="buttonJustifyCenter buttonEdit"><img title="Aligné au centre" src="img/justify_center.png"></div>
+                                <div class="buttonJustifyRight buttonEdit"><img title="Aligné à droite" src="img/justify_right.png"></div>
+                                <div class="buttonJustify buttonEdit"><img title="Justifié" src="img/justify.png"></div>
+                                <div class="buttonLink buttonEdit"><img title="Lien hypertexte" src="img/link.png"></div>
+                                <div class="buttonClean buttonEdit"><img title="Texte simple" src="img/clean.png"></div>
+                                <select class="buttonFont buttonEdit">
+                                    <option value="2">13</option>
+                                    <option value="4" selected="selected">16</option>
+                                    <option value="5">24</option>
+                                    <option value="6">32</option>
+                                </select>
+                                <select class="buttonColor buttonEdit">
+                                    <option value="black" class="black">Noir</option>
+                                    <option value="grey" class="grey">Gris</option>
+                                    <option value="purple" class="purple">Violet</option>
+                                    <option value="blue" class="bleu">Bleu</option>
+                                    <option value="green" class="green">Vert</option>
+                                    <option value="yellow" class="yellow">Jaune</option>
+                                    <option value="orange" class="orange">Orange</option>
+                                    <option value="red" class="rouge">Rouge</option>
+                                    <option value="pink" class="pink">Rose</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="textDef" class="inputTextItem">
+                            <div id="textItem" class="editor" contenteditable="true">'.$mot["definition"].'</div>
+                        </div>
                         <input type="hidden" name="id" value="'.$mot["id"].'">
                     </div>
-                    <button type="submit">Modifier un mot</button>
+                    <button type="submit" class="submitEditText">Modifier un mot</button>
                 </form>
             </div>
         </div>';

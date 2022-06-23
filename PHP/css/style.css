@@ -475,6 +475,10 @@ select option{
     border-radius: 15px;
     cursor: pointer;
 }
+.editLexique{
+    width: 100%;
+    margin: 10px;
+}
 @media (max-width: 1450px) {
     .divThemeExercice{
         flex-direction: column;

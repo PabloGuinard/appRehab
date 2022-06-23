@@ -19,7 +19,7 @@ $db->authenticate();
         <a class="link" href="updateApp.php">Mettre à jour l'app</a>
         <a class="link" href="index.php">Retourner au dashboard</a>
         <a class="link" href="viewRates.php">Voir les commentaires</a>
-        <a class="link" href="logout.php">Connecté : <?=phpCAS::getAttributes()["cn"]?></a>
+        <a class="link" href="logout.php">Connecté : <?="text"/* phpCAS::getAttributes()["cn"] */?></a>
     </div>
 </div>
 <p id="erreur"><?php if(isset($_SESSION["message"]))echo $_SESSION["message"];
@@ -47,5 +47,6 @@ foreach ($allMots as $mot){
         </div>";
 }?>
 <script src="js/popups.js"></script>
+<script src="js/editor.js"></script>
 </body>
 </html>

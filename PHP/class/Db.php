@@ -62,7 +62,7 @@ class Db {
 
     public function addItem(string $contenu, string $exercice, string $typeFile){
         $user = $this->getUserMail();
-        $sth = $this->pdo->prepare("SELECT * FROM exercices WHERE nom= :exercice");
+        $sth = $this->pdo->prepare("SELECT * FROM exercices WHERE nom= :exercice AND isDeleted != 1");
         $sth->execute(["exercice" => $exercice]);
         $result = $sth->fetch();
         if($result == false){
@@ -236,7 +236,7 @@ class Db {
     public function updateItem(string  $pathItem, string $id, string $typeItem){
         $user = $this->getUserMail();
         $sth = $this->pdo->prepare("UPDATE items SET typeItem= :typeItem, nom= :pathItem, isReady=0, modifiedBy= :user WHERE id= :id");
-        var_dump($sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id, "user" => $user]));
+        $sth->execute(["typeItem" => $typeItem, "pathItem" => $pathItem, "id" => $id, "user" => $user]);
         return "Item mis à jour";
     }
 
