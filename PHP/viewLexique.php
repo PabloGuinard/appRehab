@@ -35,9 +35,9 @@ for ($i=0; $i < sizeof($motsTitle); $i++) {
 array_multisort($motsTitle, SORT_ASC, $allMots);
 foreach ($allMots as $mot){
     echo "
-        <div class='divCommentaire mainColor'>
-            <p class='mot'>".$mot['nom']."</p>
-            <p class='messageCommentaire'>".$mot["definition"]. "</p>
+        <div class='divCommentaire2 mainColor'>
+            <p class='mot'>".$mot["nom"]."</p>
+            ".$mot["definition"]."
             <div class='buttonsForm'>
                 <div class='button btModal'><img src='img/edit_mainColor.png'></div>
                 " .$popup->modalUpdateWord($mot). "

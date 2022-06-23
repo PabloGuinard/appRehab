@@ -479,6 +479,12 @@ select option{
     width: 100%;
     margin: 10px;
 }
+.divCommentaire2{
+    margin: 10px;
+    border: 5px solid var(--couleurPrincipale);
+    padding: 10px;
+    border-radius: 10px;
+}
 @media (max-width: 1450px) {
     .divThemeExercice{
         flex-direction: column;
